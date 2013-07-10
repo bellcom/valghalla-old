@@ -1,0 +1,32 @@
+<?php
+/**
+ * hoolk_cron() implementation
+ *
+ * this hook imports "cron plugins" and run those.
+ * a plugin must consist of a file, and in this a function with the same name as the file
+ * @example
+ * plugins/xxx_test.inc
+ * function xxx_test(int $last_run_ts) {}
+ */
+function valhalla_cron_cron() {
+  $last_run_ts = variable_get('valhalla_cron_last_run', REQUEST_TIME);
+
+  $files = &drupal_static(__FUNCTION__, array());
+
+  if (empty($files)) {
+    foreach (new DirectoryIterator(dirname(__FILE__) . '/plugins') as $item) {
+      if ($item->isFile()) {
+        $files[basename($item->getFilename(), '.inc')] = $item->getPathname();
+      }
+    }
+  }
+
+  foreach ($files as $function => $file) {
+    include $file;
+    if (function_exists($function)) {
+      $function($last_run_ts);
+    }
+  }
+
+  variable_set('valhalla_cron_last_run', REQUEST_TIME);
+}

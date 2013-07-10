@@ -1,0 +1,10 @@
+name = valhalla_menu_blocks_context
+core = 7.x
+package = Features
+php = 5.2.4
+dependencies[] = context
+dependencies[] = ctools
+dependencies[] = menu
+features[context][] = valhalla_menu_blocks_context
+features[ctools][] = context:context:3
+features[features_api][] = api:1

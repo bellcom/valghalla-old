@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the valhalla_menu_blocks_context feature.
+ */
+
+include_once 'valhalla_menu_blocks_context.features.inc';
