@@ -5,6 +5,3 @@
  */
 
 include_once 'content_type_almindelig_side.features.inc';
-
-// Disable author and date display of content type page.
-variable_set('node_submitted_page', FALSE);
