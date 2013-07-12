@@ -5,10 +5,6 @@
 
 function content_type_almindelig_side_install()
 {
-	// Add missing field instances to node type.
-	$page = node_type_load('page');
-  	node_add_body_field($page);
-  	
 	// Disable author and date display of content type page.
 	variable_set('node_submitted_page', FALSE);
 }
