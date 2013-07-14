@@ -49,7 +49,7 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 17,
+        'nid' => 15,
       ),
     ),
   ),
@@ -202,7 +202,7 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 17,
+        'nid' => 15,
       ),
     ),
   ),
@@ -246,7 +246,7 @@ function valhalla_nodes_uuid_features_default_content() {
         'number_ti' => 1,
       ),
       3 => array(
-        'party' => 17,
+        'party' => 15,
         'number_va' => 0,
         'number_ti' => 1,
       ),
@@ -350,7 +350,7 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 17,
+        'nid' => 15,
       ),
     ),
   ),
@@ -394,7 +394,7 @@ function valhalla_nodes_uuid_features_default_content() {
         'number_ti' => 0,
       ),
       3 => array(
-        'party' => 17,
+        'party' => 15,
         'number_va' => 0,
         'number_ti' => 1,
       ),
@@ -503,7 +503,7 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 11,
+        'nid' => 16,
       ),
     ),
   ),
@@ -547,7 +547,7 @@ function valhalla_nodes_uuid_features_default_content() {
         'number_ti' => 4,
       ),
       3 => array(
-        'party' => 17,
+        'party' => 15,
         'number_va' => 0,
         'number_ti' => 2,
       ),
@@ -700,7 +700,7 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 11,
+        'nid' => 16,
       ),
     ),
   ),
@@ -845,7 +845,7 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 17,
+        'nid' => 15,
       ),
     ),
   ),
@@ -1001,7 +1001,7 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 11,
+        'nid' => 16,
       ),
     ),
   ),
@@ -1190,7 +1190,7 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 17,
+        'nid' => 15,
       ),
     ),
   ),
@@ -1318,34 +1318,6 @@ function valhalla_nodes_uuid_features_default_content() {
   'date' => '2011-08-26 09:43:02 +0200',
 );
   $nodes[] = array(
-  'uid' => 124,
-  'title' => '2. Odense Vestkredsen',
-  'log' => '',
-  'status' => 1,
-  'comment' => 1,
-  'promote' => 0,
-  'sticky' => 0,
-  'vuuid' => '562c37d5-e6a5-4a74-bfab-0157b120a64f',
-  'type' => 'constituency',
-  'language' => 'da',
-  'created' => 1314258812,
-  'tnid' => 0,
-  'translate' => 0,
-  'uuid' => '4f199781-ca24-457f-b6ca-28cfbc87ccc8',
-  'revision_uid' => 124,
-  'body' => array(),
-  'field_ansvarlig' => array(),
-  'field_secretary' => array(),
-  'cid' => 0,
-  'last_comment_name' => NULL,
-  'last_comment_uid' => 124,
-  'comment_count' => 0,
-  'name' => 'Rådhuset',
-  'picture' => 0,
-  'data' => 'a:9:{s:16:"ckeditor_default";s:1:"t";s:20:"ckeditor_show_toggle";s:1:"t";s:14:"ckeditor_popup";s:1:"f";s:13:"ckeditor_skin";s:4:"kama";s:15:"ckeditor_expand";s:1:"t";s:14:"ckeditor_width";s:4:"100%";s:13:"ckeditor_lang";s:2:"en";s:18:"ckeditor_auto_lang";s:1:"t";s:7:"contact";i:0;}',
-  'date' => '2011-08-25 09:53:32 +0200',
-);
-  $nodes[] = array(
   'uid' => 0,
   'title' => '107 - Fjordager-Hallen',
   'log' => '',
@@ -1384,7 +1356,7 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 17,
+        'nid' => 15,
       ),
     ),
   ),
@@ -1524,7 +1496,7 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 11,
+        'nid' => 16,
       ),
     ),
   ),
@@ -1677,7 +1649,7 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 16,
+        'nid' => 17,
       ),
     ),
   ),
@@ -1812,7 +1784,7 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 11,
+        'nid' => 16,
       ),
     ),
   ),
@@ -1933,34 +1905,6 @@ function valhalla_nodes_uuid_features_default_content() {
 );
   $nodes[] = array(
   'uid' => 124,
-  'title' => '3. Odense Sydkredsen',
-  'log' => '',
-  'status' => 1,
-  'comment' => 1,
-  'promote' => 0,
-  'sticky' => 0,
-  'vuuid' => '9ace4042-5b6a-4e6e-8787-143d4a46d41d',
-  'type' => 'constituency',
-  'language' => 'da',
-  'created' => 1314258834,
-  'tnid' => 0,
-  'translate' => 0,
-  'uuid' => '6c93311c-58a3-40b8-91b8-c2b751640611',
-  'revision_uid' => 124,
-  'body' => array(),
-  'field_ansvarlig' => array(),
-  'field_secretary' => array(),
-  'cid' => 0,
-  'last_comment_name' => NULL,
-  'last_comment_uid' => 124,
-  'comment_count' => 0,
-  'name' => 'Rådhuset',
-  'picture' => 0,
-  'data' => 'a:9:{s:16:"ckeditor_default";s:1:"t";s:20:"ckeditor_show_toggle";s:1:"t";s:14:"ckeditor_popup";s:1:"f";s:13:"ckeditor_skin";s:4:"kama";s:15:"ckeditor_expand";s:1:"t";s:14:"ckeditor_width";s:4:"100%";s:13:"ckeditor_lang";s:2:"en";s:18:"ckeditor_auto_lang";s:1:"t";s:7:"contact";i:0;}',
-  'date' => '2011-08-25 09:53:54 +0200',
-);
-  $nodes[] = array(
-  'uid' => 124,
   'title' => '1. Odense Østkredsen',
   'log' => '',
   'status' => 1,
@@ -1986,6 +1930,62 @@ function valhalla_nodes_uuid_features_default_content() {
   'picture' => 0,
   'data' => 'a:9:{s:16:"ckeditor_default";s:1:"t";s:20:"ckeditor_show_toggle";s:1:"t";s:14:"ckeditor_popup";s:1:"f";s:13:"ckeditor_skin";s:4:"kama";s:15:"ckeditor_expand";s:1:"t";s:14:"ckeditor_width";s:4:"100%";s:13:"ckeditor_lang";s:2:"en";s:18:"ckeditor_auto_lang";s:1:"t";s:7:"contact";i:0;}',
   'date' => '2011-08-25 09:52:34 +0200',
+);
+  $nodes[] = array(
+  'uid' => 124,
+  'title' => '2. Odense Vestkredsen',
+  'log' => '',
+  'status' => 1,
+  'comment' => 1,
+  'promote' => 0,
+  'sticky' => 0,
+  'vuuid' => '562c37d5-e6a5-4a74-bfab-0157b120a64f',
+  'type' => 'constituency',
+  'language' => 'da',
+  'created' => 1314258812,
+  'tnid' => 0,
+  'translate' => 0,
+  'uuid' => '4f199781-ca24-457f-b6ca-28cfbc87ccc8',
+  'revision_uid' => 124,
+  'body' => array(),
+  'field_ansvarlig' => array(),
+  'field_secretary' => array(),
+  'cid' => 0,
+  'last_comment_name' => NULL,
+  'last_comment_uid' => 124,
+  'comment_count' => 0,
+  'name' => 'Rådhuset',
+  'picture' => 0,
+  'data' => 'a:9:{s:16:"ckeditor_default";s:1:"t";s:20:"ckeditor_show_toggle";s:1:"t";s:14:"ckeditor_popup";s:1:"f";s:13:"ckeditor_skin";s:4:"kama";s:15:"ckeditor_expand";s:1:"t";s:14:"ckeditor_width";s:4:"100%";s:13:"ckeditor_lang";s:2:"en";s:18:"ckeditor_auto_lang";s:1:"t";s:7:"contact";i:0;}',
+  'date' => '2011-08-25 09:53:32 +0200',
+);
+  $nodes[] = array(
+  'uid' => 124,
+  'title' => '3. Odense Sydkredsen',
+  'log' => '',
+  'status' => 1,
+  'comment' => 1,
+  'promote' => 0,
+  'sticky' => 0,
+  'vuuid' => '9ace4042-5b6a-4e6e-8787-143d4a46d41d',
+  'type' => 'constituency',
+  'language' => 'da',
+  'created' => 1314258834,
+  'tnid' => 0,
+  'translate' => 0,
+  'uuid' => '6c93311c-58a3-40b8-91b8-c2b751640611',
+  'revision_uid' => 124,
+  'body' => array(),
+  'field_ansvarlig' => array(),
+  'field_secretary' => array(),
+  'cid' => 0,
+  'last_comment_name' => NULL,
+  'last_comment_uid' => 124,
+  'comment_count' => 0,
+  'name' => 'Rådhuset',
+  'picture' => 0,
+  'data' => 'a:9:{s:16:"ckeditor_default";s:1:"t";s:20:"ckeditor_show_toggle";s:1:"t";s:14:"ckeditor_popup";s:1:"f";s:13:"ckeditor_skin";s:4:"kama";s:15:"ckeditor_expand";s:1:"t";s:14:"ckeditor_width";s:4:"100%";s:13:"ckeditor_lang";s:2:"en";s:18:"ckeditor_auto_lang";s:1:"t";s:7:"contact";i:0;}',
+  'date' => '2011-08-25 09:53:54 +0200',
 );
   $nodes[] = array(
   'uid' => 0,
@@ -2026,7 +2026,7 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 17,
+        'nid' => 15,
       ),
     ),
   ),
@@ -2184,7 +2184,7 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 16,
+        'nid' => 17,
       ),
     ),
   ),
@@ -2334,7 +2334,7 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 11,
+        'nid' => 16,
       ),
     ),
   ),
@@ -2543,7 +2543,7 @@ Aarhus Kommune</p>
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 11,
+        'nid' => 16,
       ),
     ),
   ),
@@ -2696,7 +2696,7 @@ Aarhus Kommune</p>
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 16,
+        'nid' => 17,
       ),
     ),
   ),
@@ -2900,7 +2900,7 @@ Aarhus Kommune</p>
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 16,
+        'nid' => 17,
       ),
     ),
   ),
@@ -3053,7 +3053,7 @@ Aarhus Kommune</p>
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 17,
+        'nid' => 15,
       ),
     ),
   ),
@@ -3203,7 +3203,7 @@ Aarhus Kommune</p>
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 17,
+        'nid' => 15,
       ),
     ),
   ),
@@ -3369,7 +3369,7 @@ Aarhus Kommune</p>
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 16,
+        'nid' => 17,
       ),
     ),
   ),
@@ -3522,7 +3522,7 @@ Aarhus Kommune</p>
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 11,
+        'nid' => 16,
       ),
     ),
   ),
@@ -3680,7 +3680,7 @@ Aarhus Kommune</p>
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 11,
+        'nid' => 16,
       ),
     ),
   ),
@@ -3865,7 +3865,7 @@ Aarhus Kommune</p>
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 16,
+        'nid' => 17,
       ),
     ),
   ),
@@ -4018,7 +4018,7 @@ Aarhus Kommune</p>
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 17,
+        'nid' => 15,
       ),
     ),
   ),
@@ -4184,7 +4184,7 @@ Aarhus Kommune</p>
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 16,
+        'nid' => 17,
       ),
     ),
   ),
@@ -4337,7 +4337,7 @@ Aarhus Kommune</p>
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 16,
+        'nid' => 17,
       ),
     ),
   ),
@@ -4503,7 +4503,7 @@ Aarhus Kommune</p>
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 16,
+        'nid' => 17,
       ),
     ),
   ),
@@ -4661,7 +4661,7 @@ Aarhus Kommune</p>
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 16,
+        'nid' => 17,
       ),
     ),
   ),
@@ -4876,7 +4876,7 @@ Aarhus Kommune</p>
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 11,
+        'nid' => 16,
       ),
     ),
   ),
