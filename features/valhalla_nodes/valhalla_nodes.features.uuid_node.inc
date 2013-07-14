@@ -49,7 +49,7 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 595,
+        'nid' => 17,
       ),
     ),
   ),
@@ -202,7 +202,7 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 595,
+        'nid' => 17,
       ),
     ),
   ),
@@ -350,7 +350,7 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 595,
+        'nid' => 17,
       ),
     ),
   ),
@@ -503,7 +503,7 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 596,
+        'nid' => 11,
       ),
     ),
   ),
@@ -700,7 +700,7 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 596,
+        'nid' => 11,
       ),
     ),
   ),
@@ -845,7 +845,7 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 595,
+        'nid' => 17,
       ),
     ),
   ),
@@ -1001,7 +1001,7 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 596,
+        'nid' => 11,
       ),
     ),
   ),
@@ -1190,7 +1190,7 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 595,
+        'nid' => 17,
       ),
     ),
   ),
@@ -1384,7 +1384,7 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 595,
+        'nid' => 17,
       ),
     ),
   ),
@@ -1524,7 +1524,7 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 596,
+        'nid' => 11,
       ),
     ),
   ),
@@ -1677,7 +1677,7 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 597,
+        'nid' => 16,
       ),
     ),
   ),
@@ -1812,7 +1812,7 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 596,
+        'nid' => 11,
       ),
     ),
   ),
@@ -2026,7 +2026,7 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 595,
+        'nid' => 17,
       ),
     ),
   ),
@@ -2184,7 +2184,7 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 597,
+        'nid' => 16,
       ),
     ),
   ),
@@ -2334,7 +2334,7 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 596,
+        'nid' => 11,
       ),
     ),
   ),
@@ -2543,7 +2543,7 @@ Aarhus Kommune</p>
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 596,
+        'nid' => 11,
       ),
     ),
   ),
@@ -2696,7 +2696,7 @@ Aarhus Kommune</p>
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 597,
+        'nid' => 16,
       ),
     ),
   ),
@@ -2900,7 +2900,7 @@ Aarhus Kommune</p>
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 597,
+        'nid' => 16,
       ),
     ),
   ),
@@ -3053,7 +3053,7 @@ Aarhus Kommune</p>
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 595,
+        'nid' => 17,
       ),
     ),
   ),
@@ -3203,7 +3203,7 @@ Aarhus Kommune</p>
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 595,
+        'nid' => 17,
       ),
     ),
   ),
@@ -3369,7 +3369,7 @@ Aarhus Kommune</p>
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 597,
+        'nid' => 16,
       ),
     ),
   ),
@@ -3522,7 +3522,7 @@ Aarhus Kommune</p>
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 596,
+        'nid' => 11,
       ),
     ),
   ),
@@ -3680,7 +3680,7 @@ Aarhus Kommune</p>
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 596,
+        'nid' => 11,
       ),
     ),
   ),
@@ -3865,7 +3865,7 @@ Aarhus Kommune</p>
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 597,
+        'nid' => 16,
       ),
     ),
   ),
@@ -4018,7 +4018,7 @@ Aarhus Kommune</p>
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 595,
+        'nid' => 17,
       ),
     ),
   ),
@@ -4184,7 +4184,7 @@ Aarhus Kommune</p>
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 597,
+        'nid' => 16,
       ),
     ),
   ),
@@ -4337,7 +4337,7 @@ Aarhus Kommune</p>
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 597,
+        'nid' => 16,
       ),
     ),
   ),
@@ -4503,7 +4503,7 @@ Aarhus Kommune</p>
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 597,
+        'nid' => 16,
       ),
     ),
   ),
@@ -4661,7 +4661,7 @@ Aarhus Kommune</p>
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 597,
+        'nid' => 16,
       ),
     ),
   ),
@@ -4876,7 +4876,7 @@ Aarhus Kommune</p>
   'field_constituency' => array(
     'da' => array(
       0 => array(
-        'nid' => 596,
+        'nid' => 11,
       ),
     ),
   ),
