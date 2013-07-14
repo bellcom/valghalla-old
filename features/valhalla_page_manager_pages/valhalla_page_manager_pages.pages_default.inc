@@ -716,12 +716,8 @@ function valhalla_page_manager_pages_default_page_manager_pages() {
     $pane->subtype = 'node';
     $pane->shown = TRUE;
     $pane->access = array();
-    // + Exporting using node UUID
-    $uuid = 'c8e5baf3-310f-415e-8a0b-812b29248b83';
-    $nids = entity_get_id_by_uuid('node', array($uuid));
-    // - Exporting using node UUID
     $pane->configuration = array(
-      'nid' => $nids[$uuid],
+      'nid' => 31,
       'links' => 0,
       'leave_node_title' => 0,
       'identifier' => '',
