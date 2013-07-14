@@ -64,10 +64,10 @@ function valhalla_menus_menu_default_menu_links() {
     'expanded' => '0',
     'weight' => '-46',
   );
-  $menu_links['main-menu:node/9'] = array(
+  $menu_links['main-menu:node/22'] = array(
     'menu_name' => 'main-menu',
-    'link_path' => 'node/9',
-    'router_path' => 'node/9',
+    'link_path' => 'node/22',
+    'router_path' => 'node/22',
     'link_title' => 'Lister',
     'options' => array(
       'attributes' => array(

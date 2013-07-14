@@ -717,7 +717,7 @@ function valhalla_page_manager_pages_default_page_manager_pages() {
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'nid' => 31,
+      'nid' => 38,
       'links' => 0,
       'leave_node_title' => 0,
       'identifier' => '',
