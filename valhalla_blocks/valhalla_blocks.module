@@ -170,12 +170,8 @@ function valhalla_blocks_block_view($delta = '') {
 
 
       $data = array();
-      $entities = entity_load('node', FALSE, array('type' => 'constituency'));
 
-      // Sort stdClass object array by 'title' property.
-      usort($entities, function ($a, $b) { return strcmp($a->title, $b->title); });
-
-      foreach ($entities as $constituency) {
+      foreach (entity_load('node', FALSE, array('type' => 'constituency')) as $constituency) {
         $data[$constituency->title] = array();
         $polling_station_nids = db_select('field_data_field_constituency', 'c')
           ->fields('c', array('entity_id'))
@@ -266,9 +262,6 @@ function valhalla_blocks_block_view($delta = '') {
         $vatn = 0;
         $tit = 0;
         $titn = 0;
-
-        // Sort constituency data nodes by 'title'.
-        usort($constituency_data, function ($a, $b) { return strcmp($a['title'], $b['title']);});
 
         foreach ($constituency_data as $id => $polling_station_data) {
           $table['rows'][] = array(
