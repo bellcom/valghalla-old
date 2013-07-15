@@ -78,37 +78,37 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_volunteers_pr_party' => array(
     'da' => array(
       0 => array(
-        'party' => 3,
+        'party' => 2,
         'number_va' => 1,
         'number_ti' => 7,
       ),
       1 => array(
-        'party' => 5,
+        'party' => 4,
         'number_va' => 1,
         'number_ti' => 5,
       ),
       2 => array(
-        'party' => 7,
+        'party' => 6,
         'number_va' => 2,
         'number_ti' => 2,
       ),
       3 => array(
-        'party' => 17,
+        'party' => 15,
         'number_va' => 0,
         'number_ti' => 2,
       ),
       4 => array(
-        'party' => 22,
+        'party' => 20,
         'number_va' => 0,
         'number_ti' => 3,
       ),
       5 => array(
-        'party' => 25,
+        'party' => 23,
         'number_va' => 1,
         'number_ti' => 1,
       ),
       6 => array(
-        'party' => 4,
+        'party' => 3,
         'number_va' => 0,
         'number_ti' => 1,
       ),
@@ -228,37 +228,37 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_volunteers_pr_party' => array(
     'da' => array(
       0 => array(
-        'party' => 3,
+        'party' => 2,
         'number_va' => 1,
         'number_ti' => 6,
       ),
       1 => array(
-        'party' => 5,
+        'party' => 4,
         'number_va' => 1,
         'number_ti' => 5,
       ),
       2 => array(
-        'party' => 7,
+        'party' => 6,
         'number_va' => 2,
         'number_ti' => 3,
       ),
       3 => array(
-        'party' => 17,
+        'party' => 15,
         'number_va' => 1,
         'number_ti' => 1,
       ),
       4 => array(
-        'party' => 22,
+        'party' => 20,
         'number_va' => 0,
         'number_ti' => 2,
       ),
       5 => array(
-        'party' => 25,
+        'party' => 23,
         'number_va' => 0,
         'number_ti' => 1,
       ),
       6 => array(
-        'party' => 10,
+        'party' => 9,
         'number_va' => 0,
         'number_ti' => 1,
       ),
@@ -394,27 +394,27 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_volunteers_pr_party' => array(
     'da' => array(
       0 => array(
-        'party' => 3,
+        'party' => 2,
         'number_va' => 2,
         'number_ti' => 3,
       ),
       1 => array(
-        'party' => 5,
+        'party' => 4,
         'number_va' => 1,
         'number_ti' => 3,
       ),
       2 => array(
-        'party' => 7,
+        'party' => 6,
         'number_va' => 1,
         'number_ti' => 2,
       ),
       3 => array(
-        'party' => 17,
+        'party' => 15,
         'number_va' => 1,
         'number_ti' => 0,
       ),
       4 => array(
-        'party' => 22,
+        'party' => 20,
         'number_va' => 0,
         'number_ti' => 2,
       ),
@@ -550,37 +550,37 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_volunteers_pr_party' => array(
     'da' => array(
       0 => array(
-        'party' => 3,
+        'party' => 2,
         'number_va' => 1,
         'number_ti' => 7,
       ),
       1 => array(
-        'party' => 5,
+        'party' => 4,
         'number_va' => 1,
         'number_ti' => 6,
       ),
       2 => array(
-        'party' => 7,
+        'party' => 6,
         'number_va' => 1,
         'number_ti' => 3,
       ),
       3 => array(
-        'party' => 17,
+        'party' => 15,
         'number_va' => 0,
         'number_ti' => 3,
       ),
       4 => array(
-        'party' => 22,
+        'party' => 20,
         'number_va' => 1,
         'number_ti' => 1,
       ),
       5 => array(
-        'party' => 25,
+        'party' => 23,
         'number_va' => 1,
         'number_ti' => 0,
       ),
       6 => array(
-        'party' => 4,
+        'party' => 3,
         'number_va' => 0,
         'number_ti' => 1,
       ),
@@ -716,37 +716,37 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_volunteers_pr_party' => array(
     'da' => array(
       0 => array(
-        'party' => 3,
+        'party' => 2,
         'number_va' => 1,
         'number_ti' => 6,
       ),
       1 => array(
-        'party' => 5,
+        'party' => 4,
         'number_va' => 1,
         'number_ti' => 4,
       ),
       2 => array(
-        'party' => 7,
+        'party' => 6,
         'number_va' => 2,
         'number_ti' => 3,
       ),
       3 => array(
-        'party' => 17,
+        'party' => 15,
         'number_va' => 1,
         'number_ti' => 0,
       ),
       4 => array(
-        'party' => 22,
+        'party' => 20,
         'number_va' => 0,
         'number_ti' => 2,
       ),
       5 => array(
-        'party' => 25,
+        'party' => 23,
         'number_va' => 0,
         'number_ti' => 1,
       ),
       6 => array(
-        'party' => 10,
+        'party' => 9,
         'number_va' => 0,
         'number_ti' => 1,
       ),
@@ -882,17 +882,17 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_volunteers_pr_party' => array(
     'da' => array(
       0 => array(
-        'party' => 3,
+        'party' => 2,
         'number_va' => 1,
         'number_ti' => 2,
       ),
       1 => array(
-        'party' => 5,
+        'party' => 4,
         'number_va' => 1,
         'number_ti' => 1,
       ),
       2 => array(
-        'party' => 7,
+        'party' => 6,
         'number_va' => 2,
         'number_ti' => 0,
       ),
@@ -902,12 +902,12 @@ function valhalla_nodes_uuid_features_default_content() {
         'number_ti' => 1,
       ),
       4 => array(
-        'party' => 22,
+        'party' => 20,
         'number_va' => 1,
         'number_ti' => 0,
       ),
       5 => array(
-        'party' => 25,
+        'party' => 23,
         'number_va' => 0,
         'number_ti' => 1,
       ),
@@ -1035,27 +1035,27 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_volunteers_pr_party' => array(
     'da' => array(
       0 => array(
-        'party' => 3,
+        'party' => 2,
         'number_va' => 2,
         'number_ti' => 3,
       ),
       1 => array(
-        'party' => 5,
+        'party' => 4,
         'number_va' => 1,
         'number_ti' => 3,
       ),
       2 => array(
-        'party' => 7,
+        'party' => 6,
         'number_va' => 1,
         'number_ti' => 2,
       ),
       3 => array(
-        'party' => 17,
+        'party' => 15,
         'number_va' => 1,
         'number_ti' => 0,
       ),
       4 => array(
-        'party' => 22,
+        'party' => 20,
         'number_va' => 0,
         'number_ti' => 2,
       ),
@@ -1175,17 +1175,17 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_volunteers_pr_party' => array(
     'da' => array(
       0 => array(
-        'party' => 3,
+        'party' => 2,
         'number_va' => 2,
         'number_ti' => 1,
       ),
       1 => array(
-        'party' => 5,
+        'party' => 4,
         'number_va' => 1,
         'number_ti' => 2,
       ),
       2 => array(
-        'party' => 7,
+        'party' => 6,
         'number_va' => 1,
         'number_ti' => 1,
       ),
@@ -1195,7 +1195,7 @@ function valhalla_nodes_uuid_features_default_content() {
         'number_ti' => 1,
       ),
       4 => array(
-        'party' => 22,
+        'party' => 20,
         'number_va' => 1,
         'number_ti' => 0,
       ),
@@ -1323,32 +1323,32 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_volunteers_pr_party' => array(
     'da' => array(
       0 => array(
-        'party' => 3,
+        'party' => 2,
         'number_va' => 1,
         'number_ti' => 7,
       ),
       1 => array(
-        'party' => 5,
+        'party' => 4,
         'number_va' => 1,
         'number_ti' => 5,
       ),
       2 => array(
-        'party' => 7,
+        'party' => 6,
         'number_va' => 1,
         'number_ti' => 4,
       ),
       3 => array(
-        'party' => 17,
+        'party' => 15,
         'number_va' => 0,
         'number_ti' => 2,
       ),
       4 => array(
-        'party' => 22,
+        'party' => 20,
         'number_va' => 1,
         'number_ti' => 2,
       ),
       5 => array(
-        'party' => 25,
+        'party' => 23,
         'number_va' => 1,
         'number_ti' => 0,
       ),
@@ -1476,37 +1476,37 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_volunteers_pr_party' => array(
     'da' => array(
       0 => array(
-        'party' => 3,
+        'party' => 2,
         'number_va' => 2,
         'number_ti' => 3,
       ),
       1 => array(
-        'party' => 5,
+        'party' => 4,
         'number_va' => 1,
         'number_ti' => 3,
       ),
       2 => array(
-        'party' => 7,
+        'party' => 6,
         'number_va' => 0,
         'number_ti' => 2,
       ),
       3 => array(
-        'party' => 17,
+        'party' => 15,
         'number_va' => 1,
         'number_ti' => 0,
       ),
       4 => array(
-        'party' => 22,
+        'party' => 20,
         'number_va' => 0,
         'number_ti' => 2,
       ),
       5 => array(
-        'party' => 25,
+        'party' => 23,
         'number_va' => 1,
         'number_ti' => 0,
       ),
       6 => array(
-        'party' => 13,
+        'party' => 11,
         'number_va' => 0,
         'number_ti' => 1,
       ),
@@ -1634,37 +1634,37 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_volunteers_pr_party' => array(
     'da' => array(
       0 => array(
-        'party' => 3,
+        'party' => 2,
         'number_va' => 1,
         'number_ti' => 7,
       ),
       1 => array(
-        'party' => 5,
+        'party' => 4,
         'number_va' => 2,
         'number_ti' => 4,
       ),
       2 => array(
-        'party' => 7,
+        'party' => 6,
         'number_va' => 1,
         'number_ti' => 5,
       ),
       3 => array(
-        'party' => 17,
+        'party' => 15,
         'number_va' => 0,
         'number_ti' => 1,
       ),
       4 => array(
-        'party' => 22,
+        'party' => 20,
         'number_va' => 1,
         'number_ti' => 1,
       ),
       5 => array(
-        'party' => 25,
+        'party' => 23,
         'number_va' => 0,
         'number_ti' => 2,
       ),
       6 => array(
-        'party' => 10,
+        'party' => 9,
         'number_va' => 0,
         'number_ti' => 1,
       ),
@@ -1792,17 +1792,17 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_volunteers_pr_party' => array(
     'da' => array(
       0 => array(
-        'party' => 3,
+        'party' => 2,
         'number_va' => 2,
         'number_ti' => 5,
       ),
       1 => array(
-        'party' => 5,
+        'party' => 4,
         'number_va' => 1,
         'number_ti' => 6,
       ),
       2 => array(
-        'party' => 7,
+        'party' => 6,
         'number_va' => 1,
         'number_ti' => 4,
       ),
@@ -1812,17 +1812,17 @@ function valhalla_nodes_uuid_features_default_content() {
         'number_ti' => 2,
       ),
       4 => array(
-        'party' => 22,
+        'party' => 20,
         'number_va' => 0,
         'number_ti' => 3,
       ),
       5 => array(
-        'party' => 25,
+        'party' => 23,
         'number_va' => 1,
         'number_ti' => 0,
       ),
       6 => array(
-        'party' => 4,
+        'party' => 3,
         'number_va' => 0,
         'number_ti' => 1,
       ),
@@ -1958,22 +1958,22 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_volunteers_pr_party' => array(
     'da' => array(
       0 => array(
-        'party' => 3,
+        'party' => 2,
         'number_va' => 2,
         'number_ti' => 0,
       ),
       1 => array(
-        'party' => 5,
+        'party' => 4,
         'number_va' => 1,
         'number_ti' => 0,
       ),
       2 => array(
-        'party' => 7,
+        'party' => 6,
         'number_va' => 1,
         'number_ti' => 0,
       ),
       3 => array(
-        'party' => 22,
+        'party' => 20,
         'number_va' => 1,
         'number_ti' => 0,
       ),
@@ -2093,37 +2093,37 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_volunteers_pr_party' => array(
     'da' => array(
       0 => array(
-        'party' => 3,
+        'party' => 2,
         'number_va' => 1,
         'number_ti' => 5,
       ),
       1 => array(
-        'party' => 5,
+        'party' => 4,
         'number_va' => 2,
         'number_ti' => 3,
       ),
       2 => array(
-        'party' => 7,
+        'party' => 6,
         'number_va' => 1,
         'number_ti' => 5,
       ),
       3 => array(
-        'party' => 17,
+        'party' => 15,
         'number_va' => 1,
         'number_ti' => 0,
       ),
       4 => array(
-        'party' => 22,
+        'party' => 20,
         'number_va' => 0,
         'number_ti' => 2,
       ),
       5 => array(
-        'party' => 25,
+        'party' => 23,
         'number_va' => 0,
         'number_ti' => 1,
       ),
       6 => array(
-        'party' => 13,
+        'party' => 11,
         'number_va' => 0,
         'number_ti' => 1,
       ),
@@ -2251,27 +2251,27 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_volunteers_pr_party' => array(
     'da' => array(
       0 => array(
-        'party' => 3,
+        'party' => 2,
         'number_va' => 2,
         'number_ti' => 2,
       ),
       1 => array(
-        'party' => 5,
+        'party' => 4,
         'number_va' => 2,
         'number_ti' => 1,
       ),
       2 => array(
-        'party' => 7,
+        'party' => 6,
         'number_va' => 1,
         'number_ti' => 2,
       ),
       3 => array(
-        'party' => 17,
+        'party' => 15,
         'number_va' => 0,
         'number_ti' => 1,
       ),
       4 => array(
-        'party' => 25,
+        'party' => 23,
         'number_va' => 0,
         'number_ti' => 1,
       ),
@@ -2400,32 +2400,32 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_volunteers_pr_party' => array(
     'da' => array(
       0 => array(
-        'party' => 3,
+        'party' => 2,
         'number_va' => 2,
         'number_ti' => 5,
       ),
       1 => array(
-        'party' => 5,
+        'party' => 4,
         'number_va' => 1,
         'number_ti' => 4,
       ),
       2 => array(
-        'party' => 7,
+        'party' => 6,
         'number_va' => 1,
         'number_ti' => 4,
       ),
       3 => array(
-        'party' => 17,
+        'party' => 15,
         'number_va' => 0,
         'number_ti' => 1,
       ),
       4 => array(
-        'party' => 22,
+        'party' => 20,
         'number_va' => 1,
         'number_ti' => 1,
       ),
       5 => array(
-        'party' => 25,
+        'party' => 23,
         'number_va' => 0,
         'number_ti' => 1,
       ),
@@ -2553,32 +2553,32 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_volunteers_pr_party' => array(
     'da' => array(
       0 => array(
-        'party' => 3,
+        'party' => 2,
         'number_va' => 2,
         'number_ti' => 4,
       ),
       1 => array(
-        'party' => 5,
+        'party' => 4,
         'number_va' => 1,
         'number_ti' => 5,
       ),
       2 => array(
-        'party' => 7,
+        'party' => 6,
         'number_va' => 2,
         'number_ti' => 3,
       ),
       3 => array(
-        'party' => 17,
+        'party' => 15,
         'number_va' => 0,
         'number_ti' => 1,
       ),
       4 => array(
-        'party' => 22,
+        'party' => 20,
         'number_va' => 0,
         'number_ti' => 2,
       ),
       5 => array(
-        'party' => 25,
+        'party' => 23,
         'number_va' => 0,
         'number_ti' => 1,
       ),
@@ -2706,27 +2706,27 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_volunteers_pr_party' => array(
     'da' => array(
       0 => array(
-        'party' => 3,
+        'party' => 2,
         'number_va' => 2,
         'number_ti' => 3,
       ),
       1 => array(
-        'party' => 5,
+        'party' => 4,
         'number_va' => 1,
         'number_ti' => 3,
       ),
       2 => array(
-        'party' => 7,
+        'party' => 6,
         'number_va' => 0,
         'number_ti' => 3,
       ),
       3 => array(
-        'party' => 17,
+        'party' => 15,
         'number_va' => 1,
         'number_ti' => 0,
       ),
       4 => array(
-        'party' => 22,
+        'party' => 20,
         'number_va' => 1,
         'number_ti' => 1,
       ),
@@ -2846,32 +2846,32 @@ function valhalla_nodes_uuid_features_default_content() {
   'field_volunteers_pr_party' => array(
     'da' => array(
       0 => array(
-        'party' => 3,
+        'party' => 2,
         'number_va' => 1,
         'number_ti' => 4,
       ),
       1 => array(
-        'party' => 5,
+        'party' => 4,
         'number_va' => 1,
         'number_ti' => 2,
       ),
       2 => array(
-        'party' => 7,
+        'party' => 6,
         'number_va' => 1,
         'number_ti' => 2,
       ),
       3 => array(
-        'party' => 17,
+        'party' => 15,
         'number_va' => 1,
         'number_ti' => 0,
       ),
       4 => array(
-        'party' => 22,
+        'party' => 20,
         'number_va' => 0,
         'number_ti' => 2,
       ),
       5 => array(
-        'party' => 25,
+        'party' => 23,
         'number_va' => 1,
         'number_ti' => 0,
       ),
@@ -2999,32 +2999,32 @@ $nodes[] = array(
   'field_volunteers_pr_party' => array(
     'da' => array(
       0 => array(
-        'party' => 3,
+        'party' => 2,
         'number_va' => 2,
         'number_ti' => 1,
       ),
       1 => array(
-        'party' => 5,
+        'party' => 4,
         'number_va' => 2,
         'number_ti' => 0,
       ),
       2 => array(
-        'party' => 7,
+        'party' => 6,
         'number_va' => 1,
         'number_ti' => 1,
       ),
       3 => array(
-        'party' => 17,
+        'party' => 15,
         'number_va' => 0,
         'number_ti' => 1,
       ),
       4 => array(
-        'party' => 22,
+        'party' => 20,
         'number_va' => 0,
         'number_ti' => 1,
       ),
       5 => array(
-        'party' => 25,
+        'party' => 23,
         'number_va' => 0,
         'number_ti' => 1,
       ),
@@ -3232,37 +3232,37 @@ $nodes[] = array(
   'field_volunteers_pr_party' => array(
     'da' => array(
       0 => array(
-        'party' => 3,
+        'party' => 2,
         'number_va' => 1,
         'number_ti' => 6,
       ),
       1 => array(
-        'party' => 5,
+        'party' => 4,
         'number_va' => 1,
         'number_ti' => 6,
       ),
       2 => array(
-        'party' => 7,
+        'party' => 6,
         'number_va' => 1,
         'number_ti' => 4,
       ),
       3 => array(
-        'party' => 22,
+        'party' => 20,
         'number_va' => 1,
         'number_ti' => 1,
       ),
       4 => array(
-        'party' => 17,
+        'party' => 15,
         'number_va' => 0,
         'number_ti' => 2,
       ),
       5 => array(
-        'party' => 25,
+        'party' => 23,
         'number_va' => 1,
         'number_ti' => 1,
       ),
       6 => array(
-        'party' => 13,
+        'party' => 11,
         'number_va' => 0,
         'number_ti' => 1,
       ),
@@ -3382,32 +3382,32 @@ $nodes[] = array(
   'field_volunteers_pr_party' => array(
     'da' => array(
       0 => array(
-        'party' => 3,
+        'party' => 2,
         'number_va' => 2,
         'number_ti' => 3,
       ),
       1 => array(
-        'party' => 5,
+        'party' => 4,
         'number_va' => 1,
         'number_ti' => 3,
       ),
       2 => array(
-        'party' => 7,
+        'party' => 6,
         'number_va' => 1,
         'number_ti' => 2,
       ),
       3 => array(
-        'party' => 17,
+        'party' => 15,
         'number_va' => 0,
         'number_ti' => 1,
       ),
       4 => array(
-        'party' => 22,
+        'party' => 20,
         'number_va' => 1,
         'number_ti' => 0,
       ),
       5 => array(
-        'party' => 25,
+        'party' => 23,
         'number_va' => 0,
         'number_ti' => 1,
       ),
@@ -3535,37 +3535,37 @@ $nodes[] = array(
   'field_volunteers_pr_party' => array(
     'da' => array(
       0 => array(
-        'party' => 3,
+        'party' => 2,
         'number_va' => 1,
         'number_ti' => 6,
       ),
       1 => array(
-        'party' => 5,
+        'party' => 4,
         'number_va' => 1,
         'number_ti' => 3,
       ),
       2 => array(
-        'party' => 7,
+        'party' => 6,
         'number_va' => 1,
         'number_ti' => 5,
       ),
       3 => array(
-        'party' => 17,
+        'party' => 15,
         'number_va' => 0,
         'number_ti' => 1,
       ),
       4 => array(
-        'party' => 22,
+        'party' => 20,
         'number_va' => 1,
         'number_ti' => 1,
       ),
       5 => array(
-        'party' => 25,
+        'party' => 23,
         'number_va' => 1,
         'number_ti' => 0,
       ),
       6 => array(
-        'party' => 10,
+        'party' => 9,
         'number_va' => 0,
         'number_ti' => 1,
       ),
@@ -3693,37 +3693,37 @@ $nodes[] = array(
   'field_volunteers_pr_party' => array(
     'da' => array(
       0 => array(
-        'party' => 3,
+        'party' => 2,
         'number_va' => 1,
         'number_ti' => 6,
       ),
       1 => array(
-        'party' => 5,
+        'party' => 4,
         'number_va' => 1,
         'number_ti' => 6,
       ),
       2 => array(
-        'party' => 7,
+        'party' => 6,
         'number_va' => 1,
         'number_ti' => 4,
       ),
       3 => array(
-        'party' => 17,
+        'party' => 15,
         'number_va' => 1,
         'number_ti' => 1,
       ),
       4 => array(
-        'party' => 22,
+        'party' => 20,
         'number_va' => 0,
         'number_ti' => 3,
       ),
       5 => array(
-        'party' => 25,
+        'party' => 23,
         'number_va' => 1,
         'number_ti' => 0,
       ),
       6 => array(
-        'party' => 4,
+        'party' => 3,
         'number_va' => 0,
         'number_ti' => 1,
       ),
@@ -3851,32 +3851,32 @@ $nodes[] = array(
   'field_volunteers_pr_party' => array(
     'da' => array(
       0 => array(
-        'party' => 3,
+        'party' => 2,
         'number_va' => 2,
         'number_ti' => 2,
       ),
       1 => array(
-        'party' => 5,
+        'party' => 4,
         'number_va' => 2,
         'number_ti' => 2,
       ),
       2 => array(
-        'party' => 7,
+        'party' => 6,
         'number_va' => 0,
         'number_ti' => 3,
       ),
       3 => array(
-        'party' => 17,
+        'party' => 15,
         'number_va' => 0,
         'number_ti' => 1,
       ),
       4 => array(
-        'party' => 22,
+        'party' => 20,
         'number_va' => 1,
         'number_ti' => 1,
       ),
       5 => array(
-        'party' => 25,
+        'party' => 23,
         'number_va' => 0,
         'number_ti' => 1,
       ),
@@ -4005,32 +4005,32 @@ $nodes[] = array(
   'field_volunteers_pr_party' => array(
     'da' => array(
       0 => array(
-        'party' => 3,
+        'party' => 2,
         'number_va' => 1,
         'number_ti' => 6,
       ),
       1 => array(
-        'party' => 5,
+        'party' => 4,
         'number_va' => 2,
         'number_ti' => 3,
       ),
       2 => array(
-        'party' => 7,
+        'party' => 6,
         'number_va' => 1,
         'number_ti' => 4,
       ),
       3 => array(
-        'party' => 17,
+        'party' => 15,
         'number_va' => 1,
         'number_ti' => 0,
       ),
       4 => array(
-        'party' => 22,
+        'party' => 20,
         'number_va' => 0,
         'number_ti' => 2,
       ),
       5 => array(
-        'party' => 25,
+        'party' => 23,
         'number_va' => 0,
         'number_ti' => 1,
       ),
@@ -4158,37 +4158,37 @@ $nodes[] = array(
   'field_volunteers_pr_party' => array(
     'da' => array(
       0 => array(
-        'party' => 3,
+        'party' => 2,
         'number_va' => 2,
         'number_ti' => 5,
       ),
       1 => array(
-        'party' => 5,
+        'party' => 4,
         'number_va' => 1,
         'number_ti' => 6,
       ),
       2 => array(
-        'party' => 7,
+        'party' => 6,
         'number_va' => 1,
         'number_ti' => 5,
       ),
       3 => array(
-        'party' => 17,
+        'party' => 15,
         'number_va' => 0,
         'number_ti' => 1,
       ),
       4 => array(
-        'party' => 22,
+        'party' => 20,
         'number_va' => 1,
         'number_ti' => 1,
       ),
       5 => array(
-        'party' => 25,
+        'party' => 23,
         'number_va' => 0,
         'number_ti' => 2,
       ),
       6 => array(
-        'party' => 13,
+        'party' => 11,
         'number_va' => 0,
         'number_ti' => 1,
       ),
@@ -4324,32 +4324,32 @@ $nodes[] = array(
   'field_volunteers_pr_party' => array(
     'da' => array(
       0 => array(
-        'party' => 3,
+        'party' => 2,
         'number_va' => 2,
         'number_ti' => 1,
       ),
       1 => array(
-        'party' => 5,
+        'party' => 4,
         'number_va' => 1,
         'number_ti' => 1,
       ),
       2 => array(
-        'party' => 7,
+        'party' => 6,
         'number_va' => 1,
         'number_ti' => 1,
       ),
       3 => array(
-        'party' => 17,
+        'party' => 15,
         'number_va' => 0,
         'number_ti' => 1,
       ),
       4 => array(
-        'party' => 22,
+        'party' => 20,
         'number_va' => 1,
         'number_ti' => 0,
       ),
       5 => array(
-        'party' => 25,
+        'party' => 23,
         'number_va' => 0,
         'number_ti' => 1,
       ),
@@ -4469,22 +4469,22 @@ $nodes[] = array(
   'field_volunteers_pr_party' => array(
     'da' => array(
       0 => array(
-        'party' => 3,
+        'party' => 2,
         'number_va' => 2,
         'number_ti' => 0,
       ),
       1 => array(
-        'party' => 5,
+        'party' => 4,
         'number_va' => 1,
         'number_ti' => 0,
       ),
       2 => array(
-        'party' => 7,
+        'party' => 6,
         'number_va' => 1,
         'number_ti' => 0,
       ),
       3 => array(
-        'party' => 22,
+        'party' => 20,
         'number_va' => 1,
         'number_ti' => 0,
       ),
@@ -4604,32 +4604,32 @@ $nodes[] = array(
   'field_volunteers_pr_party' => array(
     'da' => array(
       0 => array(
-        'party' => 3,
+        'party' => 2,
         'number_va' => 2,
         'number_ti' => 3,
       ),
       1 => array(
-        'party' => 5,
+        'party' => 4,
         'number_va' => 1,
         'number_ti' => 2,
       ),
       2 => array(
-        'party' => 7,
+        'party' => 6,
         'number_va' => 1,
         'number_ti' => 2,
       ),
       3 => array(
-        'party' => 17,
+        'party' => 15,
         'number_va' => 1,
         'number_ti' => 0,
       ),
       4 => array(
-        'party' => 22,
+        'party' => 20,
         'number_va' => 0,
         'number_ti' => 2,
       ),
       5 => array(
-        'party' => 25,
+        'party' => 23,
         'number_va' => 0,
         'number_ti' => 1,
       ),
