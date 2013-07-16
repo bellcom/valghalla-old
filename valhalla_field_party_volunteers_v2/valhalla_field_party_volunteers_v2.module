@@ -71,7 +71,7 @@ function valhalla_field_party_volunteers_v2_field_widget_form(&$form, &$form_sta
   if ($instance['widget']['type'] == 'party_volunteers_standard_v2') {
 
     $options = array(0 => t('Select Party'));
-    foreach (taxonomy_get_tree(2) as $item) {
+    foreach (taxonomy_get_tree(1) as $item) {
       $options[$item->tid] = $item->name;
     }
 
