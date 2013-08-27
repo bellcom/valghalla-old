@@ -118,6 +118,13 @@ function valhalla_volunteers_menu() {
           'type' => MENU_LOCAL_TASK,
           'weight' => -3,
       ),
+      'volunteers/rsvp/reset' => array(
+          'title' => 'Nulstil tilbagemeldinger og beskeder',
+          'access arguments' => array('administer valhalla'),
+          'page callback' => 'valhalla_volunteers_rsvp_reset',
+          'file' => 'valhalla_volunteers_admin.inc',
+          'type' => MENU_CALLBACK,
+      ),
   );
 }
 
@@ -590,7 +597,7 @@ function valhalla_volunteers_send_rsvp($node) {
 
   $to = $node->field_email[$language->language][0]['email'];
   $from = variable_get('site_mail', 'admin@example.com');
-  
+
   $params = _valhalla_helper_get_volunteer_info_params($node);
 
   $language = language_default();
