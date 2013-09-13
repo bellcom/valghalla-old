@@ -118,7 +118,7 @@ function valhalla_volunteers_menu() {
           'type' => MENU_LOCAL_TASK,
           'weight' => -3,
       ),
-      'volunteers/rsvp/reset' => array(
+      'admin/valhalla/rsvp/reset' => array(
           'title' => 'Nulstil tilbagemeldinger og beskeder',
           'access arguments' => array('administer valhalla'),
           'page callback' => 'valhalla_volunteers_rsvp_reset',
