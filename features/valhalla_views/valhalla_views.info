@@ -1,11 +1,12 @@
 name = valhalla_views
 core = 7.x
 package = Features
+php = 5.2.4
 dependencies[] = ctools
 dependencies[] = field_group
 dependencies[] = views
 features[ctools][] = views:views_default:3.0
-features[features_api][] = api:2
+features[features_api][] = api:1
 features[views_view][] = list
 features[views_view][] = lister_til_valgsted
 features[views_view][] = ulriks_test

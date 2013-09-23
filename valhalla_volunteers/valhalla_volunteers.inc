@@ -249,6 +249,7 @@ function _valhalla_helper_get_polling_stations() {
 }
 
 function _valhalla_helper_get_active_election() {
+
   $nid = db_select('field_data_field_election_status', 's')
       ->fields('s', array('entity_id'))
       ->condition('field_election_status_value', 1)
@@ -298,6 +299,7 @@ function _valhalla_helper_get_volunteer_info_params($node) {
 <li><em>!polling_station</em> will be replaced by the name of the polling station.</li>
 <li><em>!polling_station_address</em> will be replaced by the address of the polling station</li>
 <li><em>!position</em> will be replaced by the VAF/VA/TI label</li>
+<li><em>!time</em> will be replaced by meeting time for position</li>      
 <li><em>!responsible</em> will be replaced by the name of responsible for a given polling station.</li>
 </ul>
 <p>Please note that in some cases the options above is not available.</p>
@@ -339,18 +341,31 @@ EOM;
 
     if (FALSE != $polling_station) {
       // build address "field"
+      $position = db_select('node', 'n')
+                  ->distinct()
+                  ->fields('n', array('nid', 'title'))   
+                  ->condition('n.type', 'roles')
+                 ->condition('n.nid', $node->field_label[$language->language][0]['value'])
+                  ->execute()
+                  ->fetchColumn();
       $polling_station_address = array();
       $polling_station_address[] = $polling_station->field_address_road[$language->language][0]['value'] . ' ' . $polling_station->field_address_road_no[$language->language][0]['value'];
       $polling_station_address[] = $polling_station->field_address_zipcode[$language->language][0]['value'] . ' ' . $polling_station->field_address_city[$language->language][0]['value'];
-
+      
       $params = array_merge($params, array(
           '!polling_station' => $polling_station->title,
           '!polling_station_address' => implode("\n", $polling_station_address),
-          '!position' => strtoupper($node->field_label[$language->language][0]['value']),
+         // '!position' => strtoupper($node->field_label[$language->language][0]['value']),
+          '!position' => strtoupper($position),
           '!responsible' => $polling_station->field_contact[$language->language][0]['value'],
           ));
     }
   }
+
 //  error_log(basename(__FILE__) . ':' . __LINE__ . ' Var: $params = ' . print_r($params, 1));
   return $params;
+}
+function preprocess_views_view(&$view){
+   echo "dddd" ;
+    die;
 }

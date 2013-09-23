@@ -7,6 +7,7 @@ dependencies[] = election_content_type
 dependencies[] = email
 dependencies[] = features
 dependencies[] = field_group
+dependencies[] = field_collection
 dependencies[] = image
 dependencies[] = list
 dependencies[] = node_reference
@@ -17,6 +18,8 @@ dependencies[] = text
 dependencies[] = user_reference
 dependencies[] = valhalla_field_absentee_ballot
 dependencies[] = valhalla_field_party_volunteers_v2
+dependencies[] = valhalla_field_party_volunteers_v3
+dependencies[] = valhalla_field_volunteers_roles
 features[features_api][] = api:2
 features[field_base][] = body
 features[field_base][] = comment_body
@@ -63,4 +66,20 @@ features[field_base][] = field_venue_skolekode
 features[field_base][] = field_venue_team_members
 features[field_base][] = field_venue_teams
 features[field_base][] = field_volunteers_pr_party
+features[field_base][] = field_dscription
+features[field_base][] = field_party_list
+features[field_base][] = field_role_n54
+features[field_base][] = field_role_n59
+features[field_base][] = field_role_n66
+features[field_base][] = field_role_n67
+features[field_base][] = field_role_n70
+features[field_base][] = field_digital_election_list
+features[field_base][] = field_volunteers_pr_party_1
+
+
+
+
+
+
+
 features_exclude[taxonomy][tags] = tags

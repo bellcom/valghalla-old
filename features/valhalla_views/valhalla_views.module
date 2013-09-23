@@ -5,3 +5,9 @@
  */
 
 include_once 'valhalla_views.features.inc';
+
+
+function valhalla_views_views_data_alter(&$data){
+ 
+
+}

@@ -4090,6 +4090,7 @@ $nodes[] = array(
   'data' => NULL,
   'date' => '2011-09-28 14:10:13 +0200',
 );
+
  $nodes[] = array(
   'uid' => 0,
   'title' => '330 - Dalumskolen',
@@ -4998,5 +4999,227 @@ Aarhus Kommune</p>
   'data' => 'a:9:{s:16:"ckeditor_default";s:1:"t";s:20:"ckeditor_show_toggle";s:1:"t";s:14:"ckeditor_popup";s:1:"f";s:13:"ckeditor_skin";s:4:"kama";s:15:"ckeditor_expand";s:1:"t";s:14:"ckeditor_width";s:4:"100%";s:13:"ckeditor_lang";s:2:"en";s:18:"ckeditor_auto_lang";s:1:"t";s:7:"contact";i:0;}',
   'date' => '2013-02-21 10:50:06 +0100',
 );
+
+   $nodes[] = array(
+  'uid' => '1',
+  'title' => 'Kommunevalg',
+  'log' => '',
+  'status' => '1',
+  'comment' => '2',
+  'promote' => '1',
+  'sticky' => '0',
+  'vuuid' => '3ffa8cdd-5895-43ca-8909-4d94244f4e83',
+  'type' => 'election',
+  'language' => 'da',
+  'created' => '1378708453',
+  'tnid' => '0',
+  'translate' => '0',
+  'uuid' => 'fb622b9e-1f33-428e-a7b2-79444396458c',
+  'revision_uid' => '1',
+  'body' => array(
+    'da' => array(
+      0 => array(
+        'value' => '<p>Ellection</p>
+',
+        'summary' => '',
+        'format' => 'filtered_html',
+        'safe_value' => '<p>Ellection</p>
+',
+        'safe_summary' => '',
+      ),
+    ),
+  ),
+  'field_date' => array(
+    'da' => array(
+      0 => array(
+        'value' => '2013-11-19T07:00:00',
+        'timezone' => 'Europe/Helsinki',
+        'timezone_db' => 'UTC',
+        'date_type' => 'date',
+      ),
+    ),
+  ),
+  'field_election_mails_send' => array(
+    'da' => array(
+      0 => array(
+        'value' => '1',
+      ),
+    ),
+  ),
+  'field_election_status' => array(
+    'da' => array(
+      0 => array(
+        'value' => '1',
+      ),
+    ),
+  ),
+  'field_election_type' => array(
+    'da' => array(
+      0 => array(
+        'tid' => '25',
+      ),
+    ),
+  ),
+  'cid' => '0',
+  'last_comment_name' => NULL,
+  'last_comment_uid' => '1',
+  'comment_count' => '0',
+  'name' => 'admin',
+  'picture' => '0',
+  'data' => 'a:6:{s:7:"contact";i:1;s:16:"ckeditor_default";s:1:"t";s:20:"ckeditor_show_toggle";s:1:"t";s:14:"ckeditor_width";s:4:"100%";s:13:"ckeditor_lang";s:2:"en";s:18:"ckeditor_auto_lang";s:1:"t";}',
+  'date' => '2013-09-09 09:34:13 +0300',
+);
+
+  $nodes[] = array(
+  'uid' => '1',
+  'title' => 'VA',
+  'log' => '',
+  'status' => '1',
+  'comment' => '2',
+  'promote' => '0',
+  'sticky' => '0',
+  'vuuid' => 'a21c968f-9499-46a8-af11-cae668fd9189',
+  'type' => 'roles',
+  'language' => 'da',
+  'created' => '1379005820',
+  'tnid' => '0',
+  'translate' => '0',
+  'uuid' => 'be4abde4-f19a-481a-80ac-7ebe287222f3',
+  'revision_uid' => '1',
+  'field_description' => array(
+    'und' => array(
+      0 => array(
+        'value' => 'valgstyrer',
+        'format' => NULL,
+        'safe_value' => 'valgstyrer',
+      ),
+    ),
+  ),
+  'cid' => '0',
+  'last_comment_name' => NULL,
+  'last_comment_uid' => '1',
+  'comment_count' => '0',
+  'name' => 'admin',
+  'picture' => '0',
+  'data' => 'a:6:{s:7:"contact";i:1;s:16:"ckeditor_default";s:1:"t";s:20:"ckeditor_show_toggle";s:1:"t";s:14:"ckeditor_width";s:4:"100%";s:13:"ckeditor_lang";s:2:"en";s:18:"ckeditor_auto_lang";s:1:"t";}',
+  'date' => '2013-09-12 20:10:20 +0300',
+);
+
+  $nodes[] = array(
+  'uid' => '1',
+  'title' => 'TI',
+  'log' => '',
+  'status' => '1',
+  'comment' => '1',
+  'promote' => '0',
+  'sticky' => '0',
+  'vuuid' => '31edd2b7-965f-4825-bc1c-c4d50a00ddc7',
+  'type' => 'roles',
+  'language' => 'da',
+  'created' => '1379018235',
+  'tnid' => '0',
+  'translate' => '0',
+  'uuid' => '819da2d8-47f1-45bb-8938-286279ff4811',
+  'revision_uid' => '1',
+  'field_description' => array(
+    'und' => array(
+      0 => array(
+        'value' => 'tilforordnet',
+        'format' => NULL,
+        'safe_value' => 'tilforordnet',
+      ),
+    ),
+  ),
+  'cid' => '0',
+  'last_comment_name' => NULL,
+  'last_comment_uid' => '1',
+  'comment_count' => '0',
+  'name' => 'admin',
+  'picture' => '0',
+  'data' => 'a:6:{s:7:"contact";i:1;s:16:"ckeditor_default";s:1:"t";s:20:"ckeditor_show_toggle";s:1:"t";s:14:"ckeditor_width";s:4:"100%";s:13:"ckeditor_lang";s:2:"en";s:18:"ckeditor_auto_lang";s:1:"t";}',
+  'date' => '2013-09-12 23:37:15 +0300',
+);
+
+  $nodes[] = array(
+  'uid' => '1',
+  'title' => 'HO',
+  'log' => '',
+  'status' => '1',
+  'comment' => '1',
+  'promote' => '0',
+  'sticky' => '0',
+  'vuuid' => 'f58a10c3-92e6-460d-9e57-857154cbd5f8',
+  'type' => 'roles',
+  'language' => 'da',
+  'created' => '1379023202',
+  'tnid' => '0',
+  'translate' => '0',
+  'uuid' => 'd93b9f18-ab79-494d-a7a5-5652fa5f4cc1',
+  'revision_uid' => '1',
+  'field_description' => array(),
+  'cid' => '0',
+  'last_comment_name' => NULL,
+  'last_comment_uid' => '1',
+  'comment_count' => '0',
+  'name' => 'admin',
+  'picture' => '0',
+  'data' => 'a:6:{s:7:"contact";i:1;s:16:"ckeditor_default";s:1:"t";s:20:"ckeditor_show_toggle";s:1:"t";s:14:"ckeditor_width";s:4:"100%";s:13:"ckeditor_lang";s:2:"en";s:18:"ckeditor_auto_lang";s:1:"t";}',
+  'date' => '2013-09-13 01:00:02 +0300',
+);
+
+  $nodes[] = array(
+  'uid' => '1',
+  'title' => 'HU',
+  'log' => '',
+  'status' => '1',
+  'comment' => '1',
+  'promote' => '0',
+  'sticky' => '0',
+  'vuuid' => 'fc0890b3-eda8-4467-a326-4f499b9d97df',
+  'type' => 'roles',
+  'language' => 'da',
+  'created' => '1379023274',
+  'tnid' => '0',
+  'translate' => '0',
+  'uuid' => '7f321b18-c573-4536-90aa-acbb9b5baef4',
+  'revision_uid' => '1',
+  'field_description' => array(),
+  'cid' => '0',
+  'last_comment_name' => NULL,
+  'last_comment_uid' => '1',
+  'comment_count' => '0',
+  'name' => 'admin',
+  'picture' => '0',
+  'data' => 'a:6:{s:7:"contact";i:1;s:16:"ckeditor_default";s:1:"t";s:20:"ckeditor_show_toggle";s:1:"t";s:14:"ckeditor_width";s:4:"100%";s:13:"ckeditor_lang";s:2:"en";s:18:"ckeditor_auto_lang";s:1:"t";}',
+  'date' => '2013-09-13 01:01:14 +0300',
+);
+
+  $nodes[] = array(
+  'uid' => '1',
+  'title' => 'TA',
+  'log' => '',
+  'status' => '1',
+  'comment' => '1',
+  'promote' => '0',
+  'sticky' => '0',
+  'vuuid' => '222c781c-d1fd-416f-a8a3-ed66367d6bcc',
+  'type' => 'roles',
+  'language' => 'da',
+  'created' => '1379083669',
+  'tnid' => '0',
+  'translate' => '0',
+  'uuid' => '5a13affe-fe0d-47a7-a78e-efb661e45803',
+  'revision_uid' => '1',
+  'field_description' => array(),
+  'cid' => '0',
+  'last_comment_name' => NULL,
+  'last_comment_uid' => '1',
+  'comment_count' => '0',
+  'name' => 'admin',
+  'picture' => '0',
+  'data' => 'a:6:{s:7:"contact";i:1;s:16:"ckeditor_default";s:1:"t";s:20:"ckeditor_show_toggle";s:1:"t";s:14:"ckeditor_width";s:4:"100%";s:13:"ckeditor_lang";s:2:"en";s:18:"ckeditor_auto_lang";s:1:"t";}',
+  'date' => '2013-09-13 17:47:49 +0300',
+);
+
   return $nodes;
 }

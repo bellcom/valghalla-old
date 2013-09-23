@@ -93,7 +93,7 @@ function valhalla_mail_mail($key, &$message, $params) {
  */
 function valhalla_mail_sendmail_form($form, $form_state) {
   if (isset($form_state['storage']['confirm'])) {
-    // ALSO do $form definition here. Your final submit handler (after user clicks Yes, I Confirm) will 
+     // ALSO do $form definition here. Your final submit handler (after user clicks Yes, I Confirm) will 
     // only see $form_state info defined here. Form you create here passed as param1 to confirm_form
     return confirm_form($form, 
       t('Er du sikker på du vil udsende mail til @count modtagere ?', array('@count' => $form_state['storage']['count'])), 
@@ -116,6 +116,19 @@ function valhalla_mail_sendmail_form($form, $form_state) {
           ->fields('n', array('nid', 'title'))
           ->condition('type', 'polling_station')
           ->execute()->fetchAllKeyed();
+  
+    $roles=array();
+    $res = db_select('node', 'n')
+                             ->distinct()
+                             ->fields('n', array('nid', 'title'))   
+                               ->condition('n.type', 'roles')
+                              ->execute();
+
+         $roles[0]='VAF';
+         while($rec=$res->fetchAssoc()){
+              $roles[$rec['nid']]= $rec['title'];
+
+         }  
   $form['content'] = array(
       '#type' => 'fieldset',
       '#title' => 'Mail indhold',
@@ -155,11 +168,7 @@ function valhalla_mail_sendmail_form($form, $form_state) {
       '#type' => 'select',
       '#title' => 'Frivillig type',
       '#multiple' => true,
-      '#options' => array(
-          'vaf' => t('VAF'),
-          'va' => t('VA'),
-          'ti' => t('TI'),
-      ),
+      '#options' => $roles,
       '#size' => 5,
       '#prefix' => '<div style="float:left;margin-right:2em">',
       '#suffix' => '</div>'
@@ -197,8 +206,7 @@ function valhalla_mail_sendmail_form_submit($form, &$form_state) {
 
   $volunteers_nids = $form_state['storage']['nids'];
 
-  if (empty($volunteers_nids)) {
-
+  if (empty($volunteers_nids) or !isset($volunteers_nids) ) {
     $rsvp_status = count($form_state['values']['rsvp_status']) > 0 ? $form_state['values']['rsvp_status'] : false;
     $volunteer_type = count($form_state['values']['volunteer_type']) > 0 ? $form_state['values']['volunteer_type'] : false;
     $party = count($form_state['values']['party']) > 0 ? $form_state['values']['party'] : false;

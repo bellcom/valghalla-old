@@ -1,6 +1,5 @@
 
 <div id="volunteer-station-list">
-
 <?php foreach($posts_to_fill as $i => $post): ?>
   <dl class="clearfix" id="volunteer-station-list-item-<?php print $i ?>">
     <dt class="label-<?php print $post ?>"><?php print $post ?></dt>

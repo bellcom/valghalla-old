@@ -415,9 +415,28 @@ function valhalla_menus_menu_default_menu_links() {
     'expanded' => '0',
     'weight' => '0',
   );
+
+   $menu_links['menu-valg-administration:node/add/roles'] = array(
+    'menu_name' => 'menu-valg-administration',
+    'link_path' => 'node/add/roles',
+    'router_path' => 'node/add',
+    'link_title' => 'Add volunteer role',
+    'options' => array(
+      'attributes' => array(
+        'title' => '',
+      ),
+    ),
+    'module' => 'menu',
+    'hidden' => '0',
+    'external' => '0',
+    'has_children' => '0',
+    'expanded' => '0',
+    'weight' => '-47',
+  );
   // Translatables
   // Included for use with string extractors like potx.
   t('Add content');
+  t('Add volunteer role');
   t('Almindelig side');
   t('Article');
   t('Brevstemmer');

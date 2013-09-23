@@ -33,5 +33,13 @@ function valhalla_taxonomy_terms_taxonomy_default_vocabularies() {
       'module' => 'taxonomy',
       'weight' => 0,
     ),
+    'volonteers_meeting_time' => array(
+      'name' => 'volonteers_meeting_time',
+      'machine_name' => 'volonteers_meeting_time',
+      'description' => '',
+      'hierarchy' => '0',
+      'module' => 'taxonomy',
+      'weight' => '-9',
+    ),
   );
 }

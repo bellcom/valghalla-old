@@ -5,7 +5,7 @@
  */
 function valhalla_volunteers_admin() {
   global $language;
-
+  
   $args = arg();
   if (isset($args[3]) && preg_match('~^[0-9]+$~', $args[3])) {
     $node = node_load($args[3]);
@@ -29,21 +29,17 @@ function valhalla_volunteers_admin() {
     drupal_goto('admin/valhalla');
   }
 
-  drupal_add_js(drupal_get_path('module', 'valhalla_volunteers') . '/valhalla_volunteers_admin.js');
-
   $out = '
     <ul class="action-links">
       <li><a href="/node/add/election">'.t('Opret nyt valg').'</a></li>
-      <li><a href="/admin/valhalla/rsvp/reset" class="confirm-rsvp-reset">'.t('Nulstil tilbagemeldinger og beskeder').'</a></li>
     </ul>
     <div>' . t('Liste over kommende eller ikke skedulerede valg') . '</div>
   ';
-
   return $out . views_embed_view('valg');
 }
 
 function valhalla_volunteers_admin_import_form($form, &$form_state) {
-
+  
   $form['#attributes'] = array('enctype' => "multipart/form-data");
   $form['import'] = array(
     '#type' => 'fieldset',
@@ -131,27 +127,4 @@ function valhalla_volunteers_admin_start_election_form($form, &$form_state, $xtr
   );
 
   return $form;
-}
-
-
-/**
- * Reset RSVP states and comments
- */
-function valhalla_volunteers_rsvp_reset() {
-  db_delete('field_data_field_rsvp')->execute();
-  db_delete('field_revision_field_rsvp')->execute();
-
-  db_delete('field_data_field_rsvp')->execute();
-  db_delete('field_revision_field_rsvp_comment')->execute();
-
-  db_delete('field_data_field_election_mails_send')->execute();
-  db_delete('field_revision_field_election_mails_send')->execute();
-
-  db_update('field_data_field_election_status')->fields(array('field_election_status_value' => 0))->execute();
-  db_update('field_revision_field_election_status')->fields(array('field_election_status_value' => 0))->execute();
-
-  drupal_flush_all_caches();
-
-  drupal_set_message(t('Alle tilbagemeldinger og beskeder er nu blevet slettet.'));
-  drupal_goto('admin/valhalla');
 }

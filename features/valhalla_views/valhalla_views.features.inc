@@ -8,5 +8,5 @@
  * Implements hook_views_api().
  */
 function valhalla_views_views_api() {
-  return array("api" => "3.0");
+  return array("version" => "3.0");
 }

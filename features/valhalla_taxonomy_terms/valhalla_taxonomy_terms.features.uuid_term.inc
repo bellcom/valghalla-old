@@ -684,5 +684,29 @@ function valhalla_taxonomy_terms_uuid_features_default_terms() {
     'uuid' => 'df260bbe-069f-43a2-8b41-5ac844a5929f',
     'vocabulary_machine_name' => 'valgtype',
   );
+   $terms[] = array(
+    'name' => '8:00',
+    'description' => '',
+    'format' => 'filtered_html',
+    'weight' => '0',
+    'uuid' => '1208149e-cca2-4e99-b956-63d4cd9e4726',
+    'vocabulary_machine_name' => 'volonteers_meeting_time',
+  );
+  $terms[] = array(
+    'name' => '16:00',
+    'description' => '',
+    'format' => 'filtered_html',
+    'weight' => '1',
+    'uuid' => '5f7f96a3-5a58-415c-a73d-39673063bfeb',
+    'vocabulary_machine_name' => 'volonteers_meeting_time',
+  );
+  $terms[] = array(
+    'name' => '19:30',
+    'description' => '',
+    'format' => 'filtered_html',
+    'weight' => '2',
+    'uuid' => 'a3732e6b-c8b7-47ec-8f0c-5344a8f28fd3',
+    'vocabulary_machine_name' => 'volonteers_meeting_time',
+  );
   return $terms;
 }
