@@ -96,6 +96,15 @@ function valhalla_user_permissions_user_default_permissions() {
     'module' => 'dashboard',
   );
 
+  // Exported permission: access rules debug.
+  $permissions['access rules debug'] = array(
+    'name' => 'access rules debug',
+    'roles' => array(
+      0 => 'administrator',
+    ),
+    'module' => 'rules',
+  );
+
   // Exported permission: access site in maintenance mode.
   $permissions['access site in maintenance mode'] = array(
     'name' => 'access site in maintenance mode',
@@ -279,6 +288,15 @@ function valhalla_user_permissions_user_default_permissions() {
     'module' => 'filter',
   );
 
+  // Exported permission: administer group.
+  $permissions['administer group'] = array(
+    'name' => 'administer group',
+    'roles' => array(
+      0 => 'administrator',
+    ),
+    'module' => 'og',
+  );
+
   // Exported permission: administer image styles.
   $permissions['administer image styles'] = array(
     'name' => 'administer image styles',
@@ -323,6 +341,15 @@ function valhalla_user_permissions_user_default_permissions() {
       1 => 'administrator',
     ),
     'module' => 'menu',
+  );
+
+  // Exported permission: administer message types.
+  $permissions['administer message types'] = array(
+    'name' => 'administer message types',
+    'roles' => array(
+      0 => 'administrator',
+    ),
+    'module' => 'message',
   );
 
   // Exported permission: administer modules.
@@ -386,6 +413,15 @@ function valhalla_user_permissions_user_default_permissions() {
       0 => 'administrator',
     ),
     'module' => 'user',
+  );
+
+  // Exported permission: administer rules.
+  $permissions['administer rules'] = array(
+    'name' => 'administer rules',
+    'roles' => array(
+      0 => 'administrator',
+    ),
+    'module' => 'rules',
   );
 
   // Exported permission: administer search.
@@ -560,6 +596,15 @@ function valhalla_user_permissions_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: bypass rules access.
+  $permissions['bypass rules access'] = array(
+    'name' => 'bypass rules access',
+    'roles' => array(
+      0 => 'administrator',
+    ),
+    'module' => 'rules',
+  );
+
   // Exported permission: cancel account.
   $permissions['cancel account'] = array(
     'name' => 'cancel account',
@@ -623,6 +668,15 @@ function valhalla_user_permissions_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: create messages.
+  $permissions['create messages'] = array(
+    'name' => 'create messages',
+    'roles' => array(
+      0 => 'administrator',
+    ),
+    'module' => 'message',
+  );
+
   // Exported permission: create page content.
   $permissions['create page content'] = array(
     'name' => 'create page content',
@@ -654,6 +708,16 @@ function valhalla_user_permissions_user_default_permissions() {
   // Exported permission: create polling_station content.
   $permissions['create polling_station content'] = array(
     'name' => 'create polling_station content',
+    'roles' => array(
+      0 => 'Valgsekretær',
+      1 => 'administrator',
+    ),
+    'module' => 'node',
+  );
+
+  // Exported permission: create roles content.
+  $permissions['create roles content'] = array(
+    'name' => 'create roles content',
     'roles' => array(
       0 => 'Valgsekretær',
       1 => 'administrator',
@@ -780,6 +844,16 @@ function valhalla_user_permissions_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: delete any roles content.
+  $permissions['delete any roles content'] = array(
+    'name' => 'delete any roles content',
+    'roles' => array(
+      0 => 'Valgsekretær',
+      1 => 'administrator',
+    ),
+    'module' => 'node',
+  );
+
   // Exported permission: delete any volunteers content.
   $permissions['delete any volunteers content'] = array(
     'name' => 'delete any volunteers content',
@@ -882,6 +956,16 @@ function valhalla_user_permissions_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: delete own roles content.
+  $permissions['delete own roles content'] = array(
+    'name' => 'delete own roles content',
+    'roles' => array(
+      0 => 'Valgsekretær',
+      1 => 'administrator',
+    ),
+    'module' => 'node',
+  );
+
   // Exported permission: delete own volunteers content.
   $permissions['delete own volunteers content'] = array(
     'name' => 'delete own volunteers content',
@@ -920,81 +1004,12 @@ function valhalla_user_permissions_user_default_permissions() {
     'module' => 'taxonomy',
   );
 
-  // Exported permission: access rules debug.
-  $permissions['access rules debug'] = array(
-    'name' => 'access rules debug',
+  // Exported permission: delete terms in 4.
+  $permissions['delete terms in 4'] = array(
+    'name' => 'delete terms in 4',
     'roles' => array(
-      0 => 'administrator',
-    ),
-    'module' => 'rules',
-  );
-
-  // Exported permission: administer group.
-  $permissions['administer group'] = array(
-    'name' => 'administer group',
-    'roles' => array(
-      0 => 'administrator',
-    ),
-    'module' => 'og',
-  );
-
-  // Exported permission: administer message types.
-  $permissions['administer message types'] = array(
-    'name' => 'administer message types',
-    'roles' => array(
-      0 => 'administrator',
-    ),
-    'module' => 'message',
-  );
-
-  // Exported permission: administer rules.
-  $permissions['administer rules'] = array(
-    'name' => 'administer rules',
-    'roles' => array(
-      0 => 'administrator',
-    ),
-    'module' => 'rules',
-  );
-
-  // Exported permission: assign administrator role.
-  $permissions['assign administrator role'] = array(
-    'name' => 'assign administrator role',
-    'roles' => array(),
-    'module' => 'role_delegation',
-  );
-
-  // Exported permission: bypass rules access.
-  $permissions['bypass rules access'] = array(
-    'name' => 'bypass rules access',
-    'roles' => array(
-      0 => 'administrator',
-    ),
-    'module' => 'rules',
-  );
-
-  // Exported permission: create messages.
-  $permissions['create messages'] = array(
-    'name' => 'create messages',
-    'roles' => array(
-      0 => 'administrator',
-    ),
-    'module' => 'message',
-  );
-
-  // Exported permission: delete terms in 3.
-  $permissions['delete terms in 3'] = array(
-    'name' => 'delete terms in 3',
-    'roles' => array(
-      0 => 'administrator',
-    ),
-    'module' => 'taxonomy',
-  );
-
-  // Exported permission: edit terms in 3.
-  $permissions['edit terms in 3'] = array(
-    'name' => 'edit terms in 3',
-    'roles' => array(
-      0 => 'administrator',
+      0 => 'Valgsekretær',
+      1 => 'administrator',
     ),
     'module' => 'taxonomy',
   );
@@ -1074,6 +1089,16 @@ function valhalla_user_permissions_user_default_permissions() {
   // Exported permission: edit any polling_station content.
   $permissions['edit any polling_station content'] = array(
     'name' => 'edit any polling_station content',
+    'roles' => array(
+      0 => 'Valgsekretær',
+      1 => 'administrator',
+    ),
+    'module' => 'node',
+  );
+
+  // Exported permission: edit any roles content.
+  $permissions['edit any roles content'] = array(
+    'name' => 'edit any roles content',
     'roles' => array(
       0 => 'Valgsekretær',
       1 => 'administrator',
@@ -1183,6 +1208,16 @@ function valhalla_user_permissions_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: edit own roles content.
+  $permissions['edit own roles content'] = array(
+    'name' => 'edit own roles content',
+    'roles' => array(
+      0 => 'Valgsekretær',
+      1 => 'administrator',
+    ),
+    'module' => 'node',
+  );
+
   // Exported permission: edit own volunteers content.
   $permissions['edit own volunteers content'] = array(
     'name' => 'edit own volunteers content',
@@ -1206,6 +1241,25 @@ function valhalla_user_permissions_user_default_permissions() {
   // Exported permission: edit terms in 2.
   $permissions['edit terms in 2'] = array(
     'name' => 'edit terms in 2',
+    'roles' => array(
+      0 => 'Valgsekretær',
+      1 => 'administrator',
+    ),
+    'module' => 'taxonomy',
+  );
+
+  // Exported permission: edit terms in 3.
+  $permissions['edit terms in 3'] = array(
+    'name' => 'edit terms in 3',
+    'roles' => array(
+      0 => 'administrator',
+    ),
+    'module' => 'taxonomy',
+  );
+
+  // Exported permission: edit terms in 4.
+  $permissions['edit terms in 4'] = array(
+    'name' => 'edit terms in 4',
     'roles' => array(
       0 => 'Valgsekretær',
       1 => 'administrator',
