@@ -54,10 +54,14 @@ function valhalla_blocks_block_view($delta = '') {
                                ->condition('n.type', 'roles')
                               ->execute();
 
-         while($rec=$res->fetchAssoc()){
-              (strtoupper($rec['title'])=='VA')?$roles[$rec['nid']]= 'VAF/'.$rec['title']:$roles[$rec['nid']]= $rec['title'];
+         while($rec = $res->fetchAssoc()) {
+#              if (strtoupper($rec['title'])=='VA') {
+#                $roles[$rec['nid']] = 'VAF/'.$rec['title'];
+#              } else { 
+                $roles[$rec['nid']] = $rec['title'];
+#              }
+         }
 
-         }  
   if (!user_access('administer volunteers') && (FALSE === $user_party_id)) {
     return array();
   }
