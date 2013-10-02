@@ -346,7 +346,7 @@ function valhalla_blocks_block_view($delta = '') {
       }
 
       $output = '';
-    
+              ksort($data);
     
       foreach ($data as $constituency => $constituency_data) {
            $total=array();
