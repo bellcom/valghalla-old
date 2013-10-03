@@ -50,6 +50,7 @@ function valhalla_mail_mail($key, &$message, $params) {
     case 'rsvp_reminder':
       $email = &drupal_static(__FUNCTION__ . 'rsvp_reminder', FALSE);
       if (!$email) {
+        $email = new stdClass;
         module_load_include('inc', 'valhalla_mail', 'valhalla_mail_admin');
         $email->subject = variable_get('valhalla_rsvp_reminder_subject', _valhalla_volunteers_default_rsvp_reminder('subject'));
         $email->body = variable_get('valhalla_rsvp_reminder_body', _valhalla_volunteers_default_rsvp_reminder('body'));
@@ -61,6 +62,7 @@ function valhalla_mail_mail($key, &$message, $params) {
       $email = &drupal_static(__FUNCTION__ . 'rsvp_email', FALSE);
       if (!$email) {
         module_load_include('inc', 'valhalla_mail', 'valhalla_mail_admin');
+        $email = new stdClass;
         $email->subject = variable_get('valhalla_rsvp_email_subject', _valhalla_volunteers_default_rsvp_email('subject'));
         $email->body = variable_get('valhalla_rsvp_email_body', _valhalla_volunteers_default_rsvp_email('body'));
       }
@@ -70,6 +72,7 @@ function valhalla_mail_mail($key, &$message, $params) {
     case 'rsvp_confirm':
       $email = &drupal_static(__FUNCTION__ . 'rsvp_status', FALSE);
       if (!$email) {
+        $email = new stdClass;
         module_load_include('inc', 'valhalla_mail', 'valhalla_mail_admin');
         if (in_array($params['rsvp_type'], array('yes', 'no', 'never'))) {
           $email->subject = variable_get('valhalla_rsvp_status_subject_' . $params['rsvp_type'], _valhalla_volunteers_default_rsvp_status('subject_' . $params['rsvp_type']));

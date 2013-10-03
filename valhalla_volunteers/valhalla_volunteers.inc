@@ -348,6 +348,23 @@ EOM;
                  ->condition('n.nid', $node->field_label[$language->language][0]['value'])
                   ->execute()
                   ->fetchColumn();
+      // tth@bellcom.dk
+      // The positions are no longer just a textstring, but a node instead.
+      // I havent taken in to account what happens up to this point, but this seems to work
+      // Load the node from the id in the field fetched to $position. If the description
+      // is not set we show the title, otherwise we show the description.
+      // Get the info from the node and put it in the $params array...
+      // Have a nice day!
+      $position_node = node_load($position);
+
+      $position_info = $position_node->title;
+
+      if(isset($position_node->field_description)){
+        if(!empty($position_node->field_description)){
+          $position_info = $position_node->field_description[LANGUAGE_NONE][0]['value'];
+        }
+      }
+
       $polling_station_address = array();
       $polling_station_address[] = $polling_station->field_address_road[$language->language][0]['value'] . ' ' . $polling_station->field_address_road_no[$language->language][0]['value'];
       $polling_station_address[] = $polling_station->field_address_zipcode[$language->language][0]['value'] . ' ' . $polling_station->field_address_city[$language->language][0]['value'];
@@ -356,13 +373,12 @@ EOM;
           '!polling_station' => $polling_station->title,
           '!polling_station_address' => implode("\n", $polling_station_address),
          // '!position' => strtoupper($node->field_label[$language->language][0]['value']),
-          '!position' => strtoupper($position),
+          '!position' => $position_info,
           '!responsible' => $polling_station->field_contact[$language->language][0]['value'],
           ));
     }
   }
 
-//  error_log(basename(__FILE__) . ':' . __LINE__ . ' Var: $params = ' . print_r($params, 1));
   return $params;
 }
 function preprocess_views_view(&$view){
