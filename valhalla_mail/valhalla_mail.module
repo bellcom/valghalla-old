@@ -111,8 +111,9 @@ function valhalla_mail_sendmail_form($form, $form_state) {
   module_load_include('inc', 'valhalla_mail');
 
   // Get parties from Term objects.
-  $tids = taxonomy_get_tree(2);
-  foreach ($tids as $tid => $term) {
+  $taxonomy=taxonomy_vocabulary_machine_name_load('partier');
+
+  foreach (taxonomy_get_tree($taxonomy->vid) as $tid => $term) {
     $parties[$term->tid] = $term->name;
   }
   $ps = db_select('node', 'n')
@@ -127,7 +128,7 @@ function valhalla_mail_sendmail_form($form, $form_state) {
                                ->condition('n.type', 'roles')
                               ->execute();
 
-         $roles[0]='VAF';
+         
          while($rec=$res->fetchAssoc()){
               $roles[$rec['nid']]= $rec['title'];
 
