@@ -245,7 +245,7 @@ function _valhalla_helper_get_polling_stations() {
     $data[$item->nid] = $item->title;
   }
 
-  asort($data, SORT_NATURAL); 
+  asort($data, SORT_REGULAR); 
   array_unshift($data, t('Select'));
   return $data;
 }

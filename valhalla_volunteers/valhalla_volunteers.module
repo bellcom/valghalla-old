@@ -489,7 +489,6 @@ function valhalla_volunteers_to_polling_station_ajax($action) {
       if (empty($html)) {
         $html = '<p>' . t('Der er pt. ingen tilforordnede tilrådighed.') . '</p>';
       }
-      error_log(print_r($html, 1));
       die($html);
       break;
 
@@ -509,6 +508,7 @@ function valhalla_volunteers_to_polling_station_ajax($action) {
       $old_relf = $query->condition('psp.field_polling_station_post_value', arg(6))
           ->execute()
           ->fetchField();
+      
 
       if ($old_relf) {
         $old_node = node_load($old_relf);
@@ -521,13 +521,19 @@ function valhalla_volunteers_to_polling_station_ajax($action) {
         node_save($old_node);
         unset($old_node);
       }
+
+      $role = strtolower(arg(7));
+      if($role == 'vaf'){
+        $role = 'va';
+      }
+
       //get role nid;
       $role_id = db_select('node', 'n')
             ->fields('n', array('nid'))   
             ->condition('n.type', 'roles')
-            ->condition('n.title', strtolower(arg(7)))
+            ->condition('n.title', $role)
             ->execute()
-             ->fetchColumn();
+            ->fetchColumn();
 $polling_station=node_load(arg(5));
 $volunteers_per_party= field_get_items('node', $polling_station, 'field_volunteers_pr_party_1');
 foreach ($volunteers_per_party as $item) {
@@ -543,7 +549,14 @@ foreach ($volunteers_per_party as $item) {
            };
 }
      
-                 
+      $role = strtolower(arg(7));
+	$role_id = db_select('node', 'n')
+	    ->fields('n', array('nid'))   
+	    ->condition('n.type', 'roles')
+	    ->condition('n.title', $role)
+	    ->execute()
+	    ->fetchColumn();     
+	 
     
       if ($node = node_load(arg(4))) {
         $node->field_polling_station[$language->language][0]['nid'] = arg(5);
