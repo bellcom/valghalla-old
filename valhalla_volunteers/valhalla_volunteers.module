@@ -313,74 +313,56 @@ function valhalla_volunteers_to_polling_station($station_id = NULL) {
   drupal_add_js('var valhalla_destination_path = "' . implode('/', arg()) . '";', 'inline');
   drupal_add_js(drupal_get_path('module', 'valhalla_volunteers') . '/valhalla_volunteers.js');
   module_load_include('inc', 'valhalla_volunteers', 'valhalla_volunteers');
-
   $user_party_id = empty($user->field_party[LANGUAGE_NONE][0]['tid']) ? FALSE : $user->field_party[LANGUAGE_NONE][0]['tid'];
   $polling_station = node_load($station_id);
   //var_dump($polling_station);
     $field_digital_election_list=field_get_items('node', $polling_station, 'field_digital_election_list');
-  if (isset($field_digital_election_list)&&(int)$field_digital_election_list[0]['value']==1)
-    
-      drupal_set_title($polling_station->title.'<div class="icon-digital-valglist">&nbsp;</div>', PASS_THROUGH);
-  else drupal_set_title($polling_station->title);
-  
+  if (isset($field_digital_election_list)&&(int)$field_digital_election_list[0]['value']==1){
+    drupal_set_title($polling_station->title.'<div class="icon-digital-valglist">&nbsp;</div>', PASS_THROUGH);
+  }
+  else {
+    drupal_set_title($polling_station->title);
+  }
+
   /**
    * figure out how many posts to fill
    */
-    $res = db_select('node', 'n')
-    ->fields('n', array('nid', 'title'))   
-    ->condition('n.type', 'roles')
-    ->execute();
-   while($rec=$res->fetchAssoc()){
-	$nids[$rec['nid']]= $rec['title'];
-        
-   }
-   
+  $res = db_select('node', 'n')
+  ->fields('n', array('nid', 'title'))   
+  ->condition('n.type', 'roles')
+  ->execute();
+  while($rec=$res->fetchAssoc()){
+    $nids[$rec['nid']]= $rec['title'];
+  }
+
   $posts_to_fill = array();
- if ($volunteers_pr_party=field_get_items('node',$polling_station, 'field_volunteers_pr_party_1')) {
-       foreach ($volunteers_pr_party as $item) {
-          $field_collection_item=entity_load('field_collection_item', array($item['value']));   
-          $party_id=field_get_items('field_collection_item',$field_collection_item[$item['value']],'field_party_list');
-          if($party_id[0]["party_list"]==$user_party_id) {               
-               foreach($nids as $nid=>$title){
-                   $field_name='field_role_n'.$nid;   
-                   $field=field_get_items('field_collection_item',$field_collection_item[$item['value']],$field_name);
-                  //var_dump($field);
-                if($field&&(int)$field[0]['number_vo']>0)
-                 $posts_to_fill =  array_merge($posts_to_fill, array_fill(0,$field[0]['number_vo'], strtolower ($title)));
-               }
-               
-                /*if (isset($field_collection_item[$item['value']]->field_ti)&& (int)$field_collection_item[$item['value']]->field_ti['und'][0]['number_vo']>0)
-                $posts_to_fill = array_merge($posts_to_fill,array_fill(0, $field_collection_item[$item['value']]->field_ti['und'][0]['number_vo'], 'ti'));
-             if(isset($field_collection_item[$item['value']]->field_custom_roles['und']))
-                   foreach($field_collection_item[$item['value']]->field_custom_roles['und'] as $custom_role)
-                      if(isset($custom_role['role_vo'])&& (int)$custom_role['number_vo']>0)
-                       $posts_to_fill = array_merge($posts_to_fill, array_fill(0, $custom_role['number_vo'], strtolower ($custom_role['role_vo'])));
-           */
-         //   if(count($posts_to_fill)>0)
-         //           $posts_to_fill[0] = 'vaf'; 
-          break;
-         }
-         
-     /* if ($item['party'] == $user_party_id) {
-        if (isset($item['number_va']) && $item['number_va'] > 0) {
-          $posts_to_fill = array_fill(0, $item['number_va'], 'va');
-        }
 
-        if (isset($item['number_ti']) && $item['number_ti'] > 0) {
-          $posts_to_fill = array_merge($posts_to_fill, array_fill(count($posts_to_fill) - 1, $item['number_ti'], 'ti'));
-        }
-  
-      }*/
-   }
-     if (isset($polling_station->field_party[$language->language][0]['tid']) &&
+  if(in_array('administrator', $user->roles)){
+  }
+
+  if ($volunteers_pr_party=field_get_items('node',$polling_station, 'field_volunteers_pr_party_1')) {
+    foreach ($volunteers_pr_party as $item) {
+      $field_collection_item=entity_load('field_collection_item', array($item['value']));   
+      $party_id=field_get_items('field_collection_item',$field_collection_item[$item['value']],'field_party_list');
+      if($party_id[0]["party_list"]==$user_party_id) {
+        foreach($nids as $nid=>$title){
+          $field_name='field_role_n'.$nid;
+          $field=field_get_items('field_collection_item',$field_collection_item[$item['value']],$field_name);
+          //var_dump($field);
+          if($field&&(int)$field[0]['number_vo']>0)
+            $posts_to_fill =  array_merge($posts_to_fill, array_fill(0,$field[0]['number_vo'], strtolower ($title)));
+          }
+
+      break;
+      }
+    }
+    if (isset($polling_station->field_party[$language->language][0]['tid']) &&
       ($polling_station->field_party[$language->language][0]['tid'] == $user_party_id)
-  ) {
-    $posts_to_fill[0] = 'vaf';
-  }
+    ) {
+      $posts_to_fill[0] = 'vaf';
+    }
   }
 
-
-  
 //OLD METHOD
 /*  
   if (isset($polling_station->field_volunteers_pr_party[$language->language][0])) {

@@ -55,11 +55,7 @@ function valhalla_blocks_block_view($delta = '') {
                               ->execute();
 
          while($rec = $res->fetchAssoc()) {
-#              if (strtoupper($rec['title'])=='VA') {
-#                $roles[$rec['nid']] = 'VAF/'.$rec['title'];
-#              } else { 
-                $roles[$rec['nid']] = $rec['title'];
-#              }
+            $roles[$rec['nid']] = $rec['title'];
          }
 
   if (!user_access('administer volunteers') && (FALSE === $user_party_id)) {
@@ -84,24 +80,7 @@ function valhalla_blocks_block_view($delta = '') {
         $parties[] = '<span>' . l('alle', 'valhalla/change/party/0') . '</span>';
         $block['content'] .= '<div id="other-parties"><h3>Se status for liste:</h3><p>'.implode(', ', $parties).'</p></div>';
       }
-/*OLD METHOD
-      $query = db_select('field_data_field_volunteers_pr_party', 'vpp');
-      $query->fields('vpp', array('field_volunteers_pr_party_number_va', 'field_volunteers_pr_party_number_ti'));
-      if ($user_party_id) {
-        $query->condition('vpp.field_volunteers_pr_party_party', $user_party_id);
-      }      
-      if (is_array($restrict_polling_stations)) {
-        $query->condition('entity_id', $restrict_polling_stations, 'IN');
-      }
-      $query->condition('vpp.bundle', 'polling_station');
-      $query = $query->execute();
 
-
-      $grand_total = 0;
-      //общее кол-во волонтеров
-      while ($record = $query->fetchObject()) {
-        $grand_total += $record->field_volunteers_pr_party_number_va + $record->field_volunteers_pr_party_number_ti;
-      }*/
       $grand_total = 0;
         foreach($roles as $nid =>$title){
                   $query = db_select('field_data_field_role_n'.$nid, 'vr');
@@ -213,205 +192,127 @@ function valhalla_blocks_block_view($delta = '') {
           ->execute()
           ->fetchAll(PDO::FETCH_COLUMN)
         ;
-              
 
-      
         foreach (node_load_multiple($polling_station_nids) as $polling_station) {          
          //new version 13.09.2013 juulia@blueflex.eu
-              $entity_ids=array(); 
-              $data[$constituency->title][$polling_station->nid]['title']=$polling_station->title;
-           
-            if ($items=field_get_items('node', $polling_station, 'field_volunteers_pr_party_1')){             
-             foreach(array_values($items) as $value)
-                 $entity_ids[]= $value['value']; 
-           //  var_dump($entity_ids);
-            }
-          foreach($roles as $nid =>$title){
-              if(!isset($data[$constituency->title][$polling_station->nid][$nid]['needed']))
-                   $data[$constituency->title][$polling_station->nid][$nid]['needed']=0;
-               if(!isset($data[$constituency->title][$polling_station->nid][$nid]['total']))
-                   $data[$constituency->title][$polling_station->nid][$nid]['total']=0;
-              if (!empty($entity_ids)) {
-                    $query = db_select('field_data_field_role_n'.$nid, 'vr');
-                    $query->innerJoin('field_data_field_party_list', 'vpp', 'vpp.entity_id=vr.entity_id');
-                    $query->addExpression('SUM(vr.field_role_n'.$nid.'_number_vo)');
-                    $query->condition('vpp.entity_id',$entity_ids, 'IN');
-                    if ($user_party_id) {
-                      $query->condition('vpp.field_party_list_party_list', $user_party_id);
-                      }
-                   $res=$query->execute()
-                             ->fetchColumn();  
-                   if (is_array($restrict_polling_stations) && !in_array($polling_station->nid, $restrict_polling_stations)) {
-                      continue;
-                    }
-                   $data[$constituency->title][$polling_station->nid][$nid]['needed']+=$res;
-             }
-           }
-              $volunteer_nids = db_select('field_data_field_polling_station', 'ps')
-                ->fields('ps', array('entity_id'))
-                ->condition('ps.bundle', 'volunteers')
-                ->condition('ps.field_polling_station_nid', $polling_station->nid)
-                ->execute()
-                ->fetchAll(PDO::FETCH_COLUMN);
-               foreach (node_load_multiple($volunteer_nids) as $volunteer) {
-             
-                if ($user_party_id && ($user_party_id != @$volunteer->field_party[$language->language][0]['tid'])) {
-                  continue;
-                }
-
-                if (isset($volunteer->field_polling_station_post[$language->language][0]['value']) &&
-                    isset($volunteer->field_label[$language->language][0]['value'])
-                ) {
-                    $data[$constituency->title][$polling_station->nid][$volunteer->field_label[$language->language][0]['value']]['total']++;
-                  
-                    /*switch($volunteer->field_label[$language->language][0]['value']) {
-                    case 'vaf':
-                    case 'va':
-                      $data[$constituency->title][$polling_station->nid]['va_total']++;
-                      break;
-                    case 'ti':
-                      $data[$constituency->title][$polling_station->nid]['ti_total']++;
-                      break;
-                  }*/
-                }
-              }
-           //   var_dump($data[$constituency->title][$polling_station->nid]); 
-        /*OLD METHOD
-         $query = db_select('field_data_field_volunteers_pr_party', 'vpp');
-          $query->fields('vpp', array('field_volunteers_pr_party_number_va', 'field_volunteers_pr_party_number_ti'));
-            if ($user_party_id) {
-                $query->condition('vpp.field_volunteers_pr_party_party', $user_party_id);
-            }
-          //$polling_station->field_volunteers_pr_party_1 array with entity_ids (party_list), custom_roles, field_va, field_ti
-          //field_volunteers_pr_party_party_1
-          //bundle field_volunteers_pr_party
-          //
-          //var_dump($polling_station);
-          $query->condition('vpp.entity_id', $polling_station->nid);
-          $query->condition('vpp.bundle', 'polling_station');
-          $query = $query->execute();
+          $entity_ids=array(); 
+          $data[$constituency->title][$polling_station->nid]['title']=$polling_station->title;
           
-          while ($polling_station_party_data = $query->fetchObject()) {
-              //var_dump($polling_station_party_data);
-            if ($polling_station_party_data instanceof stdClass) {
+          if ($items=field_get_items('node', $polling_station, 'field_volunteers_pr_party_1')){             
+            foreach(array_values($items) as $value)
+                $entity_ids[]= $value['value']; 
+          //  var_dump($entity_ids);
+          }
+          foreach($roles as $nid =>$title){
+            if(!isset($data[$constituency->title][$polling_station->nid][$nid]['needed']))
+              $data[$constituency->title][$polling_station->nid][$nid]['needed']=0;
+            if(!isset($data[$constituency->title][$polling_station->nid][$nid]['total']))
+              $data[$constituency->title][$polling_station->nid][$nid]['total']=0;
+            if (!empty($entity_ids)) {
+              $query = db_select('field_data_field_role_n'.$nid, 'vr');
+              $query->innerJoin('field_data_field_party_list', 'vpp', 'vpp.entity_id=vr.entity_id');
+              $query->addExpression('SUM(vr.field_role_n'.$nid.'_number_vo)');
+              $query->condition('vpp.entity_id',$entity_ids, 'IN');
+              if ($user_party_id) {
+                $query->condition('vpp.field_party_list_party_list', $user_party_id);
+                }
+              $res=$query->execute()
+                        ->fetchColumn();  
               if (is_array($restrict_polling_stations) && !in_array($polling_station->nid, $restrict_polling_stations)) {
                 continue;
               }
-
-
-              $va = isset($data[$constituency->title][$polling_station->nid]['va_needed']) ? $data[$constituency->title][$polling_station->nid]['va_needed'] : 0;
-              $ti = isset($data[$constituency->title][$polling_station->nid]['ti_needed']) ? $data[$constituency->title][$polling_station->nid]['ti_needed'] : 0;
-           
-                      
-              $data[$constituency->title][$polling_station->nid] = array(
-                'title' => $polling_station->title,
-                'va_needed' => $va + $polling_station_party_data->field_volunteers_pr_party_number_va,
-                'ti_needed' => $ti + $polling_station_party_data->field_volunteers_pr_party_number_ti,
-                'va_total' => 0,
-                'ti_total' => 0,
-              );
-
-              $volunteer_nids = db_select('field_data_field_polling_station', 'ps')
-                ->fields('ps', array('entity_id'))
-                ->condition('ps.bundle', 'volunteers')
-                ->condition('ps.field_polling_station_nid', $polling_station->nid)
-                ->execute()
-                ->fetchAll(PDO::FETCH_COLUMN)
-              ;
-              
-
-              foreach (node_load_multiple($volunteer_nids) as $volunteer) {
-               
-                if ($user_party_id && ($user_party_id != @$volunteer->field_party[$language->language][0]['tid'])) {
-                  continue;
-                }
-
-                if (isset($volunteer->field_polling_station_post[$language->language][0]['value']) &&
-                    isset($volunteer->field_label[$language->language][0]['value'])
-                ) {
-                  switch($volunteer->field_label[$language->language][0]['value']) {
-                    case 'vaf':
-                    case 'va':
-                      $data[$constituency->title][$polling_station->nid]['va_total']++;
-                      break;
-                    case 'ti':
-                      $data[$constituency->title][$polling_station->nid]['ti_total']++;
-                      break;
-                  }
-                }
-              }
+              $data[$constituency->title][$polling_station->nid][$nid]['needed']+=$res;
             }
-          }*/
+          }
+          $volunteer_nids = db_select('field_data_field_polling_station', 'ps')
+            ->fields('ps', array('entity_id'))
+            ->condition('ps.bundle', 'volunteers')
+            ->condition('ps.field_polling_station_nid', $polling_station->nid)
+            ->execute()
+            ->fetchAll(PDO::FETCH_COLUMN);
+
+          foreach (node_load_multiple($volunteer_nids) as $volunteer) {
+
+            if ($user_party_id && ($user_party_id != @$volunteer->field_party[$language->language][0]['tid'])) {
+              continue;
+            }
+
+            if (isset($volunteer->field_polling_station_post[$language->language][0]['value']) &&
+                isset($volunteer->field_label[$language->language][0]['value'])
+            ) {
+                $data[$constituency->title][$polling_station->nid][$volunteer->field_label[$language->language][0]['value']]['total']++;
+            }
+          }
         }
       }
 
       $output = '';
-    
-    
-      foreach ($data as $constituency => $constituency_data) {
-           $total=array();
-        $table = array(
-          'sticky' => FALSE,
-          'header' => array_merge(array(
-            $constituency,           
-          ), array_values($roles)),
-          'rows' => array()
-        );
+      ksort($data);
 
-       
+      foreach ($data as $constituency => $constituency_data) {
+        $total=array();
+        $table = array(
+            'sticky' => FALSE,
+            'header' => array_merge(array(
+            $constituency,
+            ), array_values($roles)),
+            'rows' => array()
+          );
+
+        // Add "i alt" label to header
+        $table['header']['total'] = 'I alt';
+
         $vat = 0;
-         $vatn = 0;
+        $vatn = 0;
         $tit = 0;
         $titn = 0;
 
         foreach ($constituency_data as $id => $polling_station_data) {
-         $volunteers_data=array();
-         
-        $table['rows'][] =array(
-        array('data' => l($polling_station_data['title'], 'volunteers/station/' . $id), 'class' => 'valgsted'));
-             $row_nr=count($table['rows'])-1;
-         foreach($roles as $nid=>$title){
-           isset($total[$nid]['needed'])?$total[$nid]['needed']+= $polling_station_data[$nid]['needed'] : $total[$nid]['needed']= $polling_station_data[$nid]['needed'];
-           isset($total[$nid]['total'])?$total[$nid]['total']+= $polling_station_data[$nid]['total'] : $total[$nid]['total']= $polling_station_data[$nid]['total'];
-             $table['rows'][$row_nr][]=array(
-                 'data' => $polling_station_data[$nid]['total']. '/' . $polling_station_data[$nid]['needed'], 'class' => 'vafva',
-             );
-         } 
-     
-         
-            
-         
-         /*OLD METHOD
-          * $table['rows'][] = array(
-            array('data' => l($polling_station_data['title'], 'volunteers/station/' . $id), 'class' => 'valgsted'),
-            array('data' => $polling_station_data['va_total'] . '/' . $polling_station_data['va_needed'], 'class' => 'vafva'),
-            array('data' => $polling_station_data['ti_total'] . '/' . $polling_station_data['ti_needed'], 'class' => 'friv'),
-          );*/
-              
-        
-          /*$vat += $polling_station_data['va_total'];
-          $vatn += $polling_station_data['va_needed'];
-          $tit += $polling_station_data['ti_total'];
-          $titn += $polling_station_data['ti_needed'];*/
+
+          $volunteers_data=array();
+
+          $table['rows'][] =array(
+            array('data' => l($polling_station_data['title'], 'volunteers/station/' . $id), 'class' => 'valgsted'));
+
+          $row_nr=count($table['rows'])-1;
+
+          // Variables for storing polling station totals
+          $polling_station_needed_total = 0;
+          $polling_station_total_total = 0;
+
+          foreach($roles as $nid=>$title){
+            isset($total[$nid]['needed'])?$total[$nid]['needed']+= $polling_station_data[$nid]['needed'] : $total[$nid]['needed']= $polling_station_data[$nid]['needed'];
+            isset($total[$nid]['total'])?$total[$nid]['total']+= $polling_station_data[$nid]['total'] : $total[$nid]['total']= $polling_station_data[$nid]['total'];
+
+            // Count totals
+            $polling_station_needed_total += $polling_station_data[$nid]['needed'];
+            $polling_station_total_total += $polling_station_data[$nid]['total'];
+
+            $table['rows'][$row_nr][]=array(
+                'data' => $polling_station_data[$nid]['total']. '/' . $polling_station_data[$nid]['needed'], 'class' => 'vafva',
+            );
+          }
+
+          // Add totals column to the row.
+          $table['rows'][$row_nr][]=array(
+              'data' => $polling_station_total_total . '/' . $polling_station_needed_total, 'class' => 'total',
+          );
         }
 
         if (count($table['rows'])) {
-          $table['rows'][] = array(
-            array('data' => 'I alt', 'class' => 'total'),
-            //array('data' => $vat . '/' . $vatn, 'class' => 'total'),
-           // array('data' => $tit . '/' . $titn, 'class' => 'total'),
-          );
-           $row_nr=count($table['rows'])-1;
-        foreach($roles as $nid=>$title){         
-             $table['rows'][$row_nr][]=array('data' => $total[$nid]['total'] . '/' . $total[$nid]['needed'], 'class' => 'total');
-         } 
+          $table['rows'][][] = array('data' => 'I alt', 'class' => 'total');
+          $row_nr=count($table['rows'])-1;
+          foreach($roles as $nid=>$title){
+              $table['rows'][$row_nr][]=array('data' => $total[$nid]['total'] . '/' . $total[$nid]['needed'], 'class' => 'total');
+          }
+          // Make the table pretty, add an empty field to the bottom row
+          $table['rows'][$row_nr][]=array('data' => '', 'class' => 'total');
           $output .= theme('table', $table);
         }
       }
-      
       $block['content'] = $output;
       break;
-  }
+    }
 
   return $block;
 }
