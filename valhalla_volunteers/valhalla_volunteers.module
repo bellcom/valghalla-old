@@ -447,7 +447,6 @@ function valhalla_volunteers_to_polling_station($station_id = NULL) {
           'party_id' => $user_party_id,
           'station_id' => $station_id,
           'existing' => $existing,
-         
       ));
 }
 
@@ -479,14 +478,18 @@ function valhalla_volunteers_to_polling_station_ajax($action) {
        * post ..............: arg(7)
        */
       $display_id = 'available_volunteers_filtered';
-//      if (user_access('administer valhalla')) {
-//        $display_id = 'available_volunteers_unfiltered';
-//      }
+
+      if(in_array('Valgsekretær', $user->roles)){
+        $display_id = 'available_volunteers_filtered_secretary';
+        $user_party_id = 'all';
+      }
+
       $html = views_embed_view('volunteers', $display_id, $user_party_id, arg(5), arg(6), arg(7));
 
       if (empty($html)) {
         $html = '<p>' . t('Der er pt. ingen tilforordnede tilrådighed.') . '</p>';
       }
+      error_log(print_r($html, 1));
       die($html);
       break;
 
@@ -506,7 +509,6 @@ function valhalla_volunteers_to_polling_station_ajax($action) {
       $old_relf = $query->condition('psp.field_polling_station_post_value', arg(6))
           ->execute()
           ->fetchField();
-      
 
       if ($old_relf) {
         $old_node = node_load($old_relf);
