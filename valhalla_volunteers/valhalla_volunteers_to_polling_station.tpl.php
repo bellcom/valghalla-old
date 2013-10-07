@@ -1,4 +1,4 @@
-
+<?php if($posts_to_fill): ?>
 <div id="volunteer-station-list">
 <?php foreach($posts_to_fill as $i => $post): ?>
   <dl class="clearfix" id="volunteer-station-list-item-<?php print $i ?>">
@@ -13,6 +13,5 @@
     </dd>
   </dl>
 <?php endforeach; ?>
-
-  <input type="button" name="fake" value="Gem og afslut" onclick="history.go(-1);" />
 </div>
+<?php endif;?>
