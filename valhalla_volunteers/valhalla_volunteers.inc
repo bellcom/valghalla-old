@@ -240,11 +240,13 @@ function _valhalla_helter_parse_csv_import($file_object, $party_forced = FALSE) 
  */
 function _valhalla_helper_get_polling_stations() {
 
-  $data = array('' => t('Select'));
+  $data = array();
   foreach (entity_load('node', FALSE, array('type' => 'polling_station')) as $item) {
     $data[$item->nid] = $item->title;
   }
 
+  asort($data, SORT_REGULAR); 
+  array_unshift($data, t('Select'));
   return $data;
 }
 
