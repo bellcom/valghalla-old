@@ -768,10 +768,18 @@ function valhalla_volunteers_add_form($form, &$form_state) {
     );
   }
 
+  $form['volunteer']['roles_id'] = array(
+      '#type' => 'select',
+      '#title' => t('Rolle'),
+      '#options' => _valhalla_helper_get_roles(),
+      '#empty_option' => 'Select',
+  );
+
   $form['volunteer']['polling_station'] = array(
       '#type' => 'select',
       '#title' => t('Valgsted'),
       '#options' => _valhalla_helper_get_polling_stations(),
+      '#empty_option' => 'Select',
   );
 
   $form['volunteer']['import'] = array(
@@ -890,13 +898,14 @@ function valhalla_volunteers_add_form_submit($form, &$form_state) {
     if (!empty($form_state['values']['polling_station'])) {
       $node->field_polling_station[$language->language][0]['nid'] = (int) $form_state['values']['polling_station'];
     }
+      $node->field_rolle_id['und'][0]['nid'] = (int) $form_state['values']['roles_id'];
 
     $party = FALSE;
     if (!empty($form_state['values']['party'])) {
       $node->field_party[$language->language][0]['tid'] = $form_state['values']['party'];
       $party = $form_state['values']['party'];
     }
-
+    
     node_save($node);
     drupal_set_message(t('Den frivillige "@name" er nu blevet oprettet.', array('@name' => $node->title), array('langcode' => $language->language)));
   }

@@ -236,6 +236,19 @@ function _valhalla_helter_parse_csv_import($file_object, $party_forced = FALSE) 
 }
 
 /**
+ * returns a keyed array of roles
+ */
+function _valhalla_helper_get_roles() {
+
+  $data = array();
+  foreach (entity_load('node', FALSE, array('type' => 'roles')) as $item) {
+    $data[$item->nid] = $item->title;
+  }
+
+  return $data;
+}
+
+/**
  * returns a keyed array of polling stations
  */
 function _valhalla_helper_get_polling_stations() {
@@ -246,7 +259,6 @@ function _valhalla_helper_get_polling_stations() {
   }
 
   asort($data, SORT_REGULAR); 
-  array_unshift($data, t('Select'));
   return $data;
 }
 
