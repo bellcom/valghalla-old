@@ -111,7 +111,7 @@ function valhalla_blocks_block_view($delta = '') {
                       $query->condition('vpp.field_party_list_party_list', $user_party_id);
                       }
                        if (is_array($restrict_polling_stations)) {
-                             $query->condition('entity_id', $restrict_polling_stations, 'IN');
+                             $query->condition('vr.entity_id', $restrict_polling_stations, 'IN');
                      }
                    $res=$query->execute()
                              ->fetchColumn();  
