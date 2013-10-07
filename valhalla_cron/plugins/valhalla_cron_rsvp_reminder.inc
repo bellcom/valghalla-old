@@ -12,11 +12,6 @@
 function valhalla_cron_rsvp_reminder($last_run_ts) {
   global $language;
 
-  // only run once a day
-  if (date('Ymd') <= date('Ymd', $last_run_ts)) {
-    return;
-  }
-
   // find active election
   $nid = db_select('field_data_field_election_status', 'es')
       ->fields('es', array('entity_id'))
@@ -26,21 +21,36 @@ function valhalla_cron_rsvp_reminder($last_run_ts) {
       ->fetchColumn()
   ;
 
-  if (!$nid) {
-    return;
-  }
-
   // load election node
   $election = node_load($nid);
-  $date = isset($election->field_date[$language->language][0]['value']) ? strtotime($election->field_date[$language->language][0]['value']) : FALSE;
-  $days_to_election = date('Ymd', $date) - date('Ymd');
+  list($election_date,$time) = split("T", $election->field_date[$language->language][0]['value']);
+  $today_date = strtotime(date('Y-m-d'));
+  $election_date1 = strtotime($election_date);
+  $days_to_election = floor(($election_date1 - $today_date) / 86400);
 
   // check dates
+  $notification_days_arr = variable_get('valhalla_rsvp_reminder_days', '14, 7, 5, 3');
   $notification_days = explode(',', variable_get('valhalla_rsvp_reminder_days', '14, 7, 5, 3'));
 
-  if (!in_array($days_to_election, $notification_days)) {
+  if (!$nid) {
+    watchdog('Valghalla', 'Der blev ikke fundet noget aktict valg - aktiver dit valg. ', WATCHDOG_NOTICE);
     return;
   }
+ 
+  if (!in_array($days_to_election, $notification_days)) {
+    watchdog('Valghalla', 'Mail job blev ikke kørt idet idag ikke er nogen rykker dag. Valg: %election_date Dage til valget: %todays Rykkerdage: %godays', array('%todays' => $days_to_election, '%godays' => $notification_days_arr, '%election_date' => $election_date), WATCHDOG_NOTICE);
+    return;
+  }
+
+  // only run once a day
+  if (date('Ymd') <= date('Ymd', $last_run_ts)) {
+    $check_data = date('d-m-Y', $last_run_ts);
+    watchdog('Valghalla','Cron for Valghalla mails blev ikke kørt da den allerede er kørt i dag: %last_run', array('%last_run' => $check_data), WATCHDOG_NOTICE);
+    return;
+  }
+
+
+
 
   // helpers
   $election->days_to_election = $days_to_election;

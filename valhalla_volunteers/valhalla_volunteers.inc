@@ -326,9 +326,10 @@ EOM;
     if (FALSE != $election) {
       $election_date = date('j/m Y', strtotime($election->field_date[$language->language][0]['value']));
 
-      $date = isset($election->field_date[$language->language][0]['value']) ? strtotime($election->field_date[$language->language][0]['value']) : FALSE;
-      $days_to_election = date('Ymd', $date) - date('Ymd');
-
+      list($election_date,$time) = split("T", $election->field_date[$language->language][0]['value']);
+      $today_date = strtotime(date('Y-m-d'));
+      $election_date1 = strtotime($election_date);
+      $days_to_election = floor(($election_date1 - $today_date) / 86400);
 
       $params = array_merge($params, array(
           '!election_date' => $election_date,
