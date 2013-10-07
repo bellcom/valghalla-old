@@ -373,6 +373,7 @@ function valhalla_volunteers_to_polling_station_markup($polling_station, $user_p
       $party_id=field_get_items('field_collection_item',$field_collection_item[$item['value']],'field_party_list');
 
       if($party_id[0]["party_list"]==$user_party_id) {
+        arsort($nids, SORT_REGULAR); 
         foreach($nids as $nid=>$title){
           $field_name='field_role_n'.$nid;
           $field=field_get_items('field_collection_item',$field_collection_item[$item['value']],$field_name);
