@@ -374,8 +374,7 @@ EOM;
       
       $params = array_merge($params, array(
           '!polling_station' => $polling_station->title,
-          '!polling_station_address' => implode("\n", $polling_station_address),
-         // '!position' => strtoupper($node->field_label[$language->language][0]['value']),
+          '!polling_station_address' => implode("\n", $polling_station_address),         
           '!position' => $position_info,
           '!responsible' => $polling_station->field_contact[$language->language][0]['value'],
           ));
@@ -384,7 +383,4 @@ EOM;
 
   return $params;
 }
-function preprocess_views_view(&$view){
-   echo "dddd" ;
-    die;
-}
+
