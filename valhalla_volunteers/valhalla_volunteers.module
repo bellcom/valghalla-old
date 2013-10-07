@@ -169,12 +169,12 @@ function valhalla_volunteers_rsvp() {
   }
 
   return theme('rsvp', array(
-          'rsvp' => $rsvp,
-          'name' => $_SESSION['valhalla_volunteer']->title,
-          'phone' => $_SESSION['valhalla_volunteer']->field_phone[$language->language][0]['safe_value'],
-          'email' => $_SESSION['valhalla_volunteer']->field_email[$language->language][0]['email'],
-          'form' => drupal_get_form('valhalla_volunteers_rsvp_form'),
-      ));
+      'rsvp' => $rsvp,
+      'name' => $_SESSION['valhalla_volunteer']->title,
+      'phone' => $_SESSION['valhalla_volunteer']->field_phone[$language->language][0]['safe_value'],
+      'email' => $_SESSION['valhalla_volunteer']->field_email[$language->language][0]['email'],
+      'form' => drupal_get_form('valhalla_volunteers_rsvp_form'),
+  ));
 }
 
 /**
@@ -274,17 +274,17 @@ function valhalla_volunteers_rsvp_form($form, &$form_state) {
  */
 function valhalla_volunteers_rsvp_form_submit($form, &$form_state) {
   global $language;
-  $types = array('unknown','yes','no','never');
+  $types = array('unknown', 'yes', 'no', 'never');
   module_load_include('inc', 'valhalla_volunteers', 'valhalla_volunteers');
   $node = $_SESSION['valhalla_volunteer'];
   $node->field_rsvp[$language->language][0]['value'] = $form_state['values']['rsvp'];
   $node->field_rsvp_comment[$language->language][0]['value'] = $form_state['values']['rsvp_comment'];
   node_save($node);
-  $params  = _valhalla_helper_get_volunteer_info_params($node);
+  $params = _valhalla_helper_get_volunteer_info_params($node);
   $params['rsvp_type'] = $types[$form_state['values']['rsvp']];
   $to = $params['!email'];
   $from = variable_get('site_mail', 'admin@example.com');
-  drupal_mail('valhalla_mail', 'rsvp_confirm',$to,$language,$params,$from,TRUE);
+  drupal_mail('valhalla_mail', 'rsvp_confirm', $to, $language, $params, $from, TRUE);
   drupal_set_message(t('Vi har opdateret din status.'));
 
   // allow the "wife" to set her status as well.
@@ -316,32 +316,29 @@ function valhalla_volunteers_to_polling_station($station_id = NULL) {
   $user_party_id = empty($user->field_party[LANGUAGE_NONE][0]['tid']) ? FALSE : $user->field_party[LANGUAGE_NONE][0]['tid'];
   $polling_station = node_load($station_id);
   //var_dump($polling_station);
-    $field_digital_election_list=field_get_items('node', $polling_station, 'field_digital_election_list');
-  if (isset($field_digital_election_list)&&(int)$field_digital_election_list[0]['value']==1){
-    drupal_set_title($polling_station->title.'<div class="icon-digital-valglist">&nbsp;</div>', PASS_THROUGH);
-  }
-  else {
+  $field_digital_election_list = field_get_items('node', $polling_station, 'field_digital_election_list');
+  if (isset($field_digital_election_list) && (int) $field_digital_election_list[0]['value'] == 1) {
+    drupal_set_title($polling_station->title . '<div class="icon-digital-valglist">&nbsp;</div>', PASS_THROUGH);
+  } else {
     drupal_set_title($polling_station->title);
   }
 
   $markup = '';
 
-  if(in_array('administrator', $user->roles) && !$user_party_id){
+  if (in_array('administrator', $user->roles) && !$user_party_id) {
     // If the user is administrator and theres no party chosen, show all parties!
 
     $tree = taxonomy_get_tree(1);
-    foreach($tree as $term){
-      $markup_temp .= valhalla_volunteers_to_polling_station_markup($polling_station, $term->tid, TRUE); 
-      if($markup_temp){
-        $markup .= '<h2>'.$term->name.'</h2>';
+    foreach ($tree as $term) {
+      $markup_temp .= valhalla_volunteers_to_polling_station_markup($polling_station, $term->tid, TRUE);
+      if ($markup_temp) {
+        $markup .= '<h2>' . $term->name . '</h2>';
         $markup .= $markup_temp;
       }
       $markup_temp = "";
-
     }
-  }
-  else {
-    $markup .= valhalla_volunteers_to_polling_station_markup($polling_station, $user_party_id); 
+  } else {
+    $markup .= valhalla_volunteers_to_polling_station_markup($polling_station, $user_party_id);
   }
   return $markup;
 }
@@ -349,41 +346,42 @@ function valhalla_volunteers_to_polling_station($station_id = NULL) {
 /*
  * Generate list markup for polling station
  */
-function valhalla_volunteers_to_polling_station_markup($polling_station, $user_party_id, $view_all_parties = FALSE){
+
+function valhalla_volunteers_to_polling_station_markup($polling_station, $user_party_id, $view_all_parties = FALSE) {
   global $user, $language;
 
   $station_id = $polling_station->nid;
-  $field_digital_election_list=field_get_items('node', $polling_station, 'field_digital_election_list');
+  $field_digital_election_list = field_get_items('node', $polling_station, 'field_digital_election_list');
   $posts_to_fill = array();
 
   /**
    * figure out how many posts to fill
    */
   $res = db_select('node', 'n')
-  ->fields('n', array('nid', 'title'))   
-  ->condition('n.type', 'roles')
-  ->execute();
-  while($rec=$res->fetchAssoc()){
-    $nids[$rec['nid']]= $rec['title'];
+          ->fields('n', array('nid', 'title'))
+          ->condition('n.type', 'roles')
+          ->execute();
+  while ($rec = $res->fetchAssoc()) {
+    $nids[$rec['nid']] = $rec['title'];
   }
 
-  if ($volunteers_pr_party=field_get_items('node',$polling_station, 'field_volunteers_pr_party_1')) {
+  if ($volunteers_pr_party = field_get_items('node', $polling_station, 'field_volunteers_pr_party_1')) {
     foreach ($volunteers_pr_party as $item) {
-      $field_collection_item=entity_load('field_collection_item', array($item['value']));   
-      $party_id=field_get_items('field_collection_item',$field_collection_item[$item['value']],'field_party_list');
+      $field_collection_item = entity_load('field_collection_item', array($item['value']));
+      $party_id = field_get_items('field_collection_item', $field_collection_item[$item['value']], 'field_party_list');
 
-      if($party_id[0]["party_list"]==$user_party_id) {
-        foreach($nids as $nid=>$title){
-          $field_name='field_role_n'.$nid;
-          $field=field_get_items('field_collection_item',$field_collection_item[$item['value']],$field_name);
+      if ($party_id[0]["party_list"] == $user_party_id) {
+        foreach ($nids as $nid => $title) {
+          $field_name = 'field_role_n' . $nid;
+          $field = field_get_items('field_collection_item', $field_collection_item[$item['value']], $field_name);
 
-          if($field&&(int)$field[0]['number_vo']>0)
-            $posts_to_fill =  array_merge($posts_to_fill, array_fill(0,$field[0]['number_vo'], strtolower ($title)));
-          }
+          if ($field && (int) $field[0]['number_vo'] > 0)
+            $posts_to_fill = array_merge($posts_to_fill, array_fill(0, $field[0]['number_vo'], strtolower($title)));
+        }
       }
     }
     if (isset($polling_station->field_party[$language->language][0]['tid']) &&
-      ($polling_station->field_party[$language->language][0]['tid'] == $user_party_id)
+            ($polling_station->field_party[$language->language][0]['tid'] == $user_party_id)
     ) {
       $posts_to_fill[0] = 'vaf';
     }
@@ -400,16 +398,16 @@ function valhalla_volunteers_to_polling_station_markup($polling_station, $user_p
   $select->condition('ps.bundle', 'volunteers');
   $select->condition('ps.field_polling_station_nid', $polling_station->nid);
 
-  if(!$view_all_parties){
+  if (!$view_all_parties) {
     $select->condition('p.field_party_tid', $user_party_id);
   }
 
   $volunteer_node_ids = $select->execute()
-      ->fetchAll(PDO::FETCH_COLUMN);
+          ->fetchAll(PDO::FETCH_COLUMN);
 
   $existing = array();
   foreach (node_load_multiple($volunteer_node_ids, array(), TRUE) as $node) {
-     // var_dump($node);
+    // var_dump($node);
     if (isset($node->field_polling_station_post[$language->language][0]['value'])) {
       $existing[$node->field_polling_station_post[$language->language][0]['value']] = array(
           'data' => _valhalla_helper_wrap_name($node),
@@ -432,11 +430,11 @@ function valhalla_volunteers_to_polling_station_markup($polling_station, $user_p
   }
 
   return theme('station', array(
-          'posts_to_fill' => $posts_to_fill,
-          'party_id' => $user_party_id,
-          'station_id' => $station_id,
-          'existing' => $existing,
-      ));
+      'posts_to_fill' => $posts_to_fill,
+      'party_id' => $user_party_id,
+      'station_id' => $station_id,
+      'existing' => $existing,
+  ));
 }
 
 /**
@@ -452,7 +450,7 @@ function valhalla_volunteers_to_polling_station_ajax($action) {
   module_load_include('inc', 'valhalla_volunteers', 'valhalla_volunteers');
 
   $user = user_load($user->uid);
-  
+
   $user_party_id = empty($user->field_party[LANGUAGE_NONE][0]['tid']) ? FALSE : $user->field_party[LANGUAGE_NONE][0]['tid'];
 
   $output = new stdClass;
@@ -468,7 +466,7 @@ function valhalla_volunteers_to_polling_station_ajax($action) {
        */
       $display_id = 'available_volunteers_filtered';
 
-      if(in_array('Valgsekretær', $user->roles)){
+      if (in_array('Valgsekretær', $user->roles)) {
         $display_id = 'available_volunteers_filtered_secretary';
         $user_party_id = 'all';
       }
@@ -490,13 +488,13 @@ function valhalla_volunteers_to_polling_station_ajax($action) {
        */
       // delete old refs.
       $query = db_select('field_data_field_polling_station', 'ps')
-          ->fields('ps', array('entity_id'))
-          ->condition('ps.bundle', 'volunteers')
-          ->condition('ps.field_polling_station_nid', arg(5));
+              ->fields('ps', array('entity_id'))
+              ->condition('ps.bundle', 'volunteers')
+              ->condition('ps.field_polling_station_nid', arg(5));
       $query->join('field_data_field_polling_station_post', 'psp', 'psp.entity_id = ps.entity_id');
       $old_relf = $query->condition('psp.field_polling_station_post_value', arg(6))
-          ->execute()
-          ->fetchField();
+              ->execute()
+              ->fetchField();
 
       if ($old_relf) {
         $old_node = node_load($old_relf);
@@ -504,47 +502,45 @@ function valhalla_volunteers_to_polling_station_ajax($action) {
         $old_node->field_polling_station_post = array();
         $old_node->field_label = array();
         $old_node->field_election_mails_send = array();
-        $old_node->field_rolle_id=array();
-        $old_node->field_meeting_time=array();
+        $old_node->field_rolle_id = array();
+        $old_node->field_meeting_time = array();
         node_save($old_node);
         unset($old_node);
       }
 
       $role = strtolower(arg(7));
-      if($role == 'vaf'){
+      if ($role == 'vaf') {
         $role = 'va';
       }
 
       //get role nid;
       $role_id = db_select('node', 'n')
-            ->fields('n', array('nid'))
-            ->condition('n.type', 'roles')
-            ->condition('n.title', $role)
-            ->execute()
-            ->fetchColumn();
+              ->fields('n', array('nid'))
+              ->condition('n.type', 'roles')
+              ->condition('n.title', $role)
+              ->execute()
+              ->fetchColumn();
 
-      $polling_station=node_load(arg(5));
-      $volunteers_per_party= field_get_items('node', $polling_station, 'field_volunteers_pr_party_1');
+      $polling_station = node_load(arg(5));
+      $volunteers_per_party = field_get_items('node', $polling_station, 'field_volunteers_pr_party_1');
       foreach ($volunteers_per_party as $item) {
-        $field_collection_item=entity_load('field_collection_item', array($item['value']));
-        $party=field_get_items('field_collection_item', $field_collection_item[$item['value']], 'field_party_list');
+        $field_collection_item = entity_load('field_collection_item', array($item['value']));
+        $party = field_get_items('field_collection_item', $field_collection_item[$item['value']], 'field_party_list');
 
-        //if($party[0]['party_list']==$user_party_id) {
-          $field_name='field_role_n'.$role_id;
-          $role=field_get_items('field_collection_item', $field_collection_item[$item['value']], $field_name);
-          if(isset($role[0]['meeting_time']))
-          $meeting_time =  $role[0]['meeting_time'];
-          //break;
-        //};
+        $field_name = 'field_role_n' . $role_id;
+        $role = field_get_items('field_collection_item', $field_collection_item[$item['value']], $field_name);
+        if (isset($role[0]['meeting_time']))
+          $meeting_time = $role[0]['meeting_time'];
+       
       }
 
       $role = strtolower(arg(7));
       $role_id = db_select('node', 'n')
-        ->fields('n', array('nid'))   
-        ->condition('n.type', 'roles')
-        ->condition('n.title', $role)
-        ->execute()
-        ->fetchColumn();
+              ->fields('n', array('nid'))
+              ->condition('n.type', 'roles')
+              ->condition('n.title', $role)
+              ->execute()
+              ->fetchColumn();
 
 
       if ($node = node_load(arg(4))) {
@@ -553,7 +549,7 @@ function valhalla_volunteers_to_polling_station_ajax($action) {
         $node->field_label[$language->language][0]['value'] = $role_id;
         $node->field_rolle_id['und'][0]['nid'] = $role_id;
         $node->field_meeting_time['und'][0]['tid'] = $meeting_time;
-       node_save($node);
+        node_save($node);
         if (arg(6) == 0) {
           $polling_station = node_load(arg(5));
           $polling_station->field_chairman[$language->language][0]['nid'] = arg(4);
@@ -579,7 +575,7 @@ function valhalla_volunteers_to_polling_station_ajax($action) {
         $node->field_polling_station = array();
         $node->field_polling_station_post = array();
         $node->field_election_mails_send = array();
-        $node->field_rolle_id=array();
+        $node->field_rolle_id = array();
         node_save($node);
 
         $output->status = TRUE;
@@ -614,18 +610,18 @@ function valhalla_volunteers_node_update($node) {
 
   #error_log(basename(__FILE__) . ':' . __LINE__ . ' Var: $node = ' . print_r($node, 1));
   if (($node->type == 'volunteers') &&
-      isset($node->field_polling_station[$language->language][0]['nid']) &&
-      isset($node->field_polling_station_post[$language->language][0]['value']) &&
-      ($node->field_polling_station_post[$language->language][0]['value'] > 0) &&
-      ($node->field_rsvp[$language->language][0]['value'] == '') &&
-      empty($_POST['rsvp'])
+          isset($node->field_polling_station[$language->language][0]['nid']) &&
+          isset($node->field_polling_station_post[$language->language][0]['value']) &&
+          ($node->field_polling_station_post[$language->language][0]['value'] > 0) &&
+          ($node->field_rsvp[$language->language][0]['value'] == '') &&
+          empty($_POST['rsvp'])
   ) {
     valhalla_volunteers_send_rsvp($node);
   }
 
   if ($node->type == 'election') {
     if (isset($node->field_election_status[$language->language][0]['value']) &&
-        ($node->field_election_status[$language->language][0]['value'] == 1)
+            ($node->field_election_status[$language->language][0]['value'] == 1)
     ) {
 
       // only allow one open election at a time.
@@ -639,14 +635,14 @@ function valhalla_volunteers_node_update($node) {
 
       // send mails to volunteers, but only once.
       if (empty($node->field_election_mails_send[$language->language][0]['value']) ||
-          ($node->field_election_mails_send[$language->language][0]['value'] == 0)
+              ($node->field_election_mails_send[$language->language][0]['value'] == 0)
       ) {
         $select = db_select('field_data_field_polling_station_post', 'psp')
-            ->fields('psp', array('entity_id'))
-            ->condition('psp.bundle', 'volunteers');
+                ->fields('psp', array('entity_id'))
+                ->condition('psp.bundle', 'volunteers');
         $select->addJoin('INNER', 'field_data_field_polling_station', 'ps', 'psp.entity_id = ps.entity_id');
         $nids = $select->execute()
-            ->fetchAll(PDO::FETCH_COLUMN);
+                ->fetchAll(PDO::FETCH_COLUMN);
 
         if (is_array($nids)) {
           foreach (node_load_multiple($nids) as $volunteer) {
@@ -684,7 +680,7 @@ function valhalla_volunteers_send_rsvp($node) {
 
   $to = $node->field_email[$language->language][0]['email'];
   $from = variable_get('site_mail', 'admin@example.com');
-  
+
   $params = _valhalla_helper_get_volunteer_info_params($node);
 
   $language = language_default();
@@ -1020,9 +1016,9 @@ function valhalla_volunteers_add_sub_secretary_form_submit($form, array &$form_s
   $uri = entity_uri('user', $account);
   _user_mail_notify('register_admin_created', $account);
   drupal_set_message(t('A welcome message with further instructions has been e-mailed to the new user <a href="@url">%name</a>.', array(
-          '@url' => url($uri['path'], $uri['options']),
-          '%name' => $account->name)
-      ));
+      '@url' => url($uri['path'], $uri['options']),
+      '%name' => $account->name)
+  ));
 }
 
 /**
@@ -1041,9 +1037,9 @@ function valhalla_volunteers_form_volunteers_node_form_alter(&$form, &$form_stat
    */
   $form['buttons']['#weight'] = 100;
   if (($form['#node_edit_form'] === TRUE) &&
-      !in_array('administrator', $user->roles)
+          !in_array('administrator', $user->roles)
   ) {
-    $hide_elements = array('field_party', 'field_token', 'field_polling_station', 'field_polling_station_post', 'field_label', 'additional_settings', 'field_address_bnummer', 'field_rolle_id','field_meeting_time');
+    $hide_elements = array('field_party', 'field_token', 'field_polling_station', 'field_polling_station_post', 'field_label', 'additional_settings', 'field_address_bnummer', 'field_rolle_id', 'field_meeting_time');
     foreach ($hide_elements as $field_name) {
       $form[$field_name]['#access'] = FALSE;
     }
@@ -1129,12 +1125,12 @@ function valhalla_volunteers_export() {
     $term = taxonomy_term_load($node->field_party[$language->language][0]['tid']);
 
     $data .= '"' .
-        $term->name . '";"' .
-        $node->field_cpr_number[$language->language][0]['value'] . '";"' .
-        $node->title . '";"' .
-        $node->field_email[$language->language][0]['email'] . '";"' .
-        $node->field_phone[$language->language][0]['value'] . '"' .
-        "\r\n"
+            $term->name . '";"' .
+            $node->field_cpr_number[$language->language][0]['value'] . '";"' .
+            $node->title . '";"' .
+            $node->field_email[$language->language][0]['email'] . '";"' .
+            $node->field_phone[$language->language][0]['value'] . '"' .
+            "\r\n"
     ;
   }
 
@@ -1153,5 +1149,4 @@ function valhalla_volunteers_export() {
   header("Content-Length: " . strlen($data));
   die($data);
 }
-
 

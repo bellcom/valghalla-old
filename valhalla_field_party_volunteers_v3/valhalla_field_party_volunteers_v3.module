@@ -1,158 +1,99 @@
 <?php
+
 // valhalla_field_party_volunteers
 module_load_all();
 
-//тут вроде все правильно
 function valhalla_field_party_volunteers_v3_field_info() {
   return array(
-    'party_volunteers_field_v3' => array(
-      'label' => t('Number of volunteers pr party_v3'),
-      'description' => t('Combines the party to the number of required volunteers for a specific polling station.'),
-      'default_widget' => 'party_volunteers_standard_v3',
-      'default_formatter' => 'party_volunteers_default_v3',
-    ),
+      'party_volunteers_field_v3' => array(
+          'label' => t('Number of volunteers pr party_v3'),
+          'description' => t('Combines the party to the number of required volunteers for a specific polling station.'),
+          'default_widget' => 'party_volunteers_standard_v3',
+          'default_formatter' => 'party_volunteers_default_v3',
+      ),
   );
 }
-
-/*
- *здесь если я правильно понимаю дается описание столбцов в базе данных, где будут храиться значений поля
- * с party -  все понятно
- * а вот как хранить ссылку на список ролей?
- * если бы я делала это без Друпал, то было бы  таблицы , 
- * допустим со списком партий на избирательном участке party(party_id, ...) и roles(ID, party_id, role, number_of_vol, meeting_time)
- * а как это все реализовать при создании поля?
- * 
- */
 
 function valhalla_field_party_volunteers_v3_field_schema() {
   $columns = array(
-    'party_list' => array(
-      'description' => 'Party reference.',
-      'type' => 'int',
-      'unsigned' => TRUE,
-      'not null' => TRUE,
-      'default' => 0,
-    ),
-    
-      
+      'party_list' => array(
+          'description' => 'Party reference.',
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+          'default' => 0,
+      ),
   );
 
   return array(
-    'columns' => $columns,
-    // TODO Add indexes.
+      'columns' => $columns,
+          // TODO Add indexes.
   );
 }
 
-//здесь вроде тоже все правильно
 function valhalla_field_party_volunteers_v3_field_widget_info() {
   $widgets = array();
 
   $widgets['party_volunteers_standard_v3'] = array(
-    'label' => t('Volunteers to Party v3'),
-    'field types' => array('party_volunteers_field_v3',    
-      '#type' => 'custom_field_type',
-      '#title' => t('Party'),
+      'label' => t('Volunteers to Party v3'),
+      'field types' => array('party_volunteers_field_v3',
+          '#type' => 'custom_field_type',
+          '#title' => t('Party'),
       ),
-    'settings' => array(
-      'available_parties' => array(),
-    )
+      'settings' => array(
+          'available_parties' => array(),
+      )
   );
- 
-  
+
+
 
   return $widgets;
 }
 
 function valhalla_field_party_volunteers_v3_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
-   
   $settings = $instance['widget']['settings'];
-  $party_value = isset($items[$delta]['party_list']) ? $items[$delta]['party_list'] : '';  
-  //$number_ti_value = isset($items[$delta]['number_ti']) ? $items[$delta]['number_ti'] : '0';
+  $party_value = isset($items[$delta]['party_list']) ? $items[$delta]['party_list'] : '';
 
   if ($instance['widget']['type'] == 'party_volunteers_standard_v3') {
-
     $options = array(0 => t('Select Party'));
     foreach (taxonomy_get_tree(1) as $item) {
       $options[$item->tid] = $item->name;
     }
-$element=array( 
-        '#suffix' => '<a href="/node/add/roles?destination='.$_SERVER['REQUEST_URI'].'">Add one more role
-</a>');
-    $element['party_list'] = array(
-      '#type' => 'select',
-      '#title' => t('Party'),
-      '#options' => $options,
-      '#default_value' => $party_value,
+    $element = array(
+        '#suffix' => '<a href="/node/add/roles?destination=' . $_SERVER['REQUEST_URI'] . '">Add one more role </a>'
     );
-    
-  
+    $element['party_list'] = array(
+        '#type' => 'select',
+        '#title' => t('Party'),
+        '#options' => $options,
+        '#default_value' => $party_value,
+    );
   }
-  
+
   return $element;
 }
-//function valhalla_field_party_volunteers_v3_add_more_callback($form, &$form_state ) {
-  
-
- /*
-$node = new stdClass();
-    $node->type = 'roles';
-    node_object_prepare($node);
-    $node->comment = 0;
-    $node->title = 'Vu';
-    $node->language = $language->language;
-   /* $node->field_cpr_number[$language->language][0]['value'] = $form_state['values']['cpr'];
-    $node->field_email[$language->language][0]['email'] = $form_state['values']['email'];
-    $node->field_phone[$language->language][0]['value'] = $form_state['values']['phone'];
-    $node->field_phone2[$language->language][0]['value'] = $form_state['values']['phone2'];
-    $node->field_token[$language->language][0]['value'] = user_password(8);
-
-    if (!empty($form_state['values']['polling_station'])) {
-      $node->field_polling_station[$language->language][0]['nid'] = (int) $form_state['values']['polling_station'];
-    }
-
-    $party = FALSE;
-    if (!empty($form_state['values']['party'])) {
-      $node->field_party[$language->language][0]['tid'] = $form_state['values']['party'];
-      $party = $form_state['values']['party'];
-    }
-*/
-   // node_save($node);
-  //  return $form['field_volunteers_pr_party_1'];
-
-//}
-
-/**
- * Submit handler for the "add-one-more" button.
- *
- * Increments the max counter and causes a rebuild.
- */
-
 
 function valhalla_field_party_volunteers_v3_field_formatter_info() {
   return array(
-    'party_volunteers_default_v3' => array(
-      'label' => t('Default'),
-      'field types' => array('party_volunteers_field_v3'),
-    ),
+      'party_volunteers_default_v3' => array(
+          'label' => t('Default'),
+          'field types' => array('party_volunteers_field_v3'),
+      ),
   );
 }
 
-
 function valhalla_field_party_volunteers_v3_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
   $element = array();
-
   switch ($display['type']) {
     case 'party_volunteers_default_v3':
       foreach ($items as $delta => $item) {
         $term = taxonomy_term_load($item['party_list']);
-      $element[$delta]['#markup'] = '<p>' . $term->name  .  '</p>';
+        $element[$delta]['#markup'] = '<p>' . $term->name . '</p>';
       }
       break;
   }
-
   return $element;
 }
-
 
 function valhalla_field_party_volunteers_v3_field_is_empty($item, $field) {
   return empty($item['party_list']);
