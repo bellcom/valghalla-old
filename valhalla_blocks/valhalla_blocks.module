@@ -295,7 +295,7 @@ function valhalla_blocks_block_view($delta = '') {
 
           // Add totals column to the row.
           $table['rows'][$row_nr][]=array(
-              'data' => $polling_station_total_total . '/' . $polling_station_needed_total, 'class' => 'total',
+              'data' => $polling_station_total_total . '/' . $polling_station_needed_total, 'class' => 'vafva',
           );
         }
 
