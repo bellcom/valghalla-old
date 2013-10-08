@@ -379,7 +379,9 @@ function valhalla_volunteers_to_polling_station_markup($polling_station, $user_p
           $field=field_get_items('field_collection_item',$field_collection_item[$item['value']],$field_name);
 
           if($field&&(int)$field[0]['number_vo']>0)
-            $posts_to_fill =  array_merge($posts_to_fill, array_fill(0,$field[0]['number_vo'], strtolower ($title)));
+            if($title != "VAF") {
+              $posts_to_fill =  array_merge($posts_to_fill, array_fill(0,$field[0]['number_vo'], strtolower ($title)));
+	    }
           }
       }
     }
