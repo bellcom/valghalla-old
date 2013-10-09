@@ -324,27 +324,28 @@ EOM;
 
   if (empty($params)) {
     global $language;
-
+    $email=field_get_items('node', $node, 'field_email');
+    $phone=field_get_items('node', $node, 'field_phone');
+    $token=field_get_items('node', $node, 'field_token');
     // Set up base info
     $params = array(
         '!name' => $node->title,
-        '!email' => $node->field_email[$language->language][0]['email'],
-        '!phone' => (empty($node->field_phone[$language->language][0]['safe_value']) ? '' : $node->field_phone[$language->language][0]['safe_value']),
+        '!email' => $email[0]['email'],
+        '!phone' => (empty($phone[0]['safe_value']) ? '' : $phone[0]['safe_value']),
         '!date' => date('j/m Y'),
-        '!link' => url('volunteers/rsvp/' . $node->field_token[$language->language][0]['safe_value'], array('absolute' => TRUE)),
+        '!link' => url('volunteers/rsvp/' . $token[0]['safe_value'], array('absolute' => TRUE)),
     );
 
     $election = _valhalla_helper_get_active_election();
 
     // If no current election, so omit info
     if (FALSE != $election) {
-      $election_date = date('j/m Y', strtotime($election->field_date[$language->language][0]['value']));
-
-      list($election_date,$time) = split("T", $election->field_date[$language->language][0]['value']);
-      $today_date = strtotime(date('Y-m-d'));
-      $election_date1 = strtotime($election_date);
-      $days_to_election = floor(($election_date1 - $today_date) / 86400);
-
+       $election_date = field_get_items('node', $election, 'field_date');
+       list($election_date, $time) = preg_split("|T|", $election_date[0]['value']);
+       $today_date = strtotime(date('Y-m-d'));
+       $election_date1 = strtotime($election_date);
+       $days_to_election = floor(($election_date1 - $today_date) / 86400);
+      
       $params = array_merge($params, array(
           '!election_date' => $election_date,
           '!days' => $days_to_election,
@@ -352,15 +353,16 @@ EOM;
     }
 
     // Gather polling station info
-    $polling_station = node_load($node->field_polling_station[$language->language][0]['nid']);
-
+    $field_polling_station=field_get_items('node', $node, 'field_polling_station');
+    $polling_station = node_load($field_polling_station[0]['nid']);
+    $field_label=field_get_items('node', $node, 'field_label');
     if (FALSE != $polling_station) {
       // build address "field"
       $position = db_select('node', 'n')
                   ->distinct()
                   ->fields('n', array('nid', 'title'))   
                   ->condition('n.type', 'roles')
-                 ->condition('n.nid', $node->field_label[$language->language][0]['value'])
+                 ->condition('n.nid', $field_label[0]['value'])
                   ->execute()
                   ->fetchColumn();
       // tth@bellcom.dk
@@ -396,7 +398,4 @@ EOM;
 
   return $params;
 }
-function preprocess_views_view(&$view){
-   echo "dddd" ;
-    die;
-}
+

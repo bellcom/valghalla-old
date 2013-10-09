@@ -23,7 +23,9 @@ function valhalla_cron_rsvp_reminder($last_run_ts) {
 
   // load election node
   $election = node_load($nid);
-  list($election_date,$time) = split("T", $election->field_date[$language->language][0]['value']);
+
+  $election_date = field_get_items('node', $election, 'field_date');
+  list($election_date, $time) = preg_split("|T|", $election_date[0]['value']);
   $today_date = strtotime(date('Y-m-d'));
   $election_date1 = strtotime($election_date);
   $days_to_election = floor(($election_date1 - $today_date) / 86400);
@@ -36,7 +38,7 @@ function valhalla_cron_rsvp_reminder($last_run_ts) {
     watchdog('Valghalla', 'Der blev ikke fundet noget aktict valg - aktiver dit valg. ', WATCHDOG_NOTICE);
     return;
   }
- 
+
   if (!in_array($days_to_election, $notification_days)) {
     watchdog('Valghalla', 'Mail job blev ikke kørt idet idag ikke er nogen rykker dag. Valg: %election_date Dage til valget: %todays Rykkerdage: %godays', array('%todays' => $days_to_election, '%godays' => $notification_days_arr, '%election_date' => $election_date), WATCHDOG_NOTICE);
     return;
@@ -45,21 +47,22 @@ function valhalla_cron_rsvp_reminder($last_run_ts) {
   // only run once a day
   if (date('Ymd') <= date('Ymd', $last_run_ts)) {
     $check_data = date('d-m-Y', $last_run_ts);
-    watchdog('Valghalla','Cron for Valghalla mails blev ikke kørt da den allerede er kørt i dag: %last_run', array('%last_run' => $check_data), WATCHDOG_NOTICE);
+    watchdog('Valghalla', 'Cron for Valghalla mails blev ikke kørt da den allerede er kørt i dag: %last_run', array('%last_run' => $check_data), WATCHDOG_NOTICE);
     return;
   }
 
 
-
-
   // helpers
   $election->days_to_election = $days_to_election;
-  $election->election_date = date('j/m Y', strtotime($election->field_date[$language->language][0]['value']));
+  $election_date = field_get_items('node', $election, 'field_date');
+  $election->election_date = date('j/m Y', strtotime($election_date[0]['value']));
 
   // find volunteers to notify, we only send to users whom has no rsvp status - and a valid email address
   foreach (entity_load('node', FALSE, array('type' => 'volunteers')) as $volunteer) {
+    
+    $email = field_get_items('node', $volunteer, 'field_email');
     if (!empty($volunteer->field_rsvp) ||
-        empty($volunteer->field_email[$language->language][0]['email'])
+            empty($email[0]['email'])
     ) {
       continue;
     }
@@ -80,9 +83,9 @@ function valhalla_cron_rsvp_reminder($last_run_ts) {
 function valhalla_cron_rsvp_reminder_send($election, $volunteer) {
   global $language;
   module_load_include('inc', 'valhalla_volunteers', 'valhalla_volunteers');
+  $email = field_get_items('node', $volunteer, 'field_email');
 
-
-  $to = $volunteer->field_email[$language->language][0]['email'];
+  $to = $email[0]['email'];
   $from = variable_get('site_mail', 'admin@example.com');
 
   $params = _valhalla_helper_get_volunteer_info_params($volunteer);
