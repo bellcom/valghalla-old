@@ -354,7 +354,8 @@ EOM;
 
     // Gather polling station info
     $field_polling_station=field_get_items('node', $node, 'field_polling_station');
-    $polling_station = node_load($field_polling_station[0]['nid']);
+    $polling_station =node_load($field_polling_station[0]['nid']);
+    
     $field_label=field_get_items('node', $node, 'field_label');
     if (FALSE != $polling_station) {
       // build address "field"
@@ -372,26 +373,30 @@ EOM;
       // is not set we show the title, otherwise we show the description.
       // Get the info from the node and put it in the $params array...
       // Have a nice day!
-      $position_node = node_load($position);
+      $position_info ='';
+      if ($position){
+        $position_node = node_load($position);
 
-      $position_info = $position_node->title;
-
-      if(isset($position_node->field_description)){
-        if(!empty($position_node->field_description)){
-          $position_info = $position_node->field_description[LANGUAGE_NONE][0]['value'];
+        $position_info = $position_node->title;
+        $wrapper = entity_metadata_wrapper('node', $position_node);
+        if(isset($position_node->field_description)){
+          if(!empty($position_node->field_description)){
+            $position_info = $position_node->field_description->value();
+          }
         }
       }
-
+      $wrapper = entity_metadata_wrapper('node', $polling_station);
+ 
       $polling_station_address = array();
-      $polling_station_address[] = $polling_station->field_address_road[$language->language][0]['value'] . ' ' . $polling_station->field_address_road_no[$language->language][0]['value'];
-      $polling_station_address[] = $polling_station->field_address_zipcode[$language->language][0]['value'] . ' ' . $polling_station->field_address_city[$language->language][0]['value'];
+      $polling_station_address[] = $wrapper->field_address_road->value() . ' ' . $wrapper->field_address_road_no->value();
+      $polling_station_address[] = $wrapper->field_address_zipcode->value() . ' ' . $wrapper->field_address_city->value();
       
       $params = array_merge($params, array(
           '!polling_station' => $polling_station->title,
           '!polling_station_address' => implode("\n", $polling_station_address),
          // '!position' => strtoupper($node->field_label[$language->language][0]['value']),
           '!position' => $position_info,
-          '!responsible' => $polling_station->field_contact[$language->language][0]['value'],
+          '!responsible' => $wrapper->field_contact->value(),
           ));
     }
   }
