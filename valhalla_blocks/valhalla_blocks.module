@@ -69,37 +69,36 @@ function valhalla_blocks_block_view($delta = '') {
 
       // let administrators pic a party to see stats for
       if (TRUE === $admin_user) {
-          
         $parties = array();
 
         $vid = db_query("SELECT vid FROM taxonomy_vocabulary WHERE machine_name = 'partier'")->fetchField();
 
         foreach (taxonomy_get_tree($vid) as $item) {
-          $parties[] = '<span'.($user_party_id == $item->tid ? ' style="font-weight:bold;"' : '').'>' . l($item->name, 'valhalla/change/party/' . $item->tid) . '</span>';
-        }
-        $parties[] = '<span>' . l('alle', 'valhalla/change/party/0') . '</span>';
-        $block['content'] .= '<div id="other-parties"><h3>Se status for liste:</h3><p>'.implode(', ', $parties).'</p></div>';
-      }
+              $parties[] = '<span'.($user_party_id == $item->tid ? ' style="font-weight:bold;"' : '').'>' . l($item->name, 'valhalla/change/party/' . $item->tid) . '</span>';
+            }
+            $parties[] = '<span>' . l('alle', 'valhalla/change/party/0') . '</span>';
+            $block['content'] .= '<div id="other-parties"><h3>Se status for liste:</h3><p>'.implode(', ', $parties).'</p></div>';
+          }
 
       $grand_total = 0;
-        foreach($roles as $nid =>$title){
-                  $query = db_select('field_data_field_role_n'.$nid, 'vr');
-                    $query->innerJoin('field_data_field_party_list', 'vpp', 'vpp.entity_id=vr.entity_id');
-                    $query->addExpression('SUM(vr.field_role_n'.$nid.'_number_vo)');
-                            if ($user_party_id) {
-                      $query->condition('vpp.field_party_list_party_list', $user_party_id);
-                      }
-                       if (is_array($restrict_polling_stations)) {
-                             $query->condition('vr.entity_id', $restrict_polling_stations, 'IN');
-                     }
-                   $res=$query->execute()
-                             ->fetchColumn();  
-                   if (is_array($restrict_polling_stations) && !in_array($polling_station->nid, $restrict_polling_stations)) {
-                      continue;
-                    }
-                  $grand_total+=$res;
-             }
-           
+
+      foreach($roles as $nid =>$title){
+        $query = db_select('field_data_field_role_n'.$nid, 'vr');
+        $query->innerJoin('field_data_field_party_list', 'vpp', 'vpp.entity_id=vr.entity_id');
+        $query->addExpression('SUM(vr.field_role_n'.$nid.'_number_vo)');
+          if ($user_party_id) {
+            $query->condition('vpp.field_party_list_party_list', $user_party_id);
+          }
+          if (is_array($restrict_polling_stations)) {
+            $query->condition('vr.entity_id', $restrict_polling_stations, 'IN');
+          }
+          $res=$query->execute()
+                  ->fetchColumn();
+          if (is_array($restrict_polling_stations) && !in_array($polling_station->nid, $restrict_polling_stations)) {
+            continue;
+          }
+          $grand_total+=$res;
+        }
 
       $query = db_select('field_data_field_party', 'p');
       $query->fields('p', array('entity_id'));
@@ -182,7 +181,7 @@ function valhalla_blocks_block_view($delta = '') {
       //    loop (valgsteder)
       //      loop (frivillige)
 
-
+      // tth: This block creates an array full of data about the pollingstation posts.
       $data = array();
       foreach (entity_load('node', FALSE, array('type' => 'constituency')) as $constituency) {
         $data[$constituency->title] = array();
@@ -197,17 +196,15 @@ function valhalla_blocks_block_view($delta = '') {
          //new version 13.09.2013 juulia@blueflex.eu
           $entity_ids=array(); 
           $data[$constituency->title][$polling_station->nid]['title']=$polling_station->title;
-          
-          if ($items=field_get_items('node', $polling_station, 'field_volunteers_pr_party_1')){             
+
+          if ($items=field_get_items('node', $polling_station, 'field_volunteers_pr_party_1')){
             foreach(array_values($items) as $value)
                 $entity_ids[]= $value['value']; 
-          //  var_dump($entity_ids);
           }
           foreach($roles as $nid =>$title){
-            if(!isset($data[$constituency->title][$polling_station->nid][$nid]['needed']))
+            if(!isset($data[$constituency->title][$polling_station->nid][$nid]['needed'])){
               $data[$constituency->title][$polling_station->nid][$nid]['needed']=0;
-            if(!isset($data[$constituency->title][$polling_station->nid][$nid]['total']))
-              $data[$constituency->title][$polling_station->nid][$nid]['total']=0;
+            }
             if (!empty($entity_ids)) {
               $query = db_select('field_data_field_role_n'.$nid, 'vr');
               $query->innerJoin('field_data_field_party_list', 'vpp', 'vpp.entity_id=vr.entity_id');
@@ -217,38 +214,24 @@ function valhalla_blocks_block_view($delta = '') {
                 $query->condition('vpp.field_party_list_party_list', $user_party_id);
                 }
               $res=$query->execute()
-                        ->fetchColumn();  
+                        ->fetchColumn();
+
               if (is_array($restrict_polling_stations) && !in_array($polling_station->nid, $restrict_polling_stations)) {
                 continue;
               }
+
               $data[$constituency->title][$polling_station->nid][$nid]['needed']+=$res;
-            }
-          }
-          $volunteer_nids = db_select('field_data_field_polling_station', 'ps')
-            ->fields('ps', array('entity_id'))
-            ->condition('ps.bundle', 'volunteers')
-            ->condition('ps.field_polling_station_nid', $polling_station->nid)
-            ->execute()
-            ->fetchAll(PDO::FETCH_COLUMN);
-
-          foreach (node_load_multiple($volunteer_nids) as $volunteer) {
-
-            if ($user_party_id && ($user_party_id != @$volunteer->field_party[$language->language][0]['tid'])) {
-              continue;
-            }
-
-            if (isset($volunteer->field_polling_station_post[$language->language][0]['value']) &&
-                isset($volunteer->field_label[$language->language][0]['value'])
-            ) {
-                $data[$constituency->title][$polling_station->nid][$volunteer->field_label[$language->language][0]['value']]['total']++;
             }
           }
         }
       }
 
       $output = '';
+
       ksort($data);
 
+      // tth: This block uses the data from above to create som tables with an overview
+      // of the posts on the polling station.
       foreach ($data as $constituency => $constituency_data) {
         $total=array();
         $table = array(
@@ -261,11 +244,6 @@ function valhalla_blocks_block_view($delta = '') {
 
         // Add "i alt" label to header
         $table['header']['total'] = 'I alt';
-
-        $vat = 0;
-        $vatn = 0;
-        $tit = 0;
-        $titn = 0;
 
         foreach ($constituency_data as $id => $polling_station_data) {
 
@@ -281,15 +259,38 @@ function valhalla_blocks_block_view($delta = '') {
           $polling_station_total_total = 0;
 
           foreach($roles as $nid=>$title){
-            isset($total[$nid]['needed'])?$total[$nid]['needed']+= $polling_station_data[$nid]['needed'] : $total[$nid]['needed']= $polling_station_data[$nid]['needed'];
-            isset($total[$nid]['total'])?$total[$nid]['total']+= $polling_station_data[$nid]['total'] : $total[$nid]['total']= $polling_station_data[$nid]['total'];
+            // tth: Count posts in a new way
+            // If the user_party_id is not set, we set it as a wildcard.
+            // this gets ud all posts with the roles for the 
+            $party_id = $user_party_id;
 
-            // Count totals
+            if(!$party_id){
+              $party_id = '%';
+            }
+            $station_role_id = $party_id . $nid . $id;
+
+            // tth: Query the volunteers nodes
+            $volunteer_query = new EntityFieldQuery();
+            $volunteer_query->fieldCondition('field_polling_station_post', 'value', $station_role_id, 'like');
+            $volunteers_array = reset($volunteer_query->execute());
+
+            // tth: Count on an empty array returned 1. Workaround be here.:
+            $count = 0;
+            if(!empty($volunteers_array)){
+              $count = count($volunteers_array);
+            }
+
+            // tth: Count totals
+            // For rows:
             $polling_station_needed_total += $polling_station_data[$nid]['needed'];
-            $polling_station_total_total += $polling_station_data[$nid]['total'];
+            $polling_station_total_total += $count;
+
+            // For columns:
+            $total[$nid]['needed']+= $polling_station_data[$nid]['needed'];
+            $total[$nid]['total'] += $count;
 
             $table['rows'][$row_nr][]=array(
-                'data' => $polling_station_data[$nid]['total']. '/' . $polling_station_data[$nid]['needed'], 'class' => 'vafva',
+                'data' => $count . '/' . $polling_station_data[$nid]['needed'], 'class' => 'vafva',
             );
           }
 

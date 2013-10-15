@@ -23,8 +23,10 @@ function _valhalla_helper_wrap_name($node, $container = 'p') {
       3 => 'never',
   );
 
+  $party = taxonomy_term_load($node->field_party[$language->language][0]['tid']);
+
   $rsvp = empty($node->field_rsvp[$language->language][0]['value']) ? 0 : $node->field_rsvp[$language->language][0]['value'];
-  $display = $node->title . ' (' . $rsvp_map[$rsvp] . ')';
+  $display = '(' . $party->name. ') ' . $node->title . ' (' . $rsvp_map[$rsvp] . ')';
   return '<' . $container . ' class="' . $rsvp_class_map[$rsvp] . '">' . $display . '</' . $container . '>';
 }
 
