@@ -1,4 +1,10 @@
 <?php
+/**
+ *
+ * @comments
+ *  tth: Thomas Thune Hansen <tth@bellcom.dk>
+ */
+
 
 /**
  * implement hook_permission for the volunteers module
@@ -327,7 +333,7 @@ function valhalla_volunteers_to_polling_station($station_id = NULL) {
   $markup = '';
 
   if(in_array('administrator', $user->roles) && !$user_party_id){
-    // If the user is administrator and theres no party chosen, show all parties!
+    // tth: If the user is administrator and theres no party chosen, show all parties!
 
     $tree = taxonomy_get_tree(1);
     foreach($tree as $term){
@@ -346,23 +352,48 @@ function valhalla_volunteers_to_polling_station($station_id = NULL) {
   return $markup;
 }
 
-/*
+/**
  * Generate list markup for polling station
  */
-function valhalla_volunteers_to_polling_station_markup($polling_station, $user_party_id, $view_all_parties = FALSE){
+function valhalla_volunteers_to_polling_station_markup($polling_station, $user_party_id){
+  // Get values
+  $posts_array = valhalla_volunteers_to_polling_station_roles($polling_station, $user_party_id);
+
+  arsort($roles_array['posts_to_fill'], SORT_REGULAR);
+
+  // Return the themed values
+  return theme('station', array(
+          'posts_to_fill' => $posts_array['posts_to_fill'],
+          'party_id' => $posts_array['user_party_id'],
+          'station_id' => $posts_array['station_id'],
+          'existing' => $posts_array['existing'],
+      ));
+}
+
+/**
+ * tth: Generate list of posts to fill and filled posts. Used for generating station list for adding volunteers.
+ * Also used for validation when adding volunteer. (Which is why i had to seperate this from the
+ * 'valhalla_volunteers_to_polling_station_markup' function. Someone took out the view_all_parties option. I cleaned up
+ *
+ * @params
+ *  pollling station node
+ *  party tid
+ *  view all parties bool
+ * @return
+ *  information array
+ */
+function valhalla_volunteers_to_polling_station_roles($polling_station, $user_party_id){
   global $user, $language;
 
   $station_id = $polling_station->nid;
   $field_digital_election_list=field_get_items('node', $polling_station, 'field_digital_election_list');
   $posts_to_fill = array();
 
-  /**
-   * figure out how many posts to fill
-   */
   $res = db_select('node', 'n')
-  ->fields('n', array('nid', 'title'))   
-  ->condition('n.type', 'roles')
-  ->execute();
+    ->fields('n', array('nid', 'title'))
+    ->condition('n.type', 'roles')
+    ->execute();
+
   while($rec=$res->fetchAssoc()){
     $nids[$rec['nid']]= $rec['title'];
   }
@@ -373,73 +404,61 @@ function valhalla_volunteers_to_polling_station_markup($polling_station, $user_p
       $party_id=field_get_items('field_collection_item',$field_collection_item[$item['value']],'field_party_list');
 
       if($party_id[0]["party_list"]==$user_party_id) {
-        arsort($nids, SORT_REGULAR); 
         foreach($nids as $nid=>$title){
           $field_name='field_role_n'.$nid;
           $field=field_get_items('field_collection_item',$field_collection_item[$item['value']],$field_name);
 
-          if($field&&(int)$field[0]['number_vo']>0)
-            if($title != "VAF") {
-              $posts_to_fill =  array_merge($posts_to_fill, array_fill(0,$field[0]['number_vo'], strtolower ($title)));
-	    }
+          if($field&&(int)$field[0]['number_vo']>0){
+            $posts_to_fill = array_merge($posts_to_fill, array_fill(0,$field[0]['number_vo'], strtolower ($title)));
           }
+        }
       }
     }
-    if (isset($polling_station->field_party[$language->language][0]['tid']) &&
-      ($polling_station->field_party[$language->language][0]['tid'] == $user_party_id)
-    ) {
-      $posts_to_fill[0] = 'vaf';
+  }
+
+  // tth: Get all roles, query all content from bundle 'roles'
+  $role_array = _valhalla_helper_get_role_array();
+
+  // tth: Loop through the roles used on the pollingstation, and load the volunteers
+  // $station_role_id is the "uniqe" id for the current role from the current party on the
+  // current station. This is set during the add volunteer to station routine
+  foreach($posts_to_fill as $key => $value){
+    $station_role_id = $user_party_id . $role_array[$value] . $station_id;
+
+    $volunteer_query = new EntityFieldQuery();
+    $volunteer_query->fieldCondition('field_polling_station_post', 'value', $station_role_id, 'like');
+
+    $volunteers[$value] = reset($volunteer_query->execute());
+  }
+
+  // tth: Populate "existing"-array with volunteer data
+  foreach($posts_to_fill as $key => $value){
+    $station_role_id = $user_party_id . $role_array[$value] . $station_id;
+
+    // tth: Check if there is a volunteer with the role
+    $id = reset(array_shift($volunteers[$value]));
+    if($id){
+      $existing[$id] = array(
+          'data' => _valhalla_helper_wrap_name(node_load($id)),
+          'nid' => $id
+        );
+      unset($posts_to_fill[$key]);
     }
-  }
-
-  /**
-   * find existing posts
-   */
-  $select = db_select('field_data_field_polling_station_post', 'psp');
-  $select->fields('psp', array('entity_id'));
-  $select->join('field_data_field_polling_station', 'ps', 'ps.entity_id = psp.entity_id');
-  $select->join('field_data_field_party', 'p', 'p.entity_id = psp.entity_id');
-  $select->condition('psp.bundle', 'volunteers');
-  $select->condition('ps.bundle', 'volunteers');
-  $select->condition('ps.field_polling_station_nid', $polling_station->nid);
-
-  if(!$view_all_parties){
-    $select->condition('p.field_party_tid', $user_party_id);
-  }
-
-  $volunteer_node_ids = $select->execute()
-      ->fetchAll(PDO::FETCH_COLUMN);
-
-  $existing = array();
-  foreach (node_load_multiple($volunteer_node_ids, array(), TRUE) as $node) {
-     // var_dump($node);
-    if (isset($node->field_polling_station_post[$language->language][0]['value'])) {
-      $existing[$node->field_polling_station_post[$language->language][0]['value']] = array(
-          'data' => _valhalla_helper_wrap_name($node),
-          'nid' => $node->nid
-      );
+    else {
+      $id = $key;
+      $value = $value;
     }
-  }
-  // Offset by party and pollingstation id's into post number. - jm@bellcom.dk
-  //
-  // tth@bellcom.dk: I have no clue what this is about!
-  //
-  foreach ($posts_to_fill as $i => $post) {
-    $t = $i + $user_party_id * 67 + $station_id * 67 * 76;
-    $posts_to_fill[$t] = $post;
-    unset($posts_to_fill[$i]);
-    if (isset($existing[$i])) { // Handle existing post id during migration.
-      $existing[$t] = $existing[$i];
-      unset($existing[$i]);
-    }
+
+    $posts_to_fill[$id] = array('title' => $value, 'party_id' => $user_party_id);
+    $id = NULL;
   }
 
-  return theme('station', array(
+  return array(
           'posts_to_fill' => $posts_to_fill,
           'party_id' => $user_party_id,
           'station_id' => $station_id,
           'existing' => $existing,
-      ));
+       );
 }
 
 /**
@@ -487,20 +506,18 @@ function valhalla_volunteers_to_polling_station_ajax($action) {
     case 'add':
       /**
        * arg(4) = user nid
-       * arg(5) = polling station nid
+       * arg(5) = polling station nid - party id
        * arg(6) = seat number
        * arg(7) = post
        */
-      // delete old refs.
-      $query = db_select('field_data_field_polling_station', 'ps')
-          ->fields('ps', array('entity_id'))
-          ->condition('ps.bundle', 'volunteers')
-          ->condition('ps.field_polling_station_nid', arg(5));
-      $query->join('field_data_field_polling_station_post', 'psp', 'psp.entity_id = ps.entity_id');
-      $old_relf = $query->condition('psp.field_polling_station_post_value', arg(6))
-          ->execute()
-          ->fetchField();
 
+      $info = explode('-', arg(7));
+      $post = $info[0];
+      $party_id = $info[1];
+      $station_id = arg(5);
+
+      // tth: Unset all relevant info on old volunteer.
+      $old_ref = arg(6);
       if ($old_relf) {
         $old_node = node_load($old_relf);
         $old_node->field_polling_station = array();
@@ -510,15 +527,13 @@ function valhalla_volunteers_to_polling_station_ajax($action) {
         $old_node->field_rolle_id=array();
         $old_node->field_meeting_time=array();
         node_save($old_node);
-        unset($old_node);
+        $old_node = NULL;
       }
 
-      $role = strtolower(arg(7));
-      if($role == 'vaf'){
-        $role = 'va';
-      }
+      // tth: this is a bad idea.
+      $role = strtoupper($post);
 
-      //get role nid;
+      // tth: Get the nid of the role
       $role_id = db_select('node', 'n')
             ->fields('n', array('nid'))
             ->condition('n.type', 'roles')
@@ -526,44 +541,33 @@ function valhalla_volunteers_to_polling_station_ajax($action) {
             ->execute()
             ->fetchColumn();
 
-      $polling_station=node_load(arg(5));
+      // tth: Im not sure why this is nessecary, but it returns the tid for the meeting time,
+      // and thats all i need.
+      $polling_station=node_load($station_id);
       $volunteers_per_party= field_get_items('node', $polling_station, 'field_volunteers_pr_party_1');
       foreach ($volunteers_per_party as $item) {
         $field_collection_item=entity_load('field_collection_item', array($item['value']));
         $party=field_get_items('field_collection_item', $field_collection_item[$item['value']], 'field_party_list');
 
-        //if($party[0]['party_list']==$user_party_id) {
-          $field_name='field_role_n'.$role_id;
-          $role=field_get_items('field_collection_item', $field_collection_item[$item['value']], $field_name);
-          if(isset($role[0]['meeting_time']))
-          $meeting_time =  $role[0]['meeting_time'];
-          //break;
-        //};
+        $field_name = 'field_role_n'.$role_id;
+        $role = field_get_items('field_collection_item', $field_collection_item[$item['value']], $field_name);
+        if(isset($role[0]['meeting_time']))
+        $meeting_time =  $role[0]['meeting_time'];
       }
 
-      $role = strtolower(arg(7));
-      $role_id = db_select('node', 'n')
-        ->fields('n', array('nid'))   
-        ->condition('n.type', 'roles')
-        ->condition('n.title', $role)
-        ->execute()
-        ->fetchColumn();
-
-
       if ($node = node_load(arg(4))) {
-        $node->field_polling_station[$language->language][0]['nid'] = arg(5);
-        $node->field_polling_station_post[$language->language][0]['value'] = arg(6);
+        // tth: Well this just keeps getting in the way
+        $station_role_id = $party_id . $role_id . $station_id;
+
+        $node->field_polling_station[$language->language][0]['nid'] = $station_id;
+
+        $node->field_polling_station_post[$language->language][0]['value'] = $station_role_id;
+
         $node->field_label[$language->language][0]['value'] = $role_id;
         $node->field_rolle_id['und'][0]['nid'] = $role_id;
         $node->field_meeting_time['und'][0]['tid'] = $meeting_time;
-       node_save($node);
-        if (arg(6) == 0) {
-          $polling_station = node_load(arg(5));
-          $polling_station->field_chairman[$language->language][0]['nid'] = arg(4);
-          node_save($polling_station);
-          unset($polling_station);
-          $user_party_id;
-        }
+
+        node_save($node);
 
         $output->status = TRUE;
         $output->id = arg(6);
@@ -615,7 +619,6 @@ function valhalla_volunteers_data($id) {
 function valhalla_volunteers_node_update($node) {
   global $language;
 
-  #error_log(basename(__FILE__) . ':' . __LINE__ . ' Var: $node = ' . print_r($node, 1));
   if (($node->type == 'volunteers') &&
       isset($node->field_polling_station[$language->language][0]['nid']) &&
       isset($node->field_polling_station_post[$language->language][0]['value']) &&
@@ -727,13 +730,14 @@ function valhalla_volunteers_add_form($form, &$form_state) {
       'volunteer' => array(
           'name' => array(
               '#type' => 'textfield',
-              '#title' => t('Name'),
+              '#title' => t('Navn'),
               '#required' => TRUE,
           ),
           'cpr' => array(
               '#type' => 'textfield',
               '#title' => t('CPR'),
               '#required' => TRUE,
+              '#description' => t('Skal være 10 tegn, må ikke indeholde "-"'),
           ),
           'phone' => array(
               '#type' => 'textfield',
@@ -780,7 +784,7 @@ function valhalla_volunteers_add_form($form, &$form_state) {
 
   $form['volunteer']['polling_station'] = array(
       '#type' => 'select',
-      '#title' => t('Valgsted'),
+      '#title' => t('Ønsket valgsted'),
       '#options' => _valhalla_helper_get_polling_stations(),
       '#empty_option' => 'Select',
   );
@@ -837,9 +841,13 @@ function valhalla_volunteers_add_form_validate($form, &$form_state) {
     form_set_error('email', t('E-mail adressen er ikke gyldig.'));
   }
 
+  if (!_valhalla_helper_validate_polling_post($form_state['values']['polling_station'], $form_state['values']['roles_id'], $form_state['values']['party'])){
+    form_set_error('roles_id', t('Ugyldigt valg, rollen er allerede optaget på valgstedet'));
+  }
+
   // cpr validation
   if (FALSE == _valhalla_helper_validate_cpr($form_state['values']['cpr'])) {
-    form_set_error('cpr', t('Ugyldigt CPR nummer.'));
+    form_set_error('cpr', t('Ugyldigt CPR nummer. Skal være 10 tegn'));
   }
 
   if (_valhalla_helper_get_volunteer_by_cpr($form_state['values']['cpr'])) {
@@ -901,14 +909,19 @@ function valhalla_volunteers_add_form_submit($form, &$form_state) {
     if (!empty($form_state['values']['polling_station'])) {
       $node->field_polling_station[$language->language][0]['nid'] = (int) $form_state['values']['polling_station'];
     }
-      $node->field_rolle_id['und'][0]['nid'] = (int) $form_state['values']['roles_id'];
+    $node->field_rolle_id['und'][0]['nid'] = (int) $form_state['values']['roles_id'];
 
     $party = FALSE;
     if (!empty($form_state['values']['party'])) {
       $node->field_party[$language->language][0]['tid'] = $form_state['values']['party'];
       $party = $form_state['values']['party'];
     }
-    
+
+    // tth: Add the volunteer to the polling station right away
+    $station_role_id = $form_state['values']['party'] . $form_state['values']['roles_id'] . $form_state['values']['polling_station'];
+
+    $node->field_polling_station_post[$language->language][0]['value'] = $station_role_id;
+
     node_save($node);
     drupal_set_message(t('Den frivillige "@name" er nu blevet oprettet.', array('@name' => $node->title), array('langcode' => $language->language)));
   }
