@@ -330,13 +330,25 @@ function valhalla_volunteers_to_polling_station($station_id = NULL) {
     drupal_set_title($polling_station->title);
   }
 
+  $restrict_polling_stations = FALSE;
+  if (!empty ($user->field_polling_station[LANGUAGE_NONE])) {
+    $restrict_polling_stations = array();
+    foreach ($user->field_polling_station[LANGUAGE_NONE] as $station) {
+      $restrict_polling_stations[] = $station['nid'];
+    }
+  }
+
   $markup = '';
 
-  if(in_array('administrator', $user->roles) && !$user_party_id){
+  if(in_array('Valgsekretær', $user->roles) && !$user_party_id){
     // tth: If the user is administrator and theres no party chosen, show all parties!
 
     $tree = taxonomy_get_tree(1);
     foreach($tree as $term){
+      if (is_array($restrict_polling_stations) && !in_array($polling_station->nid, $restrict_polling_stations)) {
+        continue;
+      }
+
       $markup_temp .= valhalla_volunteers_to_polling_station_markup($polling_station, $term->tid, TRUE); 
       if($markup_temp){
         $markup .= '<h2>'.$term->name.'</h2>';

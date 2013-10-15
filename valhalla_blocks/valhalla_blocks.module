@@ -80,99 +80,96 @@ function valhalla_blocks_block_view($delta = '') {
             $block['content'] .= '<div id="other-parties"><h3>Se status for liste:</h3><p>'.implode(', ', $parties).'</p></div>';
           }
 
-      $grand_total = 0;
+        $grand_total = 0;
 
-      foreach($roles as $nid =>$title){
-        $query = db_select('field_data_field_role_n'.$nid, 'vr');
-        $query->innerJoin('field_data_field_party_list', 'vpp', 'vpp.entity_id=vr.entity_id');
-        $query->addExpression('SUM(vr.field_role_n'.$nid.'_number_vo)');
+        foreach($roles as $nid =>$title){
+          $query = db_select('field_data_field_role_n'.$nid, 'vr');
+          $query->innerJoin('field_data_field_party_list', 'vp', 'vp.entity_id=vr.entity_id ' );
+          $query->innerJoin('field_data_field_volunteers_pr_party_1', 'vpp', 'vpp.field_volunteers_pr_party_1_value=vr.entity_id' );
+          $query->addExpression('SUM(vr.field_role_n'.$nid.'_number_vo)');
           if ($user_party_id) {
-            $query->condition('vpp.field_party_list_party_list', $user_party_id);
+            $query->condition('vp.field_party_list_party_list', $user_party_id);
           }
           if (is_array($restrict_polling_stations)) {
-            $query->condition('vr.entity_id', $restrict_polling_stations, 'IN');
+            $query->condition('vpp.entity_id', $restrict_polling_stations, 'IN');
           }
-          $res=$query->execute()
-                  ->fetchColumn();
-          if (is_array($restrict_polling_stations) && !in_array($polling_station->nid, $restrict_polling_stations)) {
-            continue;
-          }
+          $res=$query->execute()->fetchColumn();
           $grand_total+=$res;
         }
 
-      $query = db_select('field_data_field_party', 'p');
-      $query->fields('p', array('entity_id'));
-      if ($user_party_id) {
-        $query->condition('p.field_party_tid', $user_party_id);
-      }
-
-      // un@bellcom.dk, 2012.09.11 moved into loop
-      // if (is_array($restrict_polling_stations)) {
-      //   $query->join('field_data_field_volunteers_pr_party', 'vpp', 'vpp.field_volunteers_pr_party_party = p.entity_id');
-      //   $query->condition('vpp.entity_id', $restrict_polling_stations, 'IN');
-      // }
-
-      $query->condition('p.bundle', 'volunteers');
-      $query = $query->execute();
-
-      $total = 0;
-      $yes = 0;
-      $no = 0;
-      $missing = 0;
-
-      while ($nid = $query->fetchColumn()) {
-        $node = node_load($nid);
-
-        // un@bellcom.dk, 2012.09.11 moved to here from query section above
-        if (is_array($restrict_polling_stations)) {
-          if (!in_array($node->field_polling_station[$language->language][0]['nid'], $restrict_polling_stations)) {
-            continue;
-          }
+        $query = db_select('field_data_field_party', 'p');
+        $query->fields('p', array('entity_id'));
+        if ($user_party_id) {
+          $query->condition('p.field_party_tid', $user_party_id);
         }
 
-        if (isset($node->field_polling_station_post[$language->language][0]['value'])) {
-          $total++;
-          if (empty ($node->field_rsvp[$language->language][0]['value'])) {
-            $missing++;
+        // un@bellcom.dk, 2012.09.11 moved into loop
+        // if (is_array($restrict_polling_stations)) {
+        //   $query->join('field_data_field_volunteers_pr_party', 'vpp', 'vpp.field_volunteers_pr_party_party = p.entity_id');
+        //   $query->condition('vpp.entity_id', $restrict_polling_stations, 'IN');
+        // }
+
+        $query->condition('p.bundle', 'volunteers');
+        $query = $query->execute();
+
+        $total = 0;
+        $yes = 0;
+        $no = 0;
+        $missing = 0;
+
+        while ($nid = $query->fetchColumn()) {
+          $node = node_load($nid);
+
+          // un@bellcom.dk, 2012.09.11 moved to here from query section above
+          if (is_array($restrict_polling_stations)) {
+            if (!in_array($node->field_polling_station[$language->language][0]['nid'], $restrict_polling_stations)) {
+              continue;
+            }
           }
-          else {
-            switch (strtolower($node->field_rsvp[$language->language][0]['value'])) {
-              case '1': //yes
-                 $yes++;
-                break;
-              case '2': //no
-              case '3': //never
-                $no++;
-                break;
+
+          if (isset($node->field_polling_station_post[$language->language][0]['value'])) {
+            $total++;
+            if (empty ($node->field_rsvp[$language->language][0]['value'])) {
+              $missing++;
+            }
+            else {
+              switch (strtolower($node->field_rsvp[$language->language][0]['value'])) {
+                case '1': //yes
+                  $yes++;
+                  break;
+                case '2': //no
+                case '3': //never
+                  $no++;
+                  break;
+              }
             }
           }
         }
-      }
 
-      $block['content'] .= '
-        <div class="partistatuslinie">
-          <div class="partistatusenhed">Status total</div>
-          <div class="partistatusenhedvaerdi">' . ($yes + $missing) . '/' . $grand_total . '</div>
-        </div>
-        <div class="partistatuslinie">
-          <div class="partistatusenhed">Bekræftede</div>
-          <div class="partistatusenhedvaerdi">' . $yes . '</div>
-        </div>
-        <div class="partistatuslinie">
-          <div class="partistatusenhed">Afventer svar</div>
-          <div class="partistatusenhedvaerdi">' . $missing . '</div>
-        </div>
-        <div class="partistatuslinie">
-          <div class="partistatusenhed">Afviste</div>
-          <div class="partistatusenhedvaerdi">' . $no . '</div>
-        </div>
-        <div class="partistatuslinie">
-          <div class="partistatusenhed">Ledige pladser</div>
-          <div class="partistatusenhedvaerdi">' . ($grand_total - ($yes + $missing)) . '</div>
-        </div>
-      ';
+        $block['content'] .= '
+          <div class="partistatuslinie">
+            <div class="partistatusenhed">Status total</div>
+            <div class="partistatusenhedvaerdi">' . ($yes + $missing) . '/' . $grand_total . '</div>
+          </div>
+          <div class="partistatuslinie">
+            <div class="partistatusenhed">Bekræftede</div>
+            <div class="partistatusenhedvaerdi">' . $yes . '</div>
+          </div>
+          <div class="partistatuslinie">
+            <div class="partistatusenhed">Afventer svar</div>
+            <div class="partistatusenhedvaerdi">' . $missing . '</div>
+          </div>
+          <div class="partistatuslinie">
+            <div class="partistatusenhed">Afviste</div>
+            <div class="partistatusenhedvaerdi">' . $no . '</div>
+          </div>
+          <div class="partistatuslinie">
+            <div class="partistatusenhed">Ledige pladser</div>
+            <div class="partistatusenhedvaerdi">' . ($grand_total - ($yes + $missing)) . '</div>
+          </div>
+        ';
 
-      break;
+        break;
 
     case 'party_constituency_status':
 
@@ -216,10 +213,6 @@ function valhalla_blocks_block_view($delta = '') {
               $res=$query->execute()
                         ->fetchColumn();
 
-              if (is_array($restrict_polling_stations) && !in_array($polling_station->nid, $restrict_polling_stations)) {
-                continue;
-              }
-
               $data[$constituency->title][$polling_station->nid][$nid]['needed']+=$res;
             }
           }
@@ -246,6 +239,11 @@ function valhalla_blocks_block_view($delta = '') {
         $table['header']['total'] = 'I alt';
 
         foreach ($constituency_data as $id => $polling_station_data) {
+          // Restrict list on frontpage, so the user cannot to see other polling stations
+          // than he is allowed to.
+          if (is_array($restrict_polling_stations) && !in_array($id, $restrict_polling_stations)) {
+                continue;
+          }
 
           $volunteers_data=array();
 
