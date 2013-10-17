@@ -1,0 +1,46 @@
+<?php
+
+/*
+ *
+ * @author Juulia Devadze <juulia@bellcom.ee>
+ * @copyright Bellcom Open Source aps.
+ */
+
+function valhalla_settings_schema() {
+  $schema['valhalla_settings'] = array(
+      'description' => 'Table used store info about locking the "valgsted" content type',
+      'fields' => array(
+          'id' => array(
+              'type' => 'serial',
+              'size' => 'big',
+              'unsigned' => TRUE,
+              'not null' => TRUE,
+          ),
+          'polling_stations_lock' =>  array(
+              'type' => 'int', 
+              'description' => ' locking the "valgsted" content type',
+              'size'=>'tiny',
+              'unsigned' => TRUE,
+              'not null'=>TRUE, 
+              'default'=>0
+          ),
+       
+      ),
+      'primary key' => array('id'),
+  );
+  return $schema;
+}
+
+function valhalla_settings_install() {
+  db_insert("valhalla_settings")
+		->fields(array(
+			'polling_stations_lock' => 0,
+			
+			))
+		->execute();
+}
+
+function valhalla_settings_uninstall() {
+}
+
+?>
