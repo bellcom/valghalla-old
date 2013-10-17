@@ -23,8 +23,10 @@ function _valhalla_helper_wrap_name($node, $container = 'p') {
       3 => 'never',
   );
 
+  $party = taxonomy_term_load($node->field_party[$language->language][0]['tid']);
+
   $rsvp = empty($node->field_rsvp[$language->language][0]['value']) ? 0 : $node->field_rsvp[$language->language][0]['value'];
-  $display = $node->title . ' (' . $rsvp_map[$rsvp] . ')';
+  $display = '(' . $party->name. ') ' . $node->title . ' (' . $rsvp_map[$rsvp] . ')';
   return '<' . $container . ' class="' . $rsvp_class_map[$rsvp] . '">' . $display . '</' . $container . '>';
 }
 
@@ -114,35 +116,66 @@ function _valhalla_helper_get_volunteer_by_cpr($cpr) {
 }
 
 /**
- * danish cpr number validation via modulus 11
- * credits to: philip@groundweb.dk http://groundweb.dk
+ * Thomas Thune Hansen <tth@bellcom.dk>
+ *
+ * Length has to be 10 characters, and it cant contain a dash.
  *
  * @param string $cpr
  * @return boolean
  */
 function _valhalla_helper_validate_cpr($cpr) {
-  return true;
-  $cpr = str_replace(array(' ', '-'), '', $cpr);
+  if(strlen($cpr) === 10 && !strpos($cpr, '-')){
+    return true;
+  }
+  return false;
+}
 
-  $faktor = 1;
-  $result = 0;
-  if (strlen($cpr) == 10) {
-    while ($cpr > "") {
-      $vaerdi = substr($cpr, -1);
-      $result = $result + ($vaerdi * $faktor);
-      $faktor++;
-      if ($faktor >= 8) {
-        $faktor = 2;
-      }
-      $cpr = substr($cpr, 0, -1);
-    }
+/**
+ * Thomas Thune Hansen <tth@bellcom.dk>
+ *
+ * Helper function to check if the post if unused on the chosen polling
+ * station
+ *
+ * @params
+ *  polling station nid
+ *  role nid
+ *  party tid
+ * @return
+ *  bool
+ */
+function _valhalla_helper_validate_polling_post($polling_station_id, $role_id, $party_id){
+  $polling_station = node_load($polling_station_id);
+  $posts_array = valhalla_volunteers_to_polling_station_roles($polling_station, $party_id, FALSE);
 
-    if (is_int($result / 11) == true) {
-      return true;
+  $role_array = _valhalla_helper_get_role_array();
+
+  // Get free posts
+  $free_posts = array_diff_assoc($posts_array['posts_to_fill'], $posts_array['existing']);
+
+  // Check if one of the free posts has the correct role id.
+  foreach($free_posts as $post){
+    if($role_array[$post['title']] == $role_id){
+      return TRUE;
     }
   }
+  return FALSE;
+}
 
-  return false;
+function _valhalla_helper_get_role_array(){
+  // tth: Get all roles, query all content from bundle 'roles'
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'roles');
+  $results = $query->execute();
+  $nodes = node_load_multiple(array_keys($results['node']));
+
+  // tth: Create an array for lookup
+  $role_array = array();
+  foreach($nodes as $key => $value){
+    $role_array[strtolower($value->title)] = $key;
+  }
+
+  return $role_array;
 }
 
 /**
