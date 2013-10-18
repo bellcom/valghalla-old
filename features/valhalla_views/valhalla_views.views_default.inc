@@ -23,14 +23,20 @@ function valhalla_views_views_default_views() {
   /* Display: Defaults */
   $handler = $view->new_display('default', 'Defaults', 'default');
   $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'mere';
   $handler->display->display_options['access']['type'] = 'none';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
-  $handler->display->display_options['query']['options']['query_comment'] = FALSE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Udfør';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Gendan';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortér efter';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Stigende';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Faldende';
   $handler->display->display_options['pager']['type'] = 'none';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['grouping'] = '';
   $handler->display->display_options['style_options']['columns'] = array(
     'field_label' => 'field_label',
     'field_polling_station_post' => 'field_polling_station_post',
@@ -144,34 +150,28 @@ function valhalla_views_views_default_views() {
       'separator' => '',
     ),
   );
-  /* Relationship: Content: Taxonomy terms on node */
+  /* Forbindelse: Indhold: Taxonomy terms on node */
   $handler->display->display_options['relationships']['term_node_tid']['id'] = 'term_node_tid';
   $handler->display->display_options['relationships']['term_node_tid']['table'] = 'node';
   $handler->display->display_options['relationships']['term_node_tid']['field'] = 'term_node_tid';
-  $handler->display->display_options['relationships']['term_node_tid']['vocabularies'] = array(
-    'volonteers_meeting_time' => 'volonteers_meeting_time',
-    'partier' => 0,
-    'tags' => 0,
-    'valgtype' => 0,
-  );
-  /* Field: Content: Nid */
+  /* Felt: Indhold: Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
   $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
   $handler->display->display_options['fields']['nid']['link_to_node'] = TRUE;
-  /* Field: Content: Title */
+  /* Felt: Indhold: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = 'Navn';
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
-  /* Field: Content: CPR Number */
+  /* Felt: Indhold: CPR Number */
   $handler->display->display_options['fields']['field_cpr_number']['id'] = 'field_cpr_number';
   $handler->display->display_options['fields']['field_cpr_number']['table'] = 'field_data_field_cpr_number';
   $handler->display->display_options['fields']['field_cpr_number']['field'] = 'field_cpr_number';
   $handler->display->display_options['fields']['field_cpr_number']['exclude'] = TRUE;
-  /* Field: Field: Parti */
+  /* Felt: Felt: Parti */
   $handler->display->display_options['fields']['entity_id_6']['id'] = 'entity_id_6';
   $handler->display->display_options['fields']['entity_id_6']['table'] = 'field_data_field_party';
   $handler->display->display_options['fields']['entity_id_6']['field'] = 'field_party';
@@ -182,42 +182,42 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['entity_id_6']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['entity_id_6']['hide_empty'] = TRUE;
   $handler->display->display_options['fields']['entity_id_6']['type'] = 'taxonomy_term_reference_plain';
-  /* Field: Content: City */
+  /* Felt: Indhold: By */
   $handler->display->display_options['fields']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['fields']['entity_id']['table'] = 'field_data_field_address_city';
   $handler->display->display_options['fields']['entity_id']['field'] = 'field_address_city';
   $handler->display->display_options['fields']['entity_id']['label'] = 'field_address_door';
   $handler->display->display_options['fields']['entity_id']['exclude'] = TRUE;
   $handler->display->display_options['fields']['entity_id']['hide_empty'] = TRUE;
-  /* Field: Content: Door / Side */
+  /* Felt: Indhold: Dør / Side */
   $handler->display->display_options['fields']['entity_id_1']['id'] = 'entity_id_1';
   $handler->display->display_options['fields']['entity_id_1']['table'] = 'field_data_field_address_door';
   $handler->display->display_options['fields']['entity_id_1']['field'] = 'field_address_door';
   $handler->display->display_options['fields']['entity_id_1']['label'] = 'field_address_door';
   $handler->display->display_options['fields']['entity_id_1']['exclude'] = TRUE;
   $handler->display->display_options['fields']['entity_id_1']['hide_empty'] = TRUE;
-  /* Field: Content: Floor */
+  /* Felt: Indhold: Sal */
   $handler->display->display_options['fields']['entity_id_2']['id'] = 'entity_id_2';
   $handler->display->display_options['fields']['entity_id_2']['table'] = 'field_data_field_address_floor';
   $handler->display->display_options['fields']['entity_id_2']['field'] = 'field_address_floor';
   $handler->display->display_options['fields']['entity_id_2']['label'] = 'field_address_floor';
   $handler->display->display_options['fields']['entity_id_2']['exclude'] = TRUE;
   $handler->display->display_options['fields']['entity_id_2']['hide_empty'] = TRUE;
-  /* Field: Content: Address */
+  /* Felt: Indhold: Vej */
   $handler->display->display_options['fields']['entity_id_3']['id'] = 'entity_id_3';
   $handler->display->display_options['fields']['entity_id_3']['table'] = 'field_data_field_address_road';
   $handler->display->display_options['fields']['entity_id_3']['field'] = 'field_address_road';
   $handler->display->display_options['fields']['entity_id_3']['label'] = 'field_address_road';
   $handler->display->display_options['fields']['entity_id_3']['exclude'] = TRUE;
   $handler->display->display_options['fields']['entity_id_3']['hide_empty'] = TRUE;
-  /* Field: Content: House no. */
+  /* Felt: Indhold: Nummer */
   $handler->display->display_options['fields']['entity_id_4']['id'] = 'entity_id_4';
   $handler->display->display_options['fields']['entity_id_4']['table'] = 'field_data_field_address_road_no';
   $handler->display->display_options['fields']['entity_id_4']['field'] = 'field_address_road_no';
   $handler->display->display_options['fields']['entity_id_4']['label'] = 'field_address_road_no';
   $handler->display->display_options['fields']['entity_id_4']['exclude'] = TRUE;
   $handler->display->display_options['fields']['entity_id_4']['hide_empty'] = TRUE;
-  /* Field: Content: Zip code */
+  /* Felt: Indhold: Postnummer */
   $handler->display->display_options['fields']['entity_id_5']['id'] = 'entity_id_5';
   $handler->display->display_options['fields']['entity_id_5']['table'] = 'field_data_field_address_zipcode';
   $handler->display->display_options['fields']['entity_id_5']['field'] = 'field_address_zipcode';
@@ -228,7 +228,7 @@ function valhalla_views_views_default_views() {
     'thousand_separator' => ' ',
     'prefix_suffix' => 1,
   );
-  /* Field: Content: Telefon */
+  /* Felt: Indhold: Telefon */
   $handler->display->display_options['fields']['entity_id_7']['id'] = 'entity_id_7';
   $handler->display->display_options['fields']['entity_id_7']['table'] = 'field_data_field_phone';
   $handler->display->display_options['fields']['entity_id_7']['field'] = 'field_phone';
@@ -239,13 +239,13 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['entity_id_7']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['entity_id_7']['hide_empty'] = TRUE;
   $handler->display->display_options['fields']['entity_id_7']['type'] = 'text_plain';
-  /* Field: Content: Telefon 2 */
+  /* Felt: Indhold: Telefon 2 */
   $handler->display->display_options['fields']['entity_id_8']['id'] = 'entity_id_8';
   $handler->display->display_options['fields']['entity_id_8']['table'] = 'field_data_field_phone2';
   $handler->display->display_options['fields']['entity_id_8']['field'] = 'field_phone2';
   $handler->display->display_options['fields']['entity_id_8']['exclude'] = TRUE;
   $handler->display->display_options['fields']['entity_id_8']['hide_empty'] = TRUE;
-  /* Field: Field: Polling Station */
+  /* Felt: Felt: Begræns adgang til følgende valgsteder */
   $handler->display->display_options['fields']['entity_id_9']['id'] = 'entity_id_9';
   $handler->display->display_options['fields']['entity_id_9']['table'] = 'field_data_field_polling_station';
   $handler->display->display_options['fields']['entity_id_9']['field'] = 'field_polling_station';
@@ -256,7 +256,7 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['entity_id_9']['element_wrapper_type'] = 'span';
   $handler->display->display_options['fields']['entity_id_9']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['entity_id_9']['type'] = 'node_reference_plain';
-  /* Field: Global: Custom text */
+  /* Felt: Global: Tilpasset tekst */
   $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['table'] = 'views';
   $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
@@ -268,7 +268,7 @@ function valhalla_views_views_default_views() {
 </div>
 </div>';
   $handler->display->display_options['fields']['nothing']['alter']['make_link'] = TRUE;
-  /* Field: Content: Polling Station post */
+  /* Felt: Indhold: Polling Station post */
   $handler->display->display_options['fields']['field_polling_station_post']['id'] = 'field_polling_station_post';
   $handler->display->display_options['fields']['field_polling_station_post']['table'] = 'field_data_field_polling_station_post';
   $handler->display->display_options['fields']['field_polling_station_post']['field'] = 'field_polling_station_post';
@@ -278,48 +278,52 @@ function valhalla_views_views_default_views() {
     'thousand_separator' => ' ',
     'prefix_suffix' => 1,
   );
-  /* Field: Global: Custom text */
+  /* Felt: Global: Tilpasset tekst */
   $handler->display->display_options['fields']['nothing_1']['id'] = 'nothing_1';
   $handler->display->display_options['fields']['nothing_1']['table'] = 'views';
   $handler->display->display_options['fields']['nothing_1']['field'] = 'nothing';
   $handler->display->display_options['fields']['nothing_1']['label'] = 'Kvittering';
-  /* Sort criterion: Content: Status (field_rsvp) */
+  /* Sorteringskriterie: Indhold: Status (field_rsvp) */
   $handler->display->display_options['sorts']['field_rsvp_value']['id'] = 'field_rsvp_value';
   $handler->display->display_options['sorts']['field_rsvp_value']['table'] = 'field_data_field_rsvp';
   $handler->display->display_options['sorts']['field_rsvp_value']['field'] = 'field_rsvp_value';
-  /* Sort criterion: Taxonomy term: Name */
+  /* Sorteringskriterie: Ord i ordforråd: Navn */
   $handler->display->display_options['sorts']['name']['id'] = 'name';
   $handler->display->display_options['sorts']['name']['table'] = 'taxonomy_term_data';
   $handler->display->display_options['sorts']['name']['field'] = 'name';
   $handler->display->display_options['sorts']['name']['relationship'] = 'term_node_tid';
-  /* Sort criterion: Content: Title */
+  /* Sorteringskriterie: Indhold: Titel */
   $handler->display->display_options['sorts']['title']['id'] = 'title';
   $handler->display->display_options['sorts']['title']['table'] = 'node';
   $handler->display->display_options['sorts']['title']['field'] = 'title';
-  /* Contextual filter: Field: Polling Station (field_polling_station) */
+  /* Kontekstuelt filter: Felt: Begræns adgang til følgende valgsteder (field_polling_station) */
   $handler->display->display_options['arguments']['field_polling_station_nid']['id'] = 'field_polling_station_nid';
   $handler->display->display_options['arguments']['field_polling_station_nid']['table'] = 'field_data_field_polling_station';
   $handler->display->display_options['arguments']['field_polling_station_nid']['field'] = 'field_polling_station_nid';
+  $handler->display->display_options['arguments']['field_polling_station_nid']['exception']['title'] = 'Alle';
   $handler->display->display_options['arguments']['field_polling_station_nid']['default_argument_type'] = 'fixed';
   $handler->display->display_options['arguments']['field_polling_station_nid']['summary']['format'] = 'default_summary';
-  /* Filter criterion: Content: Type */
+  /* Filterkriterie: Indhold: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
     'volunteers' => 'volunteers',
   );
-  /* Filter criterion: Field: Polling Station (field_polling_station) */
+  $handler->display->display_options['filters']['type']['group'] = '0';
+  /* Filterkriterie: Felt: Begræns adgang til følgende valgsteder (field_polling_station) */
   $handler->display->display_options['filters']['field_polling_station_nid']['id'] = 'field_polling_station_nid';
   $handler->display->display_options['filters']['field_polling_station_nid']['table'] = 'field_data_field_polling_station';
   $handler->display->display_options['filters']['field_polling_station_nid']['field'] = 'field_polling_station_nid';
   $handler->display->display_options['filters']['field_polling_station_nid']['operator'] = 'not empty';
-  /* Filter criterion: Content: Polling Station post (field_polling_station_post) */
+  $handler->display->display_options['filters']['field_polling_station_nid']['group'] = '0';
+  /* Filterkriterie: Indhold: Polling Station post (field_polling_station_post) */
   $handler->display->display_options['filters']['field_polling_station_post_value']['id'] = 'field_polling_station_post_value';
   $handler->display->display_options['filters']['field_polling_station_post_value']['table'] = 'field_data_field_polling_station_post';
   $handler->display->display_options['filters']['field_polling_station_post_value']['field'] = 'field_polling_station_post_value';
   $handler->display->display_options['filters']['field_polling_station_post_value']['operator'] = '>=';
   $handler->display->display_options['filters']['field_polling_station_post_value']['value']['value'] = '1';
+  $handler->display->display_options['filters']['field_polling_station_post_value']['group'] = '0';
 
   /* Display: Content pane */
   $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
@@ -331,6 +335,7 @@ function valhalla_views_views_default_views() {
   );
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
   $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['grouping'] = '';
   $handler->display->display_options['style_options']['columns'] = array(
     'nid' => 'nid',
     'title' => 'title',
@@ -429,7 +434,7 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Field: Polling Station (field_polling_station) */
+  /* Kontekstuelt filter: Felt: Begræns adgang til følgende valgsteder (field_polling_station) */
   $handler->display->display_options['arguments']['field_polling_station_nid']['id'] = 'field_polling_station_nid';
   $handler->display->display_options['arguments']['field_polling_station_nid']['table'] = 'field_data_field_polling_station';
   $handler->display->display_options['arguments']['field_polling_station_nid']['field'] = 'field_polling_station_nid';
@@ -468,6 +473,7 @@ function valhalla_views_views_default_views() {
   );
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
   $handler->display->display_options['style_plugin'] = 'default';
+  $handler->display->display_options['style_options']['grouping'] = '';
   $handler->display->display_options['defaults']['style_options'] = FALSE;
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
   $handler->display->display_options['row_plugin'] = 'fields';
@@ -479,13 +485,13 @@ function valhalla_views_views_default_views() {
   );
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Content: Nid */
+  /* Felt: Indhold: Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
   $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
   $handler->display->display_options['fields']['nid']['link_to_node'] = TRUE;
-  /* Field: Field: Parti */
+  /* Felt: Felt: Parti */
   $handler->display->display_options['fields']['entity_id_6']['id'] = 'entity_id_6';
   $handler->display->display_options['fields']['entity_id_6']['table'] = 'field_data_field_party';
   $handler->display->display_options['fields']['entity_id_6']['field'] = 'field_party';
@@ -497,13 +503,13 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['entity_id_6']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['entity_id_6']['hide_empty'] = TRUE;
   $handler->display->display_options['fields']['entity_id_6']['type'] = 'taxonomy_term_reference_plain';
-  /* Field: Content: Title */
+  /* Felt: Indhold: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = 'Navn';
   $handler->display->display_options['fields']['title']['exclude'] = TRUE;
-  /* Field: Telefon */
+  /* Felt: Telefon */
   $handler->display->display_options['fields']['entity_id_7']['id'] = 'entity_id_7';
   $handler->display->display_options['fields']['entity_id_7']['table'] = 'field_data_field_phone';
   $handler->display->display_options['fields']['entity_id_7']['field'] = 'field_phone';
@@ -515,7 +521,7 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['entity_id_7']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['entity_id_7']['hide_empty'] = TRUE;
   $handler->display->display_options['fields']['entity_id_7']['type'] = 'text_plain';
-  /* Field: Content: Telefon 2 */
+  /* Felt: Indhold: Telefon 2 */
   $handler->display->display_options['fields']['entity_id_8']['id'] = 'entity_id_8';
   $handler->display->display_options['fields']['entity_id_8']['table'] = 'field_data_field_phone2';
   $handler->display->display_options['fields']['entity_id_8']['field'] = 'field_phone2';
@@ -525,42 +531,42 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['entity_id_8']['element_wrapper_type'] = '0';
   $handler->display->display_options['fields']['entity_id_8']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['entity_id_8']['hide_empty'] = TRUE;
-  /* Field: Content: City */
+  /* Felt: Indhold: By */
   $handler->display->display_options['fields']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['fields']['entity_id']['table'] = 'field_data_field_address_city';
   $handler->display->display_options['fields']['entity_id']['field'] = 'field_address_city';
   $handler->display->display_options['fields']['entity_id']['label'] = 'field_address_door';
   $handler->display->display_options['fields']['entity_id']['exclude'] = TRUE;
   $handler->display->display_options['fields']['entity_id']['hide_empty'] = TRUE;
-  /* Field: Content: Door / Side */
+  /* Felt: Indhold: Dør / Side */
   $handler->display->display_options['fields']['entity_id_1']['id'] = 'entity_id_1';
   $handler->display->display_options['fields']['entity_id_1']['table'] = 'field_data_field_address_door';
   $handler->display->display_options['fields']['entity_id_1']['field'] = 'field_address_door';
   $handler->display->display_options['fields']['entity_id_1']['label'] = 'field_address_door';
   $handler->display->display_options['fields']['entity_id_1']['exclude'] = TRUE;
   $handler->display->display_options['fields']['entity_id_1']['hide_empty'] = TRUE;
-  /* Field: Content: Floor */
+  /* Felt: Indhold: Sal */
   $handler->display->display_options['fields']['entity_id_2']['id'] = 'entity_id_2';
   $handler->display->display_options['fields']['entity_id_2']['table'] = 'field_data_field_address_floor';
   $handler->display->display_options['fields']['entity_id_2']['field'] = 'field_address_floor';
   $handler->display->display_options['fields']['entity_id_2']['label'] = 'field_address_floor';
   $handler->display->display_options['fields']['entity_id_2']['exclude'] = TRUE;
   $handler->display->display_options['fields']['entity_id_2']['hide_empty'] = TRUE;
-  /* Field: Content: Address */
+  /* Felt: Indhold: Vej */
   $handler->display->display_options['fields']['entity_id_3']['id'] = 'entity_id_3';
   $handler->display->display_options['fields']['entity_id_3']['table'] = 'field_data_field_address_road';
   $handler->display->display_options['fields']['entity_id_3']['field'] = 'field_address_road';
   $handler->display->display_options['fields']['entity_id_3']['label'] = 'field_address_road';
   $handler->display->display_options['fields']['entity_id_3']['exclude'] = TRUE;
   $handler->display->display_options['fields']['entity_id_3']['hide_empty'] = TRUE;
-  /* Field: Content: House no. */
+  /* Felt: Indhold: Nummer */
   $handler->display->display_options['fields']['entity_id_4']['id'] = 'entity_id_4';
   $handler->display->display_options['fields']['entity_id_4']['table'] = 'field_data_field_address_road_no';
   $handler->display->display_options['fields']['entity_id_4']['field'] = 'field_address_road_no';
   $handler->display->display_options['fields']['entity_id_4']['label'] = 'field_address_road_no';
   $handler->display->display_options['fields']['entity_id_4']['exclude'] = TRUE;
   $handler->display->display_options['fields']['entity_id_4']['hide_empty'] = TRUE;
-  /* Field: Content: Zip code */
+  /* Felt: Indhold: Postnummer */
   $handler->display->display_options['fields']['entity_id_5']['id'] = 'entity_id_5';
   $handler->display->display_options['fields']['entity_id_5']['table'] = 'field_data_field_address_zipcode';
   $handler->display->display_options['fields']['entity_id_5']['field'] = 'field_address_zipcode';
@@ -571,7 +577,7 @@ function valhalla_views_views_default_views() {
     'thousand_separator' => ' ',
     'prefix_suffix' => 1,
   );
-  /* Field: Field: Polling Station */
+  /* Felt: Felt: Begræns adgang til følgende valgsteder */
   $handler->display->display_options['fields']['entity_id_9']['id'] = 'entity_id_9';
   $handler->display->display_options['fields']['entity_id_9']['table'] = 'field_data_field_polling_station';
   $handler->display->display_options['fields']['entity_id_9']['field'] = 'field_polling_station';
@@ -582,7 +588,7 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['entity_id_9']['element_wrapper_type'] = 'span';
   $handler->display->display_options['fields']['entity_id_9']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['entity_id_9']['type'] = 'node_reference_plain';
-  /* Field: Global: Custom text */
+  /* Felt: Global: Tilpasset tekst */
   $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['table'] = 'views';
   $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
@@ -595,7 +601,7 @@ function valhalla_views_views_default_views() {
 </div>';
   $handler->display->display_options['fields']['nothing']['alter']['make_link'] = TRUE;
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Field: Polling Station (field_polling_station) */
+  /* Kontekstuelt filter: Felt: Begræns adgang til følgende valgsteder (field_polling_station) */
   $handler->display->display_options['arguments']['field_polling_station_nid']['id'] = 'field_polling_station_nid';
   $handler->display->display_options['arguments']['field_polling_station_nid']['table'] = 'field_data_field_polling_station';
   $handler->display->display_options['arguments']['field_polling_station_nid']['field'] = 'field_polling_station_nid';
@@ -630,24 +636,24 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['css_class'] = 'Kvitteringsliste';
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Content: Nid */
+  /* Felt: Indhold: Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
   $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
   $handler->display->display_options['fields']['nid']['link_to_node'] = TRUE;
-  /* Field: Content: Title */
+  /* Felt: Indhold: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = 'Navn';
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
-  /* Field: Content: CPR Number */
+  /* Felt: Indhold: CPR Number */
   $handler->display->display_options['fields']['field_cpr_number']['id'] = 'field_cpr_number';
   $handler->display->display_options['fields']['field_cpr_number']['table'] = 'field_data_field_cpr_number';
   $handler->display->display_options['fields']['field_cpr_number']['field'] = 'field_cpr_number';
   $handler->display->display_options['fields']['field_cpr_number']['exclude'] = TRUE;
-  /* Field: Field: Parti */
+  /* Felt: Felt: Parti */
   $handler->display->display_options['fields']['entity_id_6']['id'] = 'entity_id_6';
   $handler->display->display_options['fields']['entity_id_6']['table'] = 'field_data_field_party';
   $handler->display->display_options['fields']['entity_id_6']['field'] = 'field_party';
@@ -659,42 +665,42 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['entity_id_6']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['entity_id_6']['hide_empty'] = TRUE;
   $handler->display->display_options['fields']['entity_id_6']['type'] = 'taxonomy_term_reference_plain';
-  /* Field: Content: City */
+  /* Felt: Indhold: By */
   $handler->display->display_options['fields']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['fields']['entity_id']['table'] = 'field_data_field_address_city';
   $handler->display->display_options['fields']['entity_id']['field'] = 'field_address_city';
   $handler->display->display_options['fields']['entity_id']['label'] = 'field_address_door';
   $handler->display->display_options['fields']['entity_id']['exclude'] = TRUE;
   $handler->display->display_options['fields']['entity_id']['hide_empty'] = TRUE;
-  /* Field: Content: Door / Side */
+  /* Felt: Indhold: Dør / Side */
   $handler->display->display_options['fields']['entity_id_1']['id'] = 'entity_id_1';
   $handler->display->display_options['fields']['entity_id_1']['table'] = 'field_data_field_address_door';
   $handler->display->display_options['fields']['entity_id_1']['field'] = 'field_address_door';
   $handler->display->display_options['fields']['entity_id_1']['label'] = 'field_address_door';
   $handler->display->display_options['fields']['entity_id_1']['exclude'] = TRUE;
   $handler->display->display_options['fields']['entity_id_1']['hide_empty'] = TRUE;
-  /* Field: Content: Floor */
+  /* Felt: Indhold: Sal */
   $handler->display->display_options['fields']['entity_id_2']['id'] = 'entity_id_2';
   $handler->display->display_options['fields']['entity_id_2']['table'] = 'field_data_field_address_floor';
   $handler->display->display_options['fields']['entity_id_2']['field'] = 'field_address_floor';
   $handler->display->display_options['fields']['entity_id_2']['label'] = 'field_address_floor';
   $handler->display->display_options['fields']['entity_id_2']['exclude'] = TRUE;
   $handler->display->display_options['fields']['entity_id_2']['hide_empty'] = TRUE;
-  /* Field: Content: Address */
+  /* Felt: Indhold: Vej */
   $handler->display->display_options['fields']['entity_id_3']['id'] = 'entity_id_3';
   $handler->display->display_options['fields']['entity_id_3']['table'] = 'field_data_field_address_road';
   $handler->display->display_options['fields']['entity_id_3']['field'] = 'field_address_road';
   $handler->display->display_options['fields']['entity_id_3']['label'] = 'field_address_road';
   $handler->display->display_options['fields']['entity_id_3']['exclude'] = TRUE;
   $handler->display->display_options['fields']['entity_id_3']['hide_empty'] = TRUE;
-  /* Field: Content: House no. */
+  /* Felt: Indhold: Nummer */
   $handler->display->display_options['fields']['entity_id_4']['id'] = 'entity_id_4';
   $handler->display->display_options['fields']['entity_id_4']['table'] = 'field_data_field_address_road_no';
   $handler->display->display_options['fields']['entity_id_4']['field'] = 'field_address_road_no';
   $handler->display->display_options['fields']['entity_id_4']['label'] = 'field_address_road_no';
   $handler->display->display_options['fields']['entity_id_4']['exclude'] = TRUE;
   $handler->display->display_options['fields']['entity_id_4']['hide_empty'] = TRUE;
-  /* Field: Content: Zip code */
+  /* Felt: Indhold: Postnummer */
   $handler->display->display_options['fields']['entity_id_5']['id'] = 'entity_id_5';
   $handler->display->display_options['fields']['entity_id_5']['table'] = 'field_data_field_address_zipcode';
   $handler->display->display_options['fields']['entity_id_5']['field'] = 'field_address_zipcode';
@@ -705,7 +711,7 @@ function valhalla_views_views_default_views() {
     'thousand_separator' => ' ',
     'prefix_suffix' => 1,
   );
-  /* Field: Content: Telefon */
+  /* Felt: Indhold: Telefon */
   $handler->display->display_options['fields']['entity_id_7']['id'] = 'entity_id_7';
   $handler->display->display_options['fields']['entity_id_7']['table'] = 'field_data_field_phone';
   $handler->display->display_options['fields']['entity_id_7']['field'] = 'field_phone';
@@ -716,13 +722,13 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['entity_id_7']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['entity_id_7']['hide_empty'] = TRUE;
   $handler->display->display_options['fields']['entity_id_7']['type'] = 'text_plain';
-  /* Field: Content: Telefon 2 */
+  /* Felt: Indhold: Telefon 2 */
   $handler->display->display_options['fields']['entity_id_8']['id'] = 'entity_id_8';
   $handler->display->display_options['fields']['entity_id_8']['table'] = 'field_data_field_phone2';
   $handler->display->display_options['fields']['entity_id_8']['field'] = 'field_phone2';
   $handler->display->display_options['fields']['entity_id_8']['exclude'] = TRUE;
   $handler->display->display_options['fields']['entity_id_8']['hide_empty'] = TRUE;
-  /* Field: Field: Polling Station */
+  /* Felt: Felt: Begræns adgang til følgende valgsteder */
   $handler->display->display_options['fields']['entity_id_9']['id'] = 'entity_id_9';
   $handler->display->display_options['fields']['entity_id_9']['table'] = 'field_data_field_polling_station';
   $handler->display->display_options['fields']['entity_id_9']['field'] = 'field_polling_station';
@@ -733,7 +739,7 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['entity_id_9']['element_wrapper_type'] = 'span';
   $handler->display->display_options['fields']['entity_id_9']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['entity_id_9']['type'] = 'node_reference_plain';
-  /* Field: Global: Custom text */
+  /* Felt: Global: Tilpasset tekst */
   $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['table'] = 'views';
   $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
@@ -745,7 +751,7 @@ function valhalla_views_views_default_views() {
 </div>
 </div>';
   $handler->display->display_options['fields']['nothing']['alter']['make_link'] = TRUE;
-  /* Field: Content: Polling Station post */
+  /* Felt: Indhold: Polling Station post */
   $handler->display->display_options['fields']['field_polling_station_post']['id'] = 'field_polling_station_post';
   $handler->display->display_options['fields']['field_polling_station_post']['table'] = 'field_data_field_polling_station_post';
   $handler->display->display_options['fields']['field_polling_station_post']['field'] = 'field_polling_station_post';
@@ -756,16 +762,17 @@ function valhalla_views_views_default_views() {
     'thousand_separator' => ' ',
     'prefix_suffix' => 1,
   );
-  /* Field: Content: Diæt */
+  /* Felt: Indhold: Diæt */
   $handler->display->display_options['fields']['field_diaet']['id'] = 'field_diaet';
   $handler->display->display_options['fields']['field_diaet']['table'] = 'field_data_field_diaet';
   $handler->display->display_options['fields']['field_diaet']['field'] = 'field_diaet';
-  $handler->display->display_options['fields']['field_diaet']['empty'] = '750';
+  $handler->display->display_options['fields']['field_diaet']['empty'] = '1.185';
+  $handler->display->display_options['fields']['field_diaet']['hide_alter_empty'] = FALSE;
   $handler->display->display_options['fields']['field_diaet']['settings'] = array(
     'thousand_separator' => ' ',
     'prefix_suffix' => 1,
   );
-  /* Field: Global: Custom text */
+  /* Felt: Global: Tilpasset tekst */
   $handler->display->display_options['fields']['nothing_1']['id'] = 'nothing_1';
   $handler->display->display_options['fields']['nothing_1']['table'] = 'views';
   $handler->display->display_options['fields']['nothing_1']['field'] = 'nothing';
@@ -777,26 +784,20 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['title'] = 'Valgstyrere og tilforordnede';
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
   $handler->display->display_options['defaults']['header'] = FALSE;
-  /* Header: Global: View area */
+  /* Overskrift: Global: View-område */
   $handler->display->display_options['header']['view']['id'] = 'view';
   $handler->display->display_options['header']['view']['table'] = 'views';
   $handler->display->display_options['header']['view']['field'] = 'view';
   $handler->display->display_options['header']['view']['view_to_insert'] = 'valgsted:ctools_context_1';
   $handler->display->display_options['header']['view']['inherit_arguments'] = TRUE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Content: rolle_id */
-  $handler->display->display_options['fields']['field_rolle_id']['id'] = 'field_rolle_id';
-  $handler->display->display_options['fields']['field_rolle_id']['table'] = 'field_data_field_rolle_id';
-  $handler->display->display_options['fields']['field_rolle_id']['field'] = 'field_rolle_id';
-  $handler->display->display_options['fields']['field_rolle_id']['label'] = 'Rolle';
-  /* Field: Content: Label */
+  /* Felt: Indhold: Label */
   $handler->display->display_options['fields']['field_label']['id'] = 'field_label';
   $handler->display->display_options['fields']['field_label']['table'] = 'field_data_field_label';
   $handler->display->display_options['fields']['field_label']['field'] = 'field_label';
   $handler->display->display_options['fields']['field_label']['label'] = 'Rolle';
-  $handler->display->display_options['fields']['field_label']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_label']['element_label_colon'] = FALSE;
-  /* Field: Content: Polling Station post */
+  /* Felt: Indhold: Polling Station post */
   $handler->display->display_options['fields']['field_polling_station_post']['id'] = 'field_polling_station_post';
   $handler->display->display_options['fields']['field_polling_station_post']['table'] = 'field_data_field_polling_station_post';
   $handler->display->display_options['fields']['field_polling_station_post']['field'] = 'field_polling_station_post';
@@ -807,7 +808,7 @@ function valhalla_views_views_default_views() {
     'thousand_separator' => ' ',
     'prefix_suffix' => 1,
   );
-  /* Field: Field: Parti */
+  /* Felt: Felt: Parti */
   $handler->display->display_options['fields']['entity_id_6']['id'] = 'entity_id_6';
   $handler->display->display_options['fields']['entity_id_6']['table'] = 'field_data_field_party';
   $handler->display->display_options['fields']['entity_id_6']['field'] = 'field_party';
@@ -818,54 +819,54 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['entity_id_6']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['entity_id_6']['hide_empty'] = TRUE;
   $handler->display->display_options['fields']['entity_id_6']['type'] = 'taxonomy_term_reference_plain';
-  /* Field: Content: Nid */
+  /* Felt: Indhold: Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
   $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
   $handler->display->display_options['fields']['nid']['link_to_node'] = TRUE;
-  /* Field: Content: Title */
+  /* Felt: Indhold: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = 'Navn';
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
-  /* Field: Content: City */
+  /* Felt: Indhold: By */
   $handler->display->display_options['fields']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['fields']['entity_id']['table'] = 'field_data_field_address_city';
   $handler->display->display_options['fields']['entity_id']['field'] = 'field_address_city';
   $handler->display->display_options['fields']['entity_id']['label'] = 'field_address_door';
   $handler->display->display_options['fields']['entity_id']['exclude'] = TRUE;
   $handler->display->display_options['fields']['entity_id']['hide_empty'] = TRUE;
-  /* Field: Content: Door / Side */
+  /* Felt: Indhold: Dør / Side */
   $handler->display->display_options['fields']['entity_id_1']['id'] = 'entity_id_1';
   $handler->display->display_options['fields']['entity_id_1']['table'] = 'field_data_field_address_door';
   $handler->display->display_options['fields']['entity_id_1']['field'] = 'field_address_door';
   $handler->display->display_options['fields']['entity_id_1']['label'] = 'field_address_door';
   $handler->display->display_options['fields']['entity_id_1']['exclude'] = TRUE;
   $handler->display->display_options['fields']['entity_id_1']['hide_empty'] = TRUE;
-  /* Field: Content: Floor */
+  /* Felt: Indhold: Sal */
   $handler->display->display_options['fields']['entity_id_2']['id'] = 'entity_id_2';
   $handler->display->display_options['fields']['entity_id_2']['table'] = 'field_data_field_address_floor';
   $handler->display->display_options['fields']['entity_id_2']['field'] = 'field_address_floor';
   $handler->display->display_options['fields']['entity_id_2']['label'] = 'field_address_floor';
   $handler->display->display_options['fields']['entity_id_2']['exclude'] = TRUE;
   $handler->display->display_options['fields']['entity_id_2']['hide_empty'] = TRUE;
-  /* Field: Content: Address */
+  /* Felt: Indhold: Vej */
   $handler->display->display_options['fields']['entity_id_3']['id'] = 'entity_id_3';
   $handler->display->display_options['fields']['entity_id_3']['table'] = 'field_data_field_address_road';
   $handler->display->display_options['fields']['entity_id_3']['field'] = 'field_address_road';
   $handler->display->display_options['fields']['entity_id_3']['label'] = 'field_address_road';
   $handler->display->display_options['fields']['entity_id_3']['exclude'] = TRUE;
   $handler->display->display_options['fields']['entity_id_3']['hide_empty'] = TRUE;
-  /* Field: Content: House no. */
+  /* Felt: Indhold: Nummer */
   $handler->display->display_options['fields']['entity_id_4']['id'] = 'entity_id_4';
   $handler->display->display_options['fields']['entity_id_4']['table'] = 'field_data_field_address_road_no';
   $handler->display->display_options['fields']['entity_id_4']['field'] = 'field_address_road_no';
   $handler->display->display_options['fields']['entity_id_4']['label'] = 'field_address_road_no';
   $handler->display->display_options['fields']['entity_id_4']['exclude'] = TRUE;
   $handler->display->display_options['fields']['entity_id_4']['hide_empty'] = TRUE;
-  /* Field: Content: Zip code */
+  /* Felt: Indhold: Postnummer */
   $handler->display->display_options['fields']['entity_id_5']['id'] = 'entity_id_5';
   $handler->display->display_options['fields']['entity_id_5']['table'] = 'field_data_field_address_zipcode';
   $handler->display->display_options['fields']['entity_id_5']['field'] = 'field_address_zipcode';
@@ -878,7 +879,7 @@ function valhalla_views_views_default_views() {
     'thousand_separator' => ' ',
     'prefix_suffix' => 1,
   );
-  /* Field: Content: Telefon */
+  /* Felt: Indhold: Telefon */
   $handler->display->display_options['fields']['entity_id_7']['id'] = 'entity_id_7';
   $handler->display->display_options['fields']['entity_id_7']['table'] = 'field_data_field_phone';
   $handler->display->display_options['fields']['entity_id_7']['field'] = 'field_phone';
@@ -889,13 +890,13 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['entity_id_7']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['entity_id_7']['hide_empty'] = TRUE;
   $handler->display->display_options['fields']['entity_id_7']['type'] = 'text_plain';
-  /* Field: Content: Telefon 2 */
+  /* Felt: Indhold: Telefon 2 */
   $handler->display->display_options['fields']['entity_id_8']['id'] = 'entity_id_8';
   $handler->display->display_options['fields']['entity_id_8']['table'] = 'field_data_field_phone2';
   $handler->display->display_options['fields']['entity_id_8']['field'] = 'field_phone2';
   $handler->display->display_options['fields']['entity_id_8']['exclude'] = TRUE;
   $handler->display->display_options['fields']['entity_id_8']['hide_empty'] = TRUE;
-  /* Field: Field: Polling Station */
+  /* Felt: Felt: Begræns adgang til følgende valgsteder */
   $handler->display->display_options['fields']['entity_id_9']['id'] = 'entity_id_9';
   $handler->display->display_options['fields']['entity_id_9']['table'] = 'field_data_field_polling_station';
   $handler->display->display_options['fields']['entity_id_9']['field'] = 'field_polling_station';
@@ -906,7 +907,7 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['entity_id_9']['element_wrapper_type'] = 'span';
   $handler->display->display_options['fields']['entity_id_9']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['entity_id_9']['type'] = 'node_reference_plain';
-  /* Field: Global: Custom text */
+  /* Felt: Global: Tilpasset tekst */
   $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['table'] = 'views';
   $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
@@ -918,58 +919,241 @@ function valhalla_views_views_default_views() {
 </div>
 </div>';
   $handler->display->display_options['fields']['nothing']['alter']['make_link'] = TRUE;
-  /* Field: Content: CPR Number */
+  /* Felt: Indhold: CPR Number */
   $handler->display->display_options['fields']['field_cpr_number']['id'] = 'field_cpr_number';
   $handler->display->display_options['fields']['field_cpr_number']['table'] = 'field_data_field_cpr_number';
   $handler->display->display_options['fields']['field_cpr_number']['field'] = 'field_cpr_number';
   $handler->display->display_options['fields']['field_cpr_number']['exclude'] = TRUE;
-  /* Field: Content: meeting_time */
-  $handler->display->display_options['fields']['field_meeting_time']['id'] = 'field_meeting_time';
-  $handler->display->display_options['fields']['field_meeting_time']['table'] = 'field_data_field_meeting_time';
-  $handler->display->display_options['fields']['field_meeting_time']['field'] = 'field_meeting_time';
-  $handler->display->display_options['fields']['field_meeting_time']['label'] = 'Meeting time';
-  $handler->display->display_options['fields']['field_meeting_time']['type'] = 'taxonomy_term_reference_plain';
   $handler->display->display_options['defaults']['sorts'] = FALSE;
-  /* Sort criterion: Taxonomy term: Name */
+  /* Sorteringskriterie: Ord i ordforråd: Navn */
   $handler->display->display_options['sorts']['name']['id'] = 'name';
   $handler->display->display_options['sorts']['name']['table'] = 'taxonomy_term_data';
   $handler->display->display_options['sorts']['name']['field'] = 'name';
-  /* Sort criterion: Content: Polling Station post (field_polling_station_post) */
+  /* Sorteringskriterie: Indhold: Polling Station post (field_polling_station_post) */
   $handler->display->display_options['sorts']['field_polling_station_post_value']['id'] = 'field_polling_station_post_value';
   $handler->display->display_options['sorts']['field_polling_station_post_value']['table'] = 'field_data_field_polling_station_post';
   $handler->display->display_options['sorts']['field_polling_station_post_value']['field'] = 'field_polling_station_post_value';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['filter_groups']['groups'] = array(
+    1 => 'AND',
+    2 => 'AND',
+  );
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Content: Type */
+  /* Filterkriterie: Indhold: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
     'volunteers' => 'volunteers',
   );
-  $handler->display->display_options['filters']['type']['group'] = 0;
-  /* Filter criterion: Field: Polling Station (field_polling_station) */
+  $handler->display->display_options['filters']['type']['group'] = 1;
+  /* Filterkriterie: Felt: Begræns adgang til følgende valgsteder (field_polling_station) */
   $handler->display->display_options['filters']['field_polling_station_nid']['id'] = 'field_polling_station_nid';
   $handler->display->display_options['filters']['field_polling_station_nid']['table'] = 'field_data_field_polling_station';
   $handler->display->display_options['filters']['field_polling_station_nid']['field'] = 'field_polling_station_nid';
   $handler->display->display_options['filters']['field_polling_station_nid']['operator'] = 'not empty';
-  $handler->display->display_options['filters']['field_polling_station_nid']['group'] = 0;
-  /* Filter criterion: Content: Polling Station post (field_polling_station_post) */
+  $handler->display->display_options['filters']['field_polling_station_nid']['group'] = 1;
+  /* Filterkriterie: Indhold: Polling Station post (field_polling_station_post) */
   $handler->display->display_options['filters']['field_polling_station_post_value']['id'] = 'field_polling_station_post_value';
   $handler->display->display_options['filters']['field_polling_station_post_value']['table'] = 'field_data_field_polling_station_post';
   $handler->display->display_options['filters']['field_polling_station_post_value']['field'] = 'field_polling_station_post_value';
   $handler->display->display_options['filters']['field_polling_station_post_value']['operator'] = '>=';
   $handler->display->display_options['filters']['field_polling_station_post_value']['value']['value'] = '1';
-  $handler->display->display_options['filters']['field_polling_station_post_value']['group'] = 0;
+  $handler->display->display_options['filters']['field_polling_station_post_value']['group'] = 1;
   $handler->display->display_options['path'] = 'node/%/valgstederu';
+
+  /* Display: Valgstyrere og tilforordnede */
+  $handler = $view->new_display('page', 'Valgstyrere og tilforordnede', 'page_2');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'Valgstyrere og tilforordnede';
+  $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
+  $handler->display->display_options['defaults']['header'] = FALSE;
+  /* Overskrift: Global: View-område */
+  $handler->display->display_options['header']['view']['id'] = 'view';
+  $handler->display->display_options['header']['view']['table'] = 'views';
+  $handler->display->display_options['header']['view']['field'] = 'view';
+  $handler->display->display_options['header']['view']['view_to_insert'] = 'valgsted:ctools_context_1';
+  $handler->display->display_options['header']['view']['inherit_arguments'] = TRUE;
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Felt: Indhold: Label */
+  $handler->display->display_options['fields']['field_label']['id'] = 'field_label';
+  $handler->display->display_options['fields']['field_label']['table'] = 'field_data_field_label';
+  $handler->display->display_options['fields']['field_label']['field'] = 'field_label';
+  $handler->display->display_options['fields']['field_label']['label'] = 'Rolle';
+  $handler->display->display_options['fields']['field_label']['element_label_colon'] = FALSE;
+  /* Felt: Indhold: Polling Station post */
+  $handler->display->display_options['fields']['field_polling_station_post']['id'] = 'field_polling_station_post';
+  $handler->display->display_options['fields']['field_polling_station_post']['table'] = 'field_data_field_polling_station_post';
+  $handler->display->display_options['fields']['field_polling_station_post']['field'] = 'field_polling_station_post';
+  $handler->display->display_options['fields']['field_polling_station_post']['label'] = 'Placering';
+  $handler->display->display_options['fields']['field_polling_station_post']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_polling_station_post']['type'] = 'number_unformatted';
+  $handler->display->display_options['fields']['field_polling_station_post']['settings'] = array(
+    'thousand_separator' => ' ',
+    'prefix_suffix' => 1,
+  );
+  /* Felt: Felt: Parti */
+  $handler->display->display_options['fields']['entity_id_6']['id'] = 'entity_id_6';
+  $handler->display->display_options['fields']['entity_id_6']['table'] = 'field_data_field_party';
+  $handler->display->display_options['fields']['entity_id_6']['field'] = 'field_party';
+  $handler->display->display_options['fields']['entity_id_6']['element_type'] = '0';
+  $handler->display->display_options['fields']['entity_id_6']['element_label_type'] = '0';
+  $handler->display->display_options['fields']['entity_id_6']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['entity_id_6']['element_wrapper_type'] = '0';
+  $handler->display->display_options['fields']['entity_id_6']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['entity_id_6']['hide_empty'] = TRUE;
+  $handler->display->display_options['fields']['entity_id_6']['type'] = 'taxonomy_term_reference_plain';
+  /* Felt: Indhold: Nid */
+  $handler->display->display_options['fields']['nid']['id'] = 'nid';
+  $handler->display->display_options['fields']['nid']['table'] = 'node';
+  $handler->display->display_options['fields']['nid']['field'] = 'nid';
+  $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['nid']['link_to_node'] = TRUE;
+  /* Felt: Indhold: Titel */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = 'Navn';
+  $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
+  /* Felt: Indhold: By */
+  $handler->display->display_options['fields']['entity_id']['id'] = 'entity_id';
+  $handler->display->display_options['fields']['entity_id']['table'] = 'field_data_field_address_city';
+  $handler->display->display_options['fields']['entity_id']['field'] = 'field_address_city';
+  $handler->display->display_options['fields']['entity_id']['label'] = 'field_address_door';
+  $handler->display->display_options['fields']['entity_id']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['entity_id']['hide_empty'] = TRUE;
+  /* Felt: Indhold: Dør / Side */
+  $handler->display->display_options['fields']['entity_id_1']['id'] = 'entity_id_1';
+  $handler->display->display_options['fields']['entity_id_1']['table'] = 'field_data_field_address_door';
+  $handler->display->display_options['fields']['entity_id_1']['field'] = 'field_address_door';
+  $handler->display->display_options['fields']['entity_id_1']['label'] = 'field_address_door';
+  $handler->display->display_options['fields']['entity_id_1']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['entity_id_1']['hide_empty'] = TRUE;
+  /* Felt: Indhold: Sal */
+  $handler->display->display_options['fields']['entity_id_2']['id'] = 'entity_id_2';
+  $handler->display->display_options['fields']['entity_id_2']['table'] = 'field_data_field_address_floor';
+  $handler->display->display_options['fields']['entity_id_2']['field'] = 'field_address_floor';
+  $handler->display->display_options['fields']['entity_id_2']['label'] = 'field_address_floor';
+  $handler->display->display_options['fields']['entity_id_2']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['entity_id_2']['hide_empty'] = TRUE;
+  /* Felt: Indhold: Vej */
+  $handler->display->display_options['fields']['entity_id_3']['id'] = 'entity_id_3';
+  $handler->display->display_options['fields']['entity_id_3']['table'] = 'field_data_field_address_road';
+  $handler->display->display_options['fields']['entity_id_3']['field'] = 'field_address_road';
+  $handler->display->display_options['fields']['entity_id_3']['label'] = 'field_address_road';
+  $handler->display->display_options['fields']['entity_id_3']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['entity_id_3']['hide_empty'] = TRUE;
+  /* Felt: Indhold: Nummer */
+  $handler->display->display_options['fields']['entity_id_4']['id'] = 'entity_id_4';
+  $handler->display->display_options['fields']['entity_id_4']['table'] = 'field_data_field_address_road_no';
+  $handler->display->display_options['fields']['entity_id_4']['field'] = 'field_address_road_no';
+  $handler->display->display_options['fields']['entity_id_4']['label'] = 'field_address_road_no';
+  $handler->display->display_options['fields']['entity_id_4']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['entity_id_4']['hide_empty'] = TRUE;
+  /* Felt: Indhold: Postnummer */
+  $handler->display->display_options['fields']['entity_id_5']['id'] = 'entity_id_5';
+  $handler->display->display_options['fields']['entity_id_5']['table'] = 'field_data_field_address_zipcode';
+  $handler->display->display_options['fields']['entity_id_5']['field'] = 'field_address_zipcode';
+  $handler->display->display_options['fields']['entity_id_5']['label'] = 'Adresse';
+  $handler->display->display_options['fields']['entity_id_5']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['entity_id_5']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['entity_id_5']['alter']['text'] = '[entity_id_3] [entity_id_4]  [entity_id_2] [entity_id_1], [entity_id_5] [entity_id]';
+  $handler->display->display_options['fields']['entity_id_5']['hide_empty'] = TRUE;
+  $handler->display->display_options['fields']['entity_id_5']['settings'] = array(
+    'thousand_separator' => ' ',
+    'prefix_suffix' => 1,
+  );
+  /* Felt: Indhold: Telefon */
+  $handler->display->display_options['fields']['entity_id_7']['id'] = 'entity_id_7';
+  $handler->display->display_options['fields']['entity_id_7']['table'] = 'field_data_field_phone';
+  $handler->display->display_options['fields']['entity_id_7']['field'] = 'field_phone';
+  $handler->display->display_options['fields']['entity_id_7']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['entity_id_7']['element_type'] = '0';
+  $handler->display->display_options['fields']['entity_id_7']['element_label_type'] = 'span';
+  $handler->display->display_options['fields']['entity_id_7']['element_wrapper_type'] = '0';
+  $handler->display->display_options['fields']['entity_id_7']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['entity_id_7']['hide_empty'] = TRUE;
+  $handler->display->display_options['fields']['entity_id_7']['type'] = 'text_plain';
+  /* Felt: Indhold: Telefon 2 */
+  $handler->display->display_options['fields']['entity_id_8']['id'] = 'entity_id_8';
+  $handler->display->display_options['fields']['entity_id_8']['table'] = 'field_data_field_phone2';
+  $handler->display->display_options['fields']['entity_id_8']['field'] = 'field_phone2';
+  $handler->display->display_options['fields']['entity_id_8']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['entity_id_8']['hide_empty'] = TRUE;
+  /* Felt: Felt: Begræns adgang til følgende valgsteder */
+  $handler->display->display_options['fields']['entity_id_9']['id'] = 'entity_id_9';
+  $handler->display->display_options['fields']['entity_id_9']['table'] = 'field_data_field_polling_station';
+  $handler->display->display_options['fields']['entity_id_9']['field'] = 'field_polling_station';
+  $handler->display->display_options['fields']['entity_id_9']['label'] = 'Valgsted';
+  $handler->display->display_options['fields']['entity_id_9']['element_type'] = 'span';
+  $handler->display->display_options['fields']['entity_id_9']['element_label_type'] = 'span';
+  $handler->display->display_options['fields']['entity_id_9']['element_wrapper_type'] = 'span';
+  $handler->display->display_options['fields']['entity_id_9']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['entity_id_9']['hide_alter_empty'] = FALSE;
+  $handler->display->display_options['fields']['entity_id_9']['type'] = 'node_reference_plain';
+  $handler->display->display_options['fields']['entity_id_9']['delta_offset'] = '0';
+  /* Felt: Global: Tilpasset tekst */
+  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['label'] = '';
+  $handler->display->display_options['fields']['nothing']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['nothing']['alter']['text'] = '<div>
+<h4>[title] ([entity_id_6] )</h4>
+<div>[entity_id_3] [entity_id_4] [entity_id_2] [entity_id_1]<br />
+</div>
+</div>';
+  $handler->display->display_options['fields']['nothing']['alter']['make_link'] = TRUE;
+  /* Felt: Indhold: CPR Number */
+  $handler->display->display_options['fields']['field_cpr_number']['id'] = 'field_cpr_number';
+  $handler->display->display_options['fields']['field_cpr_number']['table'] = 'field_data_field_cpr_number';
+  $handler->display->display_options['fields']['field_cpr_number']['field'] = 'field_cpr_number';
+  $handler->display->display_options['fields']['field_cpr_number']['exclude'] = TRUE;
+  $handler->display->display_options['defaults']['sorts'] = FALSE;
+  /* Sorteringskriterie: Ord i ordforråd: Navn */
+  $handler->display->display_options['sorts']['name']['id'] = 'name';
+  $handler->display->display_options['sorts']['name']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['sorts']['name']['field'] = 'name';
+  /* Sorteringskriterie: Indhold: Polling Station post (field_polling_station_post) */
+  $handler->display->display_options['sorts']['field_polling_station_post_value']['id'] = 'field_polling_station_post_value';
+  $handler->display->display_options['sorts']['field_polling_station_post_value']['table'] = 'field_data_field_polling_station_post';
+  $handler->display->display_options['sorts']['field_polling_station_post_value']['field'] = 'field_polling_station_post_value';
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['filter_groups']['groups'] = array(
+    1 => 'AND',
+    2 => 'AND',
+  );
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filterkriterie: Indhold: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'volunteers' => 'volunteers',
+  );
+  $handler->display->display_options['filters']['type']['group'] = 1;
+  /* Filterkriterie: Felt: Begræns adgang til følgende valgsteder (field_polling_station) */
+  $handler->display->display_options['filters']['field_polling_station_nid']['id'] = 'field_polling_station_nid';
+  $handler->display->display_options['filters']['field_polling_station_nid']['table'] = 'field_data_field_polling_station';
+  $handler->display->display_options['filters']['field_polling_station_nid']['field'] = 'field_polling_station_nid';
+  $handler->display->display_options['filters']['field_polling_station_nid']['operator'] = 'not empty';
+  $handler->display->display_options['filters']['field_polling_station_nid']['group'] = 1;
+  /* Filterkriterie: Indhold: Polling Station post (field_polling_station_post) */
+  $handler->display->display_options['filters']['field_polling_station_post_value']['id'] = 'field_polling_station_post_value';
+  $handler->display->display_options['filters']['field_polling_station_post_value']['table'] = 'field_data_field_polling_station_post';
+  $handler->display->display_options['filters']['field_polling_station_post_value']['field'] = 'field_polling_station_post_value';
+  $handler->display->display_options['filters']['field_polling_station_post_value']['operator'] = '>=';
+  $handler->display->display_options['filters']['field_polling_station_post_value']['value']['value'] = '1';
+  $handler->display->display_options['filters']['field_polling_station_post_value']['group'] = 1;
+  $handler->display->display_options['path'] = 'node/%/valgstederu2';
   $translatables['list'] = array(
     t('Defaults'),
-    t('more'),
-    t('Apply'),
-    t('Reset'),
-    t('Sort by'),
-    t('Asc'),
-    t('Desc'),
+    t('mere'),
+    t('Udfør'),
+    t('Gendan'),
+    t('Sortér efter'),
+    t('Stigende'),
+    t('Faldende'),
     t('term'),
     t('Nid'),
     t('Navn'),
@@ -990,8 +1174,9 @@ function valhalla_views_views_default_views() {
 </div>'),
     t('Placering'),
     t('Kvittering'),
-    t('All'),
+    t('Alle'),
     t('Content pane'),
+    t('All'),
     t('View panes'),
     t('Content pane Partivisning'),
     t('/ [entity_id_8]'),
@@ -1002,12 +1187,11 @@ function valhalla_views_views_default_views() {
 </div>'),
     t('Kvitteringsliste for diæter'),
     t('Diæt'),
-    t('750'),
+    t('1.185'),
     t('Valgstyrere og tilforordnede'),
     t('Rolle'),
     t('Adresse'),
     t('[entity_id_3] [entity_id_4]  [entity_id_2] [entity_id_1], [entity_id_5] [entity_id]'),
-    t('Meeting time'),
   );
   $export['list'] = $view;
 
@@ -1025,13 +1209,26 @@ function valhalla_views_views_default_views() {
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'Liste til valgsted';
   $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'mere';
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
-  $handler->display->display_options['query']['options']['query_comment'] = FALSE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Udfør';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Gendan';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortér efter';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Stigende';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Faldende';
   $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elementer pr. side';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
+  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Forskydning';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« første';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ forrige';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'næste ›';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'sidste »';
   $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['grouping'] = '';
   $handler->display->display_options['style_options']['columns'] = array(
     'title' => 'title',
     'field_cpr_number' => 'title',
@@ -1091,62 +1288,61 @@ function valhalla_views_views_default_views() {
       'separator' => '',
     ),
   );
-  /* Field: Content: Title */
+  /* Felt: Indhold: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = '';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
-  /* Field: Content: CPR Number */
+  /* Felt: Indhold: CPR Number */
   $handler->display->display_options['fields']['field_cpr_number']['id'] = 'field_cpr_number';
   $handler->display->display_options['fields']['field_cpr_number']['table'] = 'field_data_field_cpr_number';
   $handler->display->display_options['fields']['field_cpr_number']['field'] = 'field_cpr_number';
   $handler->display->display_options['fields']['field_cpr_number']['exclude'] = TRUE;
-  /* Field: Content: Edit link */
+  /* Felt: Indhold: Redigér-link */
   $handler->display->display_options['fields']['edit_node']['id'] = 'edit_node';
   $handler->display->display_options['fields']['edit_node']['table'] = 'views_entity_node';
   $handler->display->display_options['fields']['edit_node']['field'] = 'edit_node';
-  $handler->display->display_options['fields']['edit_node']['label'] = 'Redigér-link';
-  /* Field: Content: Telefon */
+  /* Felt: Indhold: Telefon */
   $handler->display->display_options['fields']['field_phone']['id'] = 'field_phone';
   $handler->display->display_options['fields']['field_phone']['table'] = 'field_data_field_phone';
   $handler->display->display_options['fields']['field_phone']['field'] = 'field_phone';
   $handler->display->display_options['fields']['field_phone']['exclude'] = TRUE;
-  /* Field: Content: Telefon 2 */
+  /* Felt: Indhold: Telefon 2 */
   $handler->display->display_options['fields']['field_phone2']['id'] = 'field_phone2';
   $handler->display->display_options['fields']['field_phone2']['table'] = 'field_data_field_phone2';
   $handler->display->display_options['fields']['field_phone2']['field'] = 'field_phone2';
   $handler->display->display_options['fields']['field_phone2']['exclude'] = TRUE;
-  /* Field: Content: Title */
+  /* Felt: Indhold: Titel */
   $handler->display->display_options['fields']['title_1']['id'] = 'title_1';
   $handler->display->display_options['fields']['title_1']['table'] = 'node';
   $handler->display->display_options['fields']['title_1']['field'] = 'title';
-  $handler->display->display_options['fields']['title_1']['label'] = 'Titel';
-  /* Field: Taxonomy term: Name */
+  /* Felt: Ord i ordforråd: Navn */
   $handler->display->display_options['fields']['name_1']['id'] = 'name_1';
   $handler->display->display_options['fields']['name_1']['table'] = 'taxonomy_term_data';
   $handler->display->display_options['fields']['name_1']['field'] = 'name';
   $handler->display->display_options['fields']['name_1']['label'] = 'Parti';
-  /* Sort criterion: Content: Post date */
+  /* Sorteringskriterie: Indhold: Oprettelsesdato */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
-  /* Filter criterion: Content: Published */
+  /* Filterkriterie: Indhold: Udgivet */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
   $handler->display->display_options['filters']['status']['value'] = 1;
   $handler->display->display_options['filters']['status']['group'] = 0;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Content: Type */
+  /* Filterkriterie: Indhold: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
     'volunteers' => 'volunteers',
   );
+  $handler->display->display_options['filters']['type']['group'] = '0';
 
   /* Display: Content pane */
   $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
@@ -1165,19 +1361,19 @@ function valhalla_views_views_default_views() {
   $translatables['lister_til_valgsted'] = array(
     t('Master'),
     t('Liste til valgsted'),
-    t('more'),
-    t('Apply'),
-    t('Reset'),
-    t('Sort by'),
-    t('Asc'),
-    t('Desc'),
-    t('Items per page'),
-    t('- All -'),
-    t('Offset'),
-    t('« first'),
-    t('‹ previous'),
-    t('next ›'),
-    t('last »'),
+    t('mere'),
+    t('Udfør'),
+    t('Gendan'),
+    t('Sortér efter'),
+    t('Stigende'),
+    t('Faldende'),
+    t('Elementer pr. side'),
+    t('- Alle -'),
+    t('Forskydning'),
+    t('« første'),
+    t('‹ forrige'),
+    t('næste ›'),
+    t('sidste »'),
     t('CPR Number'),
     t('Redigér-link'),
     t('Telefon'),
@@ -1202,11 +1398,16 @@ function valhalla_views_views_default_views() {
   /* Display: Standarder */
   $handler = $view->new_display('default', 'Standarder', 'default');
   $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'mere';
   $handler->display->display_options['access']['type'] = 'none';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
-  $handler->display->display_options['query']['options']['query_comment'] = FALSE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Udfør';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Gendan';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortér efter';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Stigende';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Faldende';
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '0';
   $handler->display->display_options['pager']['options']['offset'] = '0';
@@ -1214,7 +1415,12 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elementer pr. side';
   $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
   $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Forskydning';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« første';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ forrige';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'næste ›';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'sidste »';
   $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['grouping'] = '';
   $handler->display->display_options['style_options']['columns'] = array(
     'title' => 'title',
     'entity_id' => 'entity_id',
@@ -1297,41 +1503,41 @@ function valhalla_views_views_default_views() {
       'separator' => '',
     ),
   );
-  /* Field: Content: Title */
+  /* Felt: Indhold: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
-  /* Field: Content: CPR Number */
+  /* Felt: Indhold: CPR Number */
   $handler->display->display_options['fields']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['fields']['entity_id']['table'] = 'field_data_field_cpr_number';
   $handler->display->display_options['fields']['entity_id']['field'] = 'field_cpr_number';
   $handler->display->display_options['fields']['entity_id']['label'] = 'field_cpr_number';
-  /* Field: Content: Email */
+  /* Felt: Indhold: Email */
   $handler->display->display_options['fields']['entity_id_1']['id'] = 'entity_id_1';
   $handler->display->display_options['fields']['entity_id_1']['table'] = 'field_data_field_email';
   $handler->display->display_options['fields']['entity_id_1']['field'] = 'field_email';
   $handler->display->display_options['fields']['entity_id_1']['label'] = 'field_email';
-  /* Field: Field: Parti */
+  /* Felt: Felt: Parti */
   $handler->display->display_options['fields']['entity_id_3']['id'] = 'entity_id_3';
   $handler->display->display_options['fields']['entity_id_3']['table'] = 'field_data_field_party';
   $handler->display->display_options['fields']['entity_id_3']['field'] = 'field_party';
   $handler->display->display_options['fields']['entity_id_3']['label'] = 'field_party';
-  /* Field: Content: Telefon */
+  /* Felt: Indhold: Telefon */
   $handler->display->display_options['fields']['entity_id_4']['id'] = 'entity_id_4';
   $handler->display->display_options['fields']['entity_id_4']['table'] = 'field_data_field_phone';
   $handler->display->display_options['fields']['entity_id_4']['field'] = 'field_phone';
   $handler->display->display_options['fields']['entity_id_4']['label'] = 'field_phone';
-  /* Field: Content: Telefon 2 */
+  /* Felt: Indhold: Telefon 2 */
   $handler->display->display_options['fields']['entity_id_5']['id'] = 'entity_id_5';
   $handler->display->display_options['fields']['entity_id_5']['table'] = 'field_data_field_phone2';
   $handler->display->display_options['fields']['entity_id_5']['field'] = 'field_phone2';
   $handler->display->display_options['fields']['entity_id_5']['label'] = 'field_phone2';
-  /* Field: Field: Polling Station */
+  /* Felt: Felt: Begræns adgang til følgende valgsteder */
   $handler->display->display_options['fields']['entity_id_6']['id'] = 'entity_id_6';
   $handler->display->display_options['fields']['entity_id_6']['table'] = 'field_data_field_polling_station';
   $handler->display->display_options['fields']['entity_id_6']['field'] = 'field_polling_station';
   $handler->display->display_options['fields']['entity_id_6']['label'] = 'field_polling_station';
-  /* Field: Content: Polling Station post */
+  /* Felt: Indhold: Polling Station post */
   $handler->display->display_options['fields']['entity_id_7']['id'] = 'entity_id_7';
   $handler->display->display_options['fields']['entity_id_7']['table'] = 'field_data_field_polling_station_post';
   $handler->display->display_options['fields']['entity_id_7']['field'] = 'field_polling_station_post';
@@ -1340,36 +1546,37 @@ function valhalla_views_views_default_views() {
     'thousand_separator' => ' ',
     'prefix_suffix' => 1,
   );
-  /* Field: Content: Label */
+  /* Felt: Indhold: Label */
   $handler->display->display_options['fields']['entity_id_2']['id'] = 'entity_id_2';
   $handler->display->display_options['fields']['entity_id_2']['table'] = 'field_data_field_label';
   $handler->display->display_options['fields']['entity_id_2']['field'] = 'field_label';
   $handler->display->display_options['fields']['entity_id_2']['label'] = 'field_label';
-  /* Field: Content: Status */
+  /* Felt: Indhold: Status */
   $handler->display->display_options['fields']['entity_id_8']['id'] = 'entity_id_8';
   $handler->display->display_options['fields']['entity_id_8']['table'] = 'field_data_field_rsvp';
   $handler->display->display_options['fields']['entity_id_8']['field'] = 'field_rsvp';
   $handler->display->display_options['fields']['entity_id_8']['label'] = 'field_rsvp';
-  /* Field: Content: Token */
+  /* Felt: Indhold: Token */
   $handler->display->display_options['fields']['entity_id_9']['id'] = 'entity_id_9';
   $handler->display->display_options['fields']['entity_id_9']['table'] = 'field_data_field_token';
   $handler->display->display_options['fields']['entity_id_9']['field'] = 'field_token';
   $handler->display->display_options['fields']['entity_id_9']['label'] = 'field_token';
-  /* Sort criterion: Field: Parti (field_party) */
+  /* Sorteringskriterie: Felt: Parti (field_party) */
   $handler->display->display_options['sorts']['field_party_tid']['id'] = 'field_party_tid';
   $handler->display->display_options['sorts']['field_party_tid']['table'] = 'field_data_field_party';
   $handler->display->display_options['sorts']['field_party_tid']['field'] = 'field_party_tid';
-  /* Sort criterion: Field: Polling Station (field_polling_station) */
+  /* Sorteringskriterie: Felt: Begræns adgang til følgende valgsteder (field_polling_station) */
   $handler->display->display_options['sorts']['field_polling_station_nid']['id'] = 'field_polling_station_nid';
   $handler->display->display_options['sorts']['field_polling_station_nid']['table'] = 'field_data_field_polling_station';
   $handler->display->display_options['sorts']['field_polling_station_nid']['field'] = 'field_polling_station_nid';
-  /* Filter criterion: Content: Type */
+  /* Filterkriterie: Indhold: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
     'volunteers' => 'volunteers',
   );
+  $handler->display->display_options['filters']['type']['group'] = '0';
 
   /* Display: Side */
   $handler = $view->new_display('page', 'Side', 'page_1');
@@ -1377,20 +1584,20 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['path'] = 'ulriks-test-1';
   $translatables['ulriks_test'] = array(
     t('Standarder'),
-    t('more'),
-    t('Apply'),
-    t('Reset'),
-    t('Sort by'),
-    t('Asc'),
-    t('Desc'),
+    t('mere'),
+    t('Udfør'),
+    t('Gendan'),
+    t('Sortér efter'),
+    t('Stigende'),
+    t('Faldende'),
     t('Elementer pr. side'),
     t('- Alle -'),
     t('Forskydning'),
-    t('« first'),
-    t('‹ previous'),
-    t('next ›'),
-    t('last »'),
-    t('Title'),
+    t('« første'),
+    t('‹ forrige'),
+    t('næste ›'),
+    t('sidste »'),
+    t('Titel'),
     t('field_cpr_number'),
     t('field_email'),
     t('field_party'),
@@ -1418,10 +1625,10 @@ function valhalla_views_views_default_views() {
   /* Display: Defaults */
   $handler = $view->new_display('default', 'Defaults', 'default');
   $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'mere';
   $handler->display->display_options['access']['type'] = 'none';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
-  $handler->display->display_options['query']['options']['query_comment'] = FALSE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Udfør';
   $handler->display->display_options['exposed_form']['options']['reset_button'] = TRUE;
@@ -1430,7 +1637,15 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Stigende';
   $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Faldende';
   $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elementer pr. side';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
+  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Forskydning';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« første';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ forrige';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'næste ›';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'sidste »';
   $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['grouping'] = '';
   $handler->display->display_options['style_options']['columns'] = array(
     'title' => 'title',
     'entity_id' => 'entity_id',
@@ -1470,12 +1685,12 @@ function valhalla_views_views_default_views() {
     ),
   );
   $handler->display->display_options['style_options']['sticky'] = TRUE;
-  /* Field: Content: Title */
+  /* Felt: Indhold: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
-  /* Field: Content: Dato */
+  /* Felt: Indhold: Dato */
   $handler->display->display_options['fields']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['fields']['entity_id']['table'] = 'field_data_field_date';
   $handler->display->display_options['fields']['entity_id']['field'] = 'field_date';
@@ -1487,7 +1702,7 @@ function valhalla_views_views_default_views() {
     'multiple_to' => '',
     'show_repeat_rule' => 'show',
   );
-  /* Field: Content: Sæt igang */
+  /* Felt: Indhold: Sæt igang */
   $handler->display->display_options['fields']['entity_id_1']['id'] = 'entity_id_1';
   $handler->display->display_options['fields']['entity_id_1']['table'] = 'field_data_field_election_status';
   $handler->display->display_options['fields']['entity_id_1']['field'] = 'field_election_status';
@@ -1495,12 +1710,12 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['entity_id_1']['alter']['text'] = 'i gang';
   $handler->display->display_options['fields']['entity_id_1']['hide_alter_empty'] = FALSE;
   $handler->display->display_options['fields']['entity_id_1']['type'] = 'list_key';
-  /* Field: Content: Type */
+  /* Felt: Indhold: Type */
   $handler->display->display_options['fields']['entity_id_2']['id'] = 'entity_id_2';
   $handler->display->display_options['fields']['entity_id_2']['table'] = 'field_data_field_election_type';
   $handler->display->display_options['fields']['entity_id_2']['field'] = 'field_election_type';
   $handler->display->display_options['fields']['entity_id_2']['type'] = 'taxonomy_term_reference_plain';
-  /* Field: Content: Nid */
+  /* Felt: Indhold: Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
@@ -1508,42 +1723,44 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['nid']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['nid']['alter']['text'] = '<a href="/node/[nid]/edit">ret</a> | 
 <a href="/admin/valhalla/start-election/[nid]">sæt igang</a>';
-  /* Sort criterion: Content: Dato (field_date) */
+  /* Sorteringskriterie: Indhold: Dato (field_date) */
   $handler->display->display_options['sorts']['field_date_value']['id'] = 'field_date_value';
   $handler->display->display_options['sorts']['field_date_value']['table'] = 'field_data_field_date';
   $handler->display->display_options['sorts']['field_date_value']['field'] = 'field_date_value';
-  /* Filter criterion: Date: Date (node) */
+  /* Filterkriterie: Dato: Dato (node) */
   $handler->display->display_options['filters']['date_filter']['id'] = 'date_filter';
   $handler->display->display_options['filters']['date_filter']['table'] = 'node';
   $handler->display->display_options['filters']['date_filter']['field'] = 'date_filter';
   $handler->display->display_options['filters']['date_filter']['operator'] = '>=';
+  $handler->display->display_options['filters']['date_filter']['group'] = '0';
   $handler->display->display_options['filters']['date_filter']['default_date'] = 'now -1 day';
   $handler->display->display_options['filters']['date_filter']['date_fields'] = array(
     'field_data_field_date.field_date_value' => 'field_data_field_date.field_date_value',
   );
-  /* Filter criterion: Content: Type */
+  /* Filterkriterie: Indhold: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
     'election' => 'election',
   );
+  $handler->display->display_options['filters']['type']['group'] = '0';
   $translatables['valg'] = array(
     t('Defaults'),
-    t('more'),
+    t('mere'),
     t('Udfør'),
     t('Gendan'),
     t('Sortér efter'),
     t('Stigende'),
     t('Faldende'),
-    t('Items per page'),
-    t('- All -'),
-    t('Offset'),
-    t('« first'),
-    t('‹ previous'),
-    t('next ›'),
-    t('last »'),
-    t('Title'),
+    t('Elementer pr. side'),
+    t('- Alle -'),
+    t('Forskydning'),
+    t('« første'),
+    t('‹ forrige'),
+    t('næste ›'),
+    t('sidste »'),
+    t('Titel'),
     t('Dato'),
     t('Status'),
     t('i gang'),
@@ -1568,14 +1785,20 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['title'] = 'Kvitteringsliste for diæter';
   $handler->display->display_options['css_class'] = 'kvitteringsliste-header';
   $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'mere';
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
-  $handler->display->display_options['query']['options']['query_comment'] = FALSE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Udfør';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Gendan';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortér efter';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Stigende';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Faldende';
   $handler->display->display_options['pager']['type'] = 'none';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'default';
+  $handler->display->display_options['style_options']['grouping'] = '';
   $handler->display->display_options['row_plugin'] = 'panels_fields';
   $handler->display->display_options['row_options']['inline'] = array(
     'field_constituency' => 'field_constituency',
@@ -1604,7 +1827,7 @@ function valhalla_views_views_default_views() {
     'field_venue_team_members' => 'middle',
     'field_volunteers_pr_party' => 'middle',
   );
-  /* Field: Content: Valgkreds */
+  /* Felt: Indhold: Valgkreds */
   $handler->display->display_options['fields']['field_constituency']['id'] = 'field_constituency';
   $handler->display->display_options['fields']['field_constituency']['table'] = 'field_data_field_constituency';
   $handler->display->display_options['fields']['field_constituency']['field'] = 'field_constituency';
@@ -1613,7 +1836,7 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['field_constituency']['element_label_type'] = 'span';
   $handler->display->display_options['fields']['field_constituency']['element_wrapper_type'] = 'div';
   $handler->display->display_options['fields']['field_constituency']['type'] = 'node_reference_plain';
-  /* Field: Content: Title */
+  /* Felt: Indhold: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
@@ -1622,7 +1845,7 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
-  /* Field: Content: Skolekode */
+  /* Felt: Indhold: Skolekode */
   $handler->display->display_options['fields']['field_venue_skolekode']['id'] = 'field_venue_skolekode';
   $handler->display->display_options['fields']['field_venue_skolekode']['table'] = 'field_data_field_venue_skolekode';
   $handler->display->display_options['fields']['field_venue_skolekode']['field'] = 'field_venue_skolekode';
@@ -1630,7 +1853,7 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['field_venue_skolekode']['element_type'] = 'span';
   $handler->display->display_options['fields']['field_venue_skolekode']['element_label_type'] = 'span';
   $handler->display->display_options['fields']['field_venue_skolekode']['element_wrapper_type'] = 'div';
-  /* Field: Content: Body */
+  /* Felt: Indhold: Body */
   $handler->display->display_options['fields']['body']['id'] = 'body';
   $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
   $handler->display->display_options['fields']['body']['field'] = 'body';
@@ -1639,7 +1862,7 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['body']['element_label_class'] = 'valgstedsbeskrivelse';
   $handler->display->display_options['fields']['body']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['body']['element_default_classes'] = FALSE;
-  /* Field: Content: Formand */
+  /* Felt: Indhold: Formand */
   $handler->display->display_options['fields']['field_chairman']['id'] = 'field_chairman';
   $handler->display->display_options['fields']['field_chairman']['table'] = 'field_data_field_chairman';
   $handler->display->display_options['fields']['field_chairman']['field'] = 'field_chairman';
@@ -1648,7 +1871,7 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['field_chairman']['element_label_type'] = 'span';
   $handler->display->display_options['fields']['field_chairman']['element_wrapper_type'] = 'div';
   $handler->display->display_options['fields']['field_chairman']['element_default_classes'] = FALSE;
-  /* Field: Content: Kontakt */
+  /* Felt: Indhold: Kontakt */
   $handler->display->display_options['fields']['field_venue_contact']['id'] = 'field_venue_contact';
   $handler->display->display_options['fields']['field_venue_contact']['table'] = 'field_data_field_venue_contact';
   $handler->display->display_options['fields']['field_venue_contact']['field'] = 'field_venue_contact';
@@ -1657,7 +1880,7 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['field_venue_contact']['element_label_type'] = 'span';
   $handler->display->display_options['fields']['field_venue_contact']['element_wrapper_type'] = 'div';
   $handler->display->display_options['fields']['field_venue_contact']['element_default_classes'] = FALSE;
-  /* Field: Content: Borde */
+  /* Felt: Indhold: Borde */
   $handler->display->display_options['fields']['field_venue_teams']['id'] = 'field_venue_teams';
   $handler->display->display_options['fields']['field_venue_teams']['table'] = 'field_data_field_venue_teams';
   $handler->display->display_options['fields']['field_venue_teams']['field'] = 'field_venue_teams';
@@ -1671,7 +1894,7 @@ function valhalla_views_views_default_views() {
     'thousand_separator' => ' ',
     'prefix_suffix' => 1,
   );
-  /* Field: Content: Kontakt */
+  /* Felt: Indhold: Kontakt */
   $handler->display->display_options['fields']['field_contact']['id'] = 'field_contact';
   $handler->display->display_options['fields']['field_contact']['table'] = 'field_data_field_contact';
   $handler->display->display_options['fields']['field_contact']['field'] = 'field_contact';
@@ -1679,7 +1902,7 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['field_contact']['element_type'] = 'span';
   $handler->display->display_options['fields']['field_contact']['element_label_type'] = 'span';
   $handler->display->display_options['fields']['field_contact']['element_wrapper_type'] = 'div';
-  /* Field: Content: Lokalekontakt */
+  /* Felt: Indhold: Lokalekontakt */
   $handler->display->display_options['fields']['field_venue_contact_name']['id'] = 'field_venue_contact_name';
   $handler->display->display_options['fields']['field_venue_contact_name']['table'] = 'field_data_field_venue_contact_name';
   $handler->display->display_options['fields']['field_venue_contact_name']['field'] = 'field_venue_contact_name';
@@ -1687,7 +1910,7 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['field_venue_contact_name']['element_type'] = 'span';
   $handler->display->display_options['fields']['field_venue_contact_name']['element_label_type'] = 'span';
   $handler->display->display_options['fields']['field_venue_contact_name']['element_wrapper_type'] = 'div';
-  /* Field: Content: Pladser per bord */
+  /* Felt: Indhold: Pladser per bord */
   $handler->display->display_options['fields']['field_venue_team_members']['id'] = 'field_venue_team_members';
   $handler->display->display_options['fields']['field_venue_team_members']['table'] = 'field_data_field_venue_team_members';
   $handler->display->display_options['fields']['field_venue_team_members']['field'] = 'field_venue_team_members';
@@ -1699,7 +1922,7 @@ function valhalla_views_views_default_views() {
     'thousand_separator' => ' ',
     'prefix_suffix' => 1,
   );
-  /* Field: Content: Frivillige pr. parti */
+  /* Felt: Indhold: Frivillige pr. parti */
   $handler->display->display_options['fields']['field_volunteers_pr_party']['id'] = 'field_volunteers_pr_party';
   $handler->display->display_options['fields']['field_volunteers_pr_party']['table'] = 'field_data_field_volunteers_pr_party';
   $handler->display->display_options['fields']['field_volunteers_pr_party']['field'] = 'field_volunteers_pr_party';
@@ -1709,23 +1932,24 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['field_volunteers_pr_party']['element_wrapper_type'] = 'div';
   $handler->display->display_options['fields']['field_volunteers_pr_party']['element_wrapper_class'] = 'antalperparti';
   $handler->display->display_options['fields']['field_volunteers_pr_party']['click_sort_column'] = 'party';
+  $handler->display->display_options['fields']['field_volunteers_pr_party']['group_column'] = 'party';
   $handler->display->display_options['fields']['field_volunteers_pr_party']['delta_offset'] = '0';
   $handler->display->display_options['fields']['field_volunteers_pr_party']['multi_type'] = 'ul';
-  /* Field: Content: Door / Side */
+  /* Felt: Indhold: Dør / Side */
   $handler->display->display_options['fields']['field_address_door']['id'] = 'field_address_door';
   $handler->display->display_options['fields']['field_address_door']['table'] = 'field_data_field_address_door';
   $handler->display->display_options['fields']['field_address_door']['field'] = 'field_address_door';
   $handler->display->display_options['fields']['field_address_door']['label'] = '';
   $handler->display->display_options['fields']['field_address_door']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_address_door']['element_label_colon'] = FALSE;
-  /* Field: Content: House no. */
+  /* Felt: Indhold: Nummer */
   $handler->display->display_options['fields']['field_address_road_no']['id'] = 'field_address_road_no';
   $handler->display->display_options['fields']['field_address_road_no']['table'] = 'field_data_field_address_road_no';
   $handler->display->display_options['fields']['field_address_road_no']['field'] = 'field_address_road_no';
   $handler->display->display_options['fields']['field_address_road_no']['label'] = '';
   $handler->display->display_options['fields']['field_address_road_no']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_address_road_no']['element_label_colon'] = FALSE;
-  /* Field: Content: Zip code */
+  /* Felt: Indhold: Postnummer */
   $handler->display->display_options['fields']['field_address_zipcode']['id'] = 'field_address_zipcode';
   $handler->display->display_options['fields']['field_address_zipcode']['table'] = 'field_data_field_address_zipcode';
   $handler->display->display_options['fields']['field_address_zipcode']['field'] = 'field_address_zipcode';
@@ -1736,21 +1960,21 @@ function valhalla_views_views_default_views() {
     'thousand_separator' => ' ',
     'prefix_suffix' => 1,
   );
-  /* Field: Content: City */
+  /* Felt: Indhold: By */
   $handler->display->display_options['fields']['field_address_city']['id'] = 'field_address_city';
   $handler->display->display_options['fields']['field_address_city']['table'] = 'field_data_field_address_city';
   $handler->display->display_options['fields']['field_address_city']['field'] = 'field_address_city';
   $handler->display->display_options['fields']['field_address_city']['label'] = '';
   $handler->display->display_options['fields']['field_address_city']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_address_city']['element_label_colon'] = FALSE;
-  /* Field: Content: Floor */
+  /* Felt: Indhold: Sal */
   $handler->display->display_options['fields']['field_address_floor']['id'] = 'field_address_floor';
   $handler->display->display_options['fields']['field_address_floor']['table'] = 'field_data_field_address_floor';
   $handler->display->display_options['fields']['field_address_floor']['field'] = 'field_address_floor';
   $handler->display->display_options['fields']['field_address_floor']['label'] = '';
   $handler->display->display_options['fields']['field_address_floor']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_address_floor']['element_label_colon'] = FALSE;
-  /* Field: Content: Address */
+  /* Felt: Indhold: Vej */
   $handler->display->display_options['fields']['field_address_road']['id'] = 'field_address_road';
   $handler->display->display_options['fields']['field_address_road']['table'] = 'field_data_field_address_road';
   $handler->display->display_options['fields']['field_address_road']['field'] = 'field_address_road';
@@ -1758,12 +1982,12 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['field_address_road']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['field_address_road']['alter']['text'] = '<center>[field_constituency] <br />[title], [field_address_road] [field_address_road_no] [field_address_floor] [field_address_door], [field_address_zipcode] [field_address_city] - Skolekode [field_venue_skolekode]</center>';
   $handler->display->display_options['fields']['field_address_road']['element_label_colon'] = FALSE;
-  /* Sort criterion: Content: Post date */
+  /* Sorteringskriterie: Indhold: Oprettelsesdato */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
-  /* Contextual filter: Content: Nid */
+  /* Kontekstuelt filter: Indhold: Nid */
   $handler->display->display_options['arguments']['nid']['id'] = 'nid';
   $handler->display->display_options['arguments']['nid']['table'] = 'node';
   $handler->display->display_options['arguments']['nid']['field'] = 'nid';
@@ -1772,14 +1996,14 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['arguments']['nid']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['nid']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['nid']['summary_options']['items_per_page'] = '25';
-  /* Filter criterion: Content: Published */
+  /* Filterkriterie: Indhold: Udgivet */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
   $handler->display->display_options['filters']['status']['value'] = 1;
   $handler->display->display_options['filters']['status']['group'] = 0;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Content: Type */
+  /* Filterkriterie: Indhold: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
@@ -1795,12 +2019,12 @@ function valhalla_views_views_default_views() {
   $translatables['valgsted'] = array(
     t('Master'),
     t('Kvitteringsliste for diæter'),
-    t('more'),
-    t('Apply'),
-    t('Reset'),
-    t('Sort by'),
-    t('Asc'),
-    t('Desc'),
+    t('mere'),
+    t('Udfør'),
+    t('Gendan'),
+    t('Sortér efter'),
+    t('Stigende'),
+    t('Faldende'),
     t('Valgkreds'),
     t('Skolekode'),
     t('Formand'),
@@ -1829,12 +2053,24 @@ function valhalla_views_views_default_views() {
   $handler = $view->new_display('default', 'Defaults', 'default');
   $handler->display->display_options['css_class'] = 'valgsteder';
   $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'mere';
   $handler->display->display_options['access']['type'] = 'none';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
-  $handler->display->display_options['query']['options']['query_comment'] = FALSE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Udfør';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Gendan';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortér efter';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Stigende';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Faldende';
   $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elementer pr. side';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
+  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Forskydning';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« første';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ forrige';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'næste ›';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'sidste »';
   $handler->display->display_options['style_plugin'] = 'list';
   $handler->display->display_options['style_options']['grouping'] = 'entity_id_9';
   $handler->display->display_options['row_plugin'] = 'fields';
@@ -1844,54 +2080,50 @@ function valhalla_views_views_default_views() {
     'entity_id_7' => 'entity_id_7',
   );
   $handler->display->display_options['row_options']['hide_empty'] = TRUE;
-  /* Field: Content: Title */
+  /* Felt: Indhold: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = '';
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
-  /* Field: Content: Body */
+  /* Felt: Indhold: Body */
   $handler->display->display_options['fields']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['fields']['entity_id']['table'] = 'field_data_body';
   $handler->display->display_options['fields']['entity_id']['field'] = 'body';
   $handler->display->display_options['fields']['entity_id']['label'] = 'indhold';
-  /* Field: Content: Formand */
+  /* Felt: Indhold: Formand */
   $handler->display->display_options['fields']['entity_id_2']['id'] = 'entity_id_2';
   $handler->display->display_options['fields']['entity_id_2']['table'] = 'field_data_field_chairman';
   $handler->display->display_options['fields']['entity_id_2']['field'] = 'field_chairman';
-  /* Field: Content: Kontakt */
+  /* Felt: Indhold: Kontakt */
   $handler->display->display_options['fields']['entity_id_3']['id'] = 'entity_id_3';
   $handler->display->display_options['fields']['entity_id_3']['table'] = 'field_data_field_contact';
   $handler->display->display_options['fields']['entity_id_3']['field'] = 'field_contact';
-  /* Field: Field: Parti */
+  /* Felt: Felt: Parti */
   $handler->display->display_options['fields']['entity_id_5']['id'] = 'entity_id_5';
   $handler->display->display_options['fields']['entity_id_5']['table'] = 'field_data_field_party';
   $handler->display->display_options['fields']['entity_id_5']['field'] = 'field_party';
-  /* Field: Content: Kontakt */
+  /* Felt: Indhold: Kontakt */
   $handler->display->display_options['fields']['entity_id_6']['id'] = 'entity_id_6';
   $handler->display->display_options['fields']['entity_id_6']['table'] = 'field_data_field_venue_contact';
   $handler->display->display_options['fields']['entity_id_6']['field'] = 'field_venue_contact';
-  /* Field: Content: Lokalekontakt */
+  /* Felt: Indhold: Lokalekontakt */
   $handler->display->display_options['fields']['entity_id_7']['id'] = 'entity_id_7';
   $handler->display->display_options['fields']['entity_id_7']['table'] = 'field_data_field_venue_contact_name';
   $handler->display->display_options['fields']['entity_id_7']['field'] = 'field_venue_contact_name';
-  /* Field: Content: Frivillige pr. parti */
+  /* Felt: Indhold: Frivillige pr. parti */
   $handler->display->display_options['fields']['entity_id_8']['id'] = 'entity_id_8';
   $handler->display->display_options['fields']['entity_id_8']['table'] = 'field_data_field_volunteers_pr_party';
   $handler->display->display_options['fields']['entity_id_8']['field'] = 'field_volunteers_pr_party';
-  /* Field: Content: Valgkreds */
+  /* Felt: Indhold: Valgkreds */
   $handler->display->display_options['fields']['entity_id_9']['id'] = 'entity_id_9';
   $handler->display->display_options['fields']['entity_id_9']['table'] = 'field_data_field_constituency';
   $handler->display->display_options['fields']['entity_id_9']['field'] = 'field_constituency';
-  /* Field: Broken/missing handler */
-  $handler->display->display_options['fields']['entity_id_10']['id'] = 'entity_id_10';
-  $handler->display->display_options['fields']['entity_id_10']['table'] = 'field_data_field_dig_election';
-  $handler->display->display_options['fields']['entity_id_10']['field'] = 'field_dig_election';
-  /* Sort criterion: Content: Title */
+  /* Sorteringskriterie: Indhold: Titel */
   $handler->display->display_options['sorts']['title']['id'] = 'title';
   $handler->display->display_options['sorts']['title']['table'] = 'node';
   $handler->display->display_options['sorts']['title']['field'] = 'title';
-  /* Contextual filter: Content: Type */
+  /* Kontekstuelt filter: Indhold: Type */
   $handler->display->display_options['arguments']['type']['id'] = 'type';
   $handler->display->display_options['arguments']['type']['table'] = 'node';
   $handler->display->display_options['arguments']['type']['field'] = 'type';
@@ -1903,13 +2135,14 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['arguments']['type']['validate_options']['types'] = array(
     'polling_station' => 'polling_station',
   );
-  /* Filter criterion: Content: Type */
+  /* Filterkriterie: Indhold: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
     'polling_station' => 'polling_station',
   );
+  $handler->display->display_options['filters']['type']['group'] = '0';
 
   /* Display: Block */
   $handler = $view->new_display('block', 'Block', 'block_1');
@@ -1922,7 +2155,7 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['row_plugin'] = 'fields';
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Content: Nid */
+  /* Felt: Indhold: Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
@@ -1930,7 +2163,7 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['nid']['element_type'] = 'h4';
   $handler->display->display_options['fields']['nid']['element_label_type'] = '0';
   $handler->display->display_options['fields']['nid']['element_wrapper_type'] = '0';
-  /* Field: Content: Formand */
+  /* Felt: Indhold: Formand */
   $handler->display->display_options['fields']['entity_id_2']['id'] = 'entity_id_2';
   $handler->display->display_options['fields']['entity_id_2']['table'] = 'field_data_field_chairman';
   $handler->display->display_options['fields']['entity_id_2']['field'] = 'field_chairman';
@@ -1939,13 +2172,13 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['entity_id_2']['click_sort_column'] = 'value';
   $handler->display->display_options['fields']['entity_id_2']['type'] = 'text_default';
   $handler->display->display_options['fields']['entity_id_2']['group_column'] = 'value';
-  /* Field: Field: Parti */
+  /* Felt: Felt: Parti */
   $handler->display->display_options['fields']['entity_id_5']['id'] = 'entity_id_5';
   $handler->display->display_options['fields']['entity_id_5']['table'] = 'field_data_field_party';
   $handler->display->display_options['fields']['entity_id_5']['field'] = 'field_party';
   $handler->display->display_options['fields']['entity_id_5']['label'] = 'field_party';
   $handler->display->display_options['fields']['entity_id_5']['exclude'] = TRUE;
-  /* Field: Content: Valgkreds */
+  /* Felt: Indhold: Valgkreds */
   $handler->display->display_options['fields']['entity_id_9']['id'] = 'entity_id_9';
   $handler->display->display_options['fields']['entity_id_9']['table'] = 'field_data_field_constituency';
   $handler->display->display_options['fields']['entity_id_9']['field'] = 'field_constituency';
@@ -1955,7 +2188,7 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['entity_id_9']['element_wrapper_type'] = 'h3';
   $handler->display->display_options['fields']['entity_id_9']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['entity_id_9']['type'] = 'node_reference_plain';
-  /* Field: Content: Title */
+  /* Felt: Indhold: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
@@ -1967,25 +2200,25 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['title']['element_wrapper_type'] = 'h4';
   $handler->display->display_options['fields']['title']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
-  /* Field: Content: Digital valgiste */
-  $handler->display->display_options['fields']['field_digital_election_list']['id'] = 'field_digital_election_list';
-  $handler->display->display_options['fields']['field_digital_election_list']['table'] = 'field_data_field_digital_election_list';
-  $handler->display->display_options['fields']['field_digital_election_list']['field'] = 'field_digital_election_list';
-  $handler->display->display_options['fields']['field_digital_election_list']['exclude'] = TRUE;
   $handler->display->display_options['defaults']['sorts'] = FALSE;
-  /* Sort criterion: Content: Title */
+  /* Sorteringskriterie: Indhold: Titel */
   $handler->display->display_options['sorts']['title']['id'] = 'title';
   $handler->display->display_options['sorts']['title']['table'] = 'node';
   $handler->display->display_options['sorts']['title']['field'] = 'title';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['filter_groups']['groups'] = array(
+    1 => 'AND',
+    2 => 'AND',
+  );
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Content: Type */
+  /* Filterkriterie: Indhold: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
     'polling_station' => 'polling_station',
   );
+  $handler->display->display_options['filters']['type']['group'] = 1;
 
   /* Display: Side m  CPR */
   $handler = $view->new_display('page', 'Side m  CPR', 'page_1');
@@ -2020,62 +2253,51 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['row_options']['hide_empty'] = TRUE;
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Content: Digital valgiste */
-  $handler->display->display_options['fields']['field_digital_election_list']['id'] = 'field_digital_election_list';
-  $handler->display->display_options['fields']['field_digital_election_list']['table'] = 'field_data_field_digital_election_list';
-  $handler->display->display_options['fields']['field_digital_election_list']['field'] = 'field_digital_election_list';
-  $handler->display->display_options['fields']['field_digital_election_list']['label'] = '';
-  $handler->display->display_options['fields']['field_digital_election_list']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['field_digital_election_list']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['field_digital_election_list']['alter']['text'] = '<div class="icon-digital-valglist">&nbsp;</div>';
-  $handler->display->display_options['fields']['field_digital_election_list']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_digital_election_list']['element_default_classes'] = FALSE;
-  /* Field: Content: Title */
+  /* Felt: Indhold: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = '';
-  $handler->display->display_options['fields']['title']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['title']['alter']['text'] = '[title] [field_digital_election_list]';
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
-  /* Field: Content: Body */
+  /* Felt: Indhold: Body */
   $handler->display->display_options['fields']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['fields']['entity_id']['table'] = 'field_data_body';
   $handler->display->display_options['fields']['entity_id']['field'] = 'body';
   $handler->display->display_options['fields']['entity_id']['label'] = 'indhold';
   $handler->display->display_options['fields']['entity_id']['exclude'] = TRUE;
-  /* Field: Content: Formand */
+  /* Felt: Indhold: Formand */
   $handler->display->display_options['fields']['entity_id_2']['id'] = 'entity_id_2';
   $handler->display->display_options['fields']['entity_id_2']['table'] = 'field_data_field_chairman';
   $handler->display->display_options['fields']['entity_id_2']['field'] = 'field_chairman';
-  /* Field: Content: Kontakt */
+  /* Felt: Indhold: Kontakt */
   $handler->display->display_options['fields']['entity_id_3']['id'] = 'entity_id_3';
   $handler->display->display_options['fields']['entity_id_3']['table'] = 'field_data_field_contact';
   $handler->display->display_options['fields']['entity_id_3']['field'] = 'field_contact';
   $handler->display->display_options['fields']['entity_id_3']['exclude'] = TRUE;
-  /* Field: Field: Parti */
+  /* Felt: Felt: Parti */
   $handler->display->display_options['fields']['entity_id_5']['id'] = 'entity_id_5';
   $handler->display->display_options['fields']['entity_id_5']['table'] = 'field_data_field_party';
   $handler->display->display_options['fields']['entity_id_5']['field'] = 'field_party';
   $handler->display->display_options['fields']['entity_id_5']['exclude'] = TRUE;
-  /* Field: Content: Kontakt */
+  /* Felt: Indhold: Kontakt */
   $handler->display->display_options['fields']['entity_id_6']['id'] = 'entity_id_6';
   $handler->display->display_options['fields']['entity_id_6']['table'] = 'field_data_field_venue_contact';
   $handler->display->display_options['fields']['entity_id_6']['field'] = 'field_venue_contact';
   $handler->display->display_options['fields']['entity_id_6']['exclude'] = TRUE;
-  /* Field: Content: Lokalekontakt */
+  /* Felt: Indhold: Lokalekontakt */
   $handler->display->display_options['fields']['entity_id_7']['id'] = 'entity_id_7';
   $handler->display->display_options['fields']['entity_id_7']['table'] = 'field_data_field_venue_contact_name';
   $handler->display->display_options['fields']['entity_id_7']['field'] = 'field_venue_contact_name';
   $handler->display->display_options['fields']['entity_id_7']['exclude'] = TRUE;
-  /* Field: Content: Frivillige pr. parti */
+  /* Felt: Indhold: Frivillige pr. parti */
   $handler->display->display_options['fields']['entity_id_8']['id'] = 'entity_id_8';
   $handler->display->display_options['fields']['entity_id_8']['table'] = 'field_data_field_volunteers_pr_party';
   $handler->display->display_options['fields']['entity_id_8']['field'] = 'field_volunteers_pr_party';
   $handler->display->display_options['fields']['entity_id_8']['exclude'] = TRUE;
   $handler->display->display_options['fields']['entity_id_8']['click_sort_column'] = 'party';
+  $handler->display->display_options['fields']['entity_id_8']['group_column'] = 'party';
   $handler->display->display_options['fields']['entity_id_8']['delta_offset'] = '0';
-  /* Field: Content: Valgkreds */
+  /* Felt: Indhold: Valgkreds */
   $handler->display->display_options['fields']['entity_id_9']['id'] = 'entity_id_9';
   $handler->display->display_options['fields']['entity_id_9']['table'] = 'field_data_field_constituency';
   $handler->display->display_options['fields']['entity_id_9']['field'] = 'field_constituency';
@@ -2110,78 +2332,66 @@ function valhalla_views_views_default_views() {
     'entity_id_7' => 'entity_id_7',
     'entity_id_8' => 'entity_id_8',
     'entity_id_9' => 'entity_id_9',
-    'entity_id_10' => 'entity_id_10',
   );
   $handler->display->display_options['row_options']['separator'] = ' / ';
   $handler->display->display_options['row_options']['hide_empty'] = TRUE;
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Content: Nid */
+  /* Felt: Indhold: Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
   $handler->display->display_options['fields']['nid']['label'] = '';
   $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
   $handler->display->display_options['fields']['nid']['element_label_colon'] = FALSE;
-  /* Field: Content: Digital valgiste */
-  $handler->display->display_options['fields']['field_digital_election_list']['id'] = 'field_digital_election_list';
-  $handler->display->display_options['fields']['field_digital_election_list']['table'] = 'field_data_field_digital_election_list';
-  $handler->display->display_options['fields']['field_digital_election_list']['field'] = 'field_digital_election_list';
-  $handler->display->display_options['fields']['field_digital_election_list']['label'] = '';
-  $handler->display->display_options['fields']['field_digital_election_list']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['field_digital_election_list']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['field_digital_election_list']['alter']['text'] = '<div class="icon-digital-valglist">&nbsp;</div>';
-  $handler->display->display_options['fields']['field_digital_election_list']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_digital_election_list']['element_default_classes'] = FALSE;
-  $handler->display->display_options['fields']['field_digital_election_list']['hide_empty'] = TRUE;
-  $handler->display->display_options['fields']['field_digital_election_list']['empty_zero'] = TRUE;
-  /* Field: Content: Title */
+  /* Felt: Indhold: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = '';
   $handler->display->display_options['fields']['title']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['title']['alter']['text'] = '<a href="node/[nid]/valgstederU">[title] [field_digital_election_list]</a>';
+  $handler->display->display_options['fields']['title']['alter']['text'] = '<a href="node/[nid]/valgstederU">[title]</a>';
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
-  /* Field: Content: Body */
+  /* Felt: Indhold: Body */
   $handler->display->display_options['fields']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['fields']['entity_id']['table'] = 'field_data_body';
   $handler->display->display_options['fields']['entity_id']['field'] = 'body';
   $handler->display->display_options['fields']['entity_id']['label'] = 'indhold';
   $handler->display->display_options['fields']['entity_id']['exclude'] = TRUE;
-  /* Field: Content: Formand */
+  /* Felt: Indhold: Formand */
   $handler->display->display_options['fields']['entity_id_2']['id'] = 'entity_id_2';
   $handler->display->display_options['fields']['entity_id_2']['table'] = 'field_data_field_chairman';
   $handler->display->display_options['fields']['entity_id_2']['field'] = 'field_chairman';
-  /* Field: Content: Kontakt */
+  /* Felt: Indhold: Kontakt */
   $handler->display->display_options['fields']['entity_id_3']['id'] = 'entity_id_3';
   $handler->display->display_options['fields']['entity_id_3']['table'] = 'field_data_field_contact';
   $handler->display->display_options['fields']['entity_id_3']['field'] = 'field_contact';
   $handler->display->display_options['fields']['entity_id_3']['exclude'] = TRUE;
-  /* Field: Field: Parti */
+  /* Felt: Felt: Parti */
   $handler->display->display_options['fields']['entity_id_5']['id'] = 'entity_id_5';
   $handler->display->display_options['fields']['entity_id_5']['table'] = 'field_data_field_party';
   $handler->display->display_options['fields']['entity_id_5']['field'] = 'field_party';
   $handler->display->display_options['fields']['entity_id_5']['exclude'] = TRUE;
-  /* Field: Content: Kontakt */
+  /* Felt: Indhold: Kontakt */
   $handler->display->display_options['fields']['entity_id_6']['id'] = 'entity_id_6';
   $handler->display->display_options['fields']['entity_id_6']['table'] = 'field_data_field_venue_contact';
   $handler->display->display_options['fields']['entity_id_6']['field'] = 'field_venue_contact';
   $handler->display->display_options['fields']['entity_id_6']['exclude'] = TRUE;
-  /* Field: Content: Lokalekontakt */
+  /* Felt: Indhold: Lokalekontakt */
   $handler->display->display_options['fields']['entity_id_7']['id'] = 'entity_id_7';
   $handler->display->display_options['fields']['entity_id_7']['table'] = 'field_data_field_venue_contact_name';
   $handler->display->display_options['fields']['entity_id_7']['field'] = 'field_venue_contact_name';
   $handler->display->display_options['fields']['entity_id_7']['exclude'] = TRUE;
-  /* Field: Content: Frivillige pr. parti */
+  /* Felt: Indhold: Frivillige pr. parti */
   $handler->display->display_options['fields']['entity_id_8']['id'] = 'entity_id_8';
   $handler->display->display_options['fields']['entity_id_8']['table'] = 'field_data_field_volunteers_pr_party';
   $handler->display->display_options['fields']['entity_id_8']['field'] = 'field_volunteers_pr_party';
   $handler->display->display_options['fields']['entity_id_8']['exclude'] = TRUE;
   $handler->display->display_options['fields']['entity_id_8']['click_sort_column'] = 'party';
+  $handler->display->display_options['fields']['entity_id_8']['group_column'] = 'party';
   $handler->display->display_options['fields']['entity_id_8']['delta_offset'] = '0';
-  /* Field: Content: Valgkreds */
+  /* Felt: Indhold: Valgkreds */
   $handler->display->display_options['fields']['entity_id_9']['id'] = 'entity_id_9';
   $handler->display->display_options['fields']['entity_id_9']['table'] = 'field_data_field_constituency';
   $handler->display->display_options['fields']['entity_id_9']['field'] = 'field_constituency';
@@ -2189,19 +2399,19 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['path'] = 'valgstederU';
   $translatables['valgsteder'] = array(
     t('Defaults'),
-    t('more'),
-    t('Apply'),
-    t('Reset'),
-    t('Sort by'),
-    t('Asc'),
-    t('Desc'),
-    t('Items per page'),
-    t('- All -'),
-    t('Offset'),
-    t('« first'),
-    t('‹ previous'),
-    t('next ›'),
-    t('last »'),
+    t('mere'),
+    t('Udfør'),
+    t('Gendan'),
+    t('Sortér efter'),
+    t('Stigende'),
+    t('Faldende'),
+    t('Elementer pr. side'),
+    t('- Alle -'),
+    t('Forskydning'),
+    t('« første'),
+    t('‹ forrige'),
+    t('næste ›'),
+    t('sidste »'),
     t('indhold'),
     t('Formand'),
     t('Kontakt'),
@@ -2209,18 +2419,14 @@ function valhalla_views_views_default_views() {
     t('Lokalekontakt'),
     t('Frivillige pr. parti'),
     t('Valgkreds'),
-    t('Broken handler field_data_field_dig_election.field_dig_election'),
     t('All'),
     t('Block'),
     t('Nid'),
     t('field_chairman'),
     t('field_party'),
-    t('Digital valgiste'),
     t('Side m  CPR'),
-    t('<div class="icon-digital-valglist">&nbsp;</div>'),
-    t('[title] [field_digital_election_list]'),
     t('Side u CPR'),
-    t('<a href="node/[nid]/valgstederU">[title] [field_digital_election_list]</a>'),
+    t('<a href="node/[nid]/valgstederU">[title]</a>'),
   );
   $export['valgsteder'] = $view;
 
@@ -2238,6 +2444,7 @@ function valhalla_views_views_default_views() {
   $handler = $view->new_display('default', 'Standarder', 'default');
   $handler->display->display_options['css_class'] = 'kvitteringsliste';
   $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'mere';
   $handler->display->display_options['access']['type'] = 'role';
   $handler->display->display_options['access']['role'] = array(
     3 => '3',
@@ -2246,8 +2453,12 @@ function valhalla_views_views_default_views() {
   );
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
-  $handler->display->display_options['query']['options']['query_comment'] = FALSE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Udfør';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Gendan';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortér efter';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Stigende';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Faldende';
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '50';
   $handler->display->display_options['pager']['options']['offset'] = '0';
@@ -2255,7 +2466,12 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elementer pr. side';
   $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
   $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Forskydning';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« første';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ forrige';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'næste ›';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'sidste »';
   $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['grouping'] = '';
   $handler->display->display_options['style_options']['columns'] = array(
     'edit_node' => 'edit_node',
     'delete_node' => 'delete_node',
@@ -2332,80 +2548,84 @@ function valhalla_views_views_default_views() {
       'separator' => '',
     ),
   );
-  /* Relationship: Field: Parti (field_party) */
+  /* Forbindelse: Felt: Parti (field_party) */
   $handler->display->display_options['relationships']['field_party_tid']['id'] = 'field_party_tid';
   $handler->display->display_options['relationships']['field_party_tid']['table'] = 'field_data_field_party';
   $handler->display->display_options['relationships']['field_party_tid']['field'] = 'field_party_tid';
-  $handler->display->display_options['relationships']['field_party_tid']['label'] = 'term fra field_party';
-  /* Relationship: Field: Polling Station (field_polling_station) */
+  /* Forbindelse: Felt: Begræns adgang til følgende valgsteder (field_polling_station) */
   $handler->display->display_options['relationships']['field_polling_station_nid']['id'] = 'field_polling_station_nid';
   $handler->display->display_options['relationships']['field_polling_station_nid']['table'] = 'field_data_field_polling_station';
   $handler->display->display_options['relationships']['field_polling_station_nid']['field'] = 'field_polling_station_nid';
   $handler->display->display_options['relationships']['field_polling_station_nid']['delta'] = '-1';
-  /* Field: Content: Edit link */
+  /* Felt: Indhold: Redigér-link */
   $handler->display->display_options['fields']['edit_node']['id'] = 'edit_node';
   $handler->display->display_options['fields']['edit_node']['table'] = 'views_entity_node';
   $handler->display->display_options['fields']['edit_node']['field'] = 'edit_node';
-  $handler->display->display_options['fields']['edit_node']['label'] = 'Redigér-link';
   $handler->display->display_options['fields']['edit_node']['exclude'] = TRUE;
-  /* Field: Content: Delete link */
+  /* Felt: Indhold: Slet-link */
   $handler->display->display_options['fields']['delete_node']['id'] = 'delete_node';
   $handler->display->display_options['fields']['delete_node']['table'] = 'views_entity_node';
   $handler->display->display_options['fields']['delete_node']['field'] = 'delete_node';
-  $handler->display->display_options['fields']['delete_node']['label'] = 'Slet-link';
   $handler->display->display_options['fields']['delete_node']['exclude'] = TRUE;
-  /* Field: Content: Title */
+  /* Felt: Indhold: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
-  $handler->display->display_options['fields']['title']['label'] = 'Titel';
-  /* Field: Content: CPR Number */
+  /* Felt: Indhold: CPR Number */
   $handler->display->display_options['fields']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['fields']['entity_id']['table'] = 'field_data_field_cpr_number';
   $handler->display->display_options['fields']['entity_id']['field'] = 'field_cpr_number';
   $handler->display->display_options['fields']['entity_id']['label'] = 'CPR';
   $handler->display->display_options['fields']['entity_id']['exclude'] = TRUE;
-  /* Field: Content: Email */
+  /* Felt: Indhold: Email */
   $handler->display->display_options['fields']['entity_id_1']['id'] = 'entity_id_1';
   $handler->display->display_options['fields']['entity_id_1']['table'] = 'field_data_field_email';
   $handler->display->display_options['fields']['entity_id_1']['field'] = 'field_email';
   $handler->display->display_options['fields']['entity_id_1']['label'] = 'E-mail';
   $handler->display->display_options['fields']['entity_id_1']['exclude'] = TRUE;
-  /* Field: Field: Parti */
+  /* Felt: Felt: Parti */
   $handler->display->display_options['fields']['entity_id_2']['id'] = 'entity_id_2';
   $handler->display->display_options['fields']['entity_id_2']['table'] = 'field_data_field_party';
   $handler->display->display_options['fields']['entity_id_2']['field'] = 'field_party';
   $handler->display->display_options['fields']['entity_id_2']['type'] = 'taxonomy_term_reference_plain';
-  /* Field: Content: Telefon */
+  /* Felt: Indhold: Telefon */
   $handler->display->display_options['fields']['entity_id_3']['id'] = 'entity_id_3';
   $handler->display->display_options['fields']['entity_id_3']['table'] = 'field_data_field_phone';
   $handler->display->display_options['fields']['entity_id_3']['field'] = 'field_phone';
   $handler->display->display_options['fields']['entity_id_3']['exclude'] = TRUE;
-  /* Field: Content: Telefon 2 */
+  /* Felt: Indhold: Telefon 2 */
   $handler->display->display_options['fields']['entity_id_4']['id'] = 'entity_id_4';
   $handler->display->display_options['fields']['entity_id_4']['table'] = 'field_data_field_phone2';
   $handler->display->display_options['fields']['entity_id_4']['field'] = 'field_phone2';
   $handler->display->display_options['fields']['entity_id_4']['exclude'] = TRUE;
-  /* Field: Field: Polling Station */
+  /* Felt: Felt: Begræns adgang til følgende valgsteder */
   $handler->display->display_options['fields']['entity_id_5']['id'] = 'entity_id_5';
   $handler->display->display_options['fields']['entity_id_5']['table'] = 'field_data_field_polling_station';
   $handler->display->display_options['fields']['entity_id_5']['field'] = 'field_polling_station';
   $handler->display->display_options['fields']['entity_id_5']['relationship'] = 'field_polling_station_nid';
   $handler->display->display_options['fields']['entity_id_5']['label'] = 'Valgsted';
   $handler->display->display_options['fields']['entity_id_5']['type'] = 'node_reference_plain';
-  /* Field: Content: Status */
+  /* Felt: Felt: Begræns adgang til følgende valgsteder */
+  $handler->display->display_options['fields']['field_polling_station']['id'] = 'field_polling_station';
+  $handler->display->display_options['fields']['field_polling_station']['table'] = 'field_data_field_polling_station';
+  $handler->display->display_options['fields']['field_polling_station']['field'] = 'field_polling_station';
+  $handler->display->display_options['fields']['field_polling_station']['label'] = 'Valgsted';
+  $handler->display->display_options['fields']['field_polling_station']['hide_alter_empty'] = FALSE;
+  $handler->display->display_options['fields']['field_polling_station']['type'] = 'node_reference_plain';
+  $handler->display->display_options['fields']['field_polling_station']['delta_offset'] = '0';
+  /* Felt: Indhold: Status */
   $handler->display->display_options['fields']['entity_id_6']['id'] = 'entity_id_6';
   $handler->display->display_options['fields']['entity_id_6']['table'] = 'field_data_field_rsvp';
   $handler->display->display_options['fields']['entity_id_6']['field'] = 'field_rsvp';
   $handler->display->display_options['fields']['entity_id_6']['label'] = 'RSVP';
-  /* Field: Content: Link */
+  /* Felt: Indhold: Link */
   $handler->display->display_options['fields']['view_node']['id'] = 'view_node';
   $handler->display->display_options['fields']['view_node']['table'] = 'views_entity_node';
   $handler->display->display_options['fields']['view_node']['field'] = 'view_node';
   $handler->display->display_options['fields']['view_node']['label'] = '';
   $handler->display->display_options['fields']['view_node']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['view_node']['alter']['text'] = '[edit_node] | [delete_node]';
-  /* Contextual filter: Field: Parti (field_party) */
+  /* Kontekstuelt filter: Felt: Parti (field_party) */
   $handler->display->display_options['arguments']['field_party_tid']['id'] = 'field_party_tid';
   $handler->display->display_options['arguments']['field_party_tid']['table'] = 'field_data_field_party';
   $handler->display->display_options['arguments']['field_party_tid']['field'] = 'field_party_tid';
@@ -2416,17 +2636,19 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['arguments']['field_party_tid']['default_argument_options']['argument'] = 'all';
   $handler->display->display_options['arguments']['field_party_tid']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['field_party_tid']['specify_validation'] = TRUE;
-  /* Filter criterion: Content: Type */
+  /* Filterkriterie: Indhold: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
     'volunteers' => 'volunteers',
   );
-  /* Filter criterion: Content: Status (field_rsvp) */
+  $handler->display->display_options['filters']['type']['group'] = '0';
+  /* Filterkriterie: Indhold: Status (field_rsvp) */
   $handler->display->display_options['filters']['field_rsvp_value']['id'] = 'field_rsvp_value';
   $handler->display->display_options['filters']['field_rsvp_value']['table'] = 'field_data_field_rsvp';
   $handler->display->display_options['filters']['field_rsvp_value']['field'] = 'field_rsvp_value';
+  $handler->display->display_options['filters']['field_rsvp_value']['group'] = '0';
   $handler->display->display_options['filters']['field_rsvp_value']['expose']['label'] = 'RSVP';
   $handler->display->display_options['filters']['field_rsvp_value']['expose']['operator'] = 'field_rsvp_value_op';
   $handler->display->display_options['filters']['field_rsvp_value']['expose']['identifier'] = 'rsvp';
@@ -2435,63 +2657,61 @@ function valhalla_views_views_default_views() {
   $handler = $view->new_display('page', 'Alle frivillige', 'all_volunteers');
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Content: Edit link */
+  /* Felt: Indhold: Redigér-link */
   $handler->display->display_options['fields']['edit_node']['id'] = 'edit_node';
   $handler->display->display_options['fields']['edit_node']['table'] = 'views_entity_node';
   $handler->display->display_options['fields']['edit_node']['field'] = 'edit_node';
-  $handler->display->display_options['fields']['edit_node']['label'] = 'Redigér-link';
   $handler->display->display_options['fields']['edit_node']['exclude'] = TRUE;
-  /* Field: Content: Delete link */
+  /* Felt: Indhold: Slet-link */
   $handler->display->display_options['fields']['delete_node']['id'] = 'delete_node';
   $handler->display->display_options['fields']['delete_node']['table'] = 'views_entity_node';
   $handler->display->display_options['fields']['delete_node']['field'] = 'delete_node';
-  $handler->display->display_options['fields']['delete_node']['label'] = 'Slet-link';
   $handler->display->display_options['fields']['delete_node']['exclude'] = TRUE;
-  /* Field: Content: Title */
+  /* Felt: Indhold: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
-  $handler->display->display_options['fields']['title']['label'] = 'Titel';
-  /* Field: Content: CPR Number */
+  /* Felt: Indhold: CPR Number */
   $handler->display->display_options['fields']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['fields']['entity_id']['table'] = 'field_data_field_cpr_number';
   $handler->display->display_options['fields']['entity_id']['field'] = 'field_cpr_number';
   $handler->display->display_options['fields']['entity_id']['label'] = 'CPR';
   $handler->display->display_options['fields']['entity_id']['exclude'] = TRUE;
-  /* Field: Content: Email */
+  /* Felt: Indhold: Email */
   $handler->display->display_options['fields']['entity_id_1']['id'] = 'entity_id_1';
   $handler->display->display_options['fields']['entity_id_1']['table'] = 'field_data_field_email';
   $handler->display->display_options['fields']['entity_id_1']['field'] = 'field_email';
   $handler->display->display_options['fields']['entity_id_1']['label'] = 'E-mail';
   $handler->display->display_options['fields']['entity_id_1']['exclude'] = TRUE;
-  /* Field: Field: Parti */
+  /* Felt: Felt: Parti */
   $handler->display->display_options['fields']['entity_id_2']['id'] = 'entity_id_2';
   $handler->display->display_options['fields']['entity_id_2']['table'] = 'field_data_field_party';
   $handler->display->display_options['fields']['entity_id_2']['field'] = 'field_party';
   $handler->display->display_options['fields']['entity_id_2']['type'] = 'taxonomy_term_reference_plain';
-  /* Field: Content: Telefon */
+  /* Felt: Indhold: Telefon */
   $handler->display->display_options['fields']['entity_id_3']['id'] = 'entity_id_3';
   $handler->display->display_options['fields']['entity_id_3']['table'] = 'field_data_field_phone';
   $handler->display->display_options['fields']['entity_id_3']['field'] = 'field_phone';
   $handler->display->display_options['fields']['entity_id_3']['exclude'] = TRUE;
-  /* Field: Content: Telefon 2 */
+  /* Felt: Indhold: Telefon 2 */
   $handler->display->display_options['fields']['entity_id_4']['id'] = 'entity_id_4';
   $handler->display->display_options['fields']['entity_id_4']['table'] = 'field_data_field_phone2';
   $handler->display->display_options['fields']['entity_id_4']['field'] = 'field_phone2';
   $handler->display->display_options['fields']['entity_id_4']['exclude'] = TRUE;
-  /* Field: Field: Polling Station */
-  $handler->display->display_options['fields']['entity_id_5']['id'] = 'entity_id_5';
-  $handler->display->display_options['fields']['entity_id_5']['table'] = 'field_data_field_polling_station';
-  $handler->display->display_options['fields']['entity_id_5']['field'] = 'field_polling_station';
-  $handler->display->display_options['fields']['entity_id_5']['relationship'] = 'field_polling_station_nid';
-  $handler->display->display_options['fields']['entity_id_5']['label'] = 'Valgsted';
-  $handler->display->display_options['fields']['entity_id_5']['type'] = 'node_reference_plain';
-  /* Field: Content: Status */
+  /* Felt: Felt: Begræns adgang til følgende valgsteder */
+  $handler->display->display_options['fields']['field_polling_station']['id'] = 'field_polling_station';
+  $handler->display->display_options['fields']['field_polling_station']['table'] = 'field_data_field_polling_station';
+  $handler->display->display_options['fields']['field_polling_station']['field'] = 'field_polling_station';
+  $handler->display->display_options['fields']['field_polling_station']['label'] = 'Valgsted';
+  $handler->display->display_options['fields']['field_polling_station']['hide_alter_empty'] = FALSE;
+  $handler->display->display_options['fields']['field_polling_station']['type'] = 'node_reference_plain';
+  $handler->display->display_options['fields']['field_polling_station']['delta_offset'] = '0';
+  /* Felt: Indhold: Status */
   $handler->display->display_options['fields']['entity_id_6']['id'] = 'entity_id_6';
   $handler->display->display_options['fields']['entity_id_6']['table'] = 'field_data_field_rsvp';
   $handler->display->display_options['fields']['entity_id_6']['field'] = 'field_rsvp';
   $handler->display->display_options['fields']['entity_id_6']['label'] = 'RSVP';
-  /* Field: Content: Link */
+  /* Felt: Indhold: Link */
   $handler->display->display_options['fields']['view_node']['id'] = 'view_node';
   $handler->display->display_options['fields']['view_node']['table'] = 'views_entity_node';
   $handler->display->display_options['fields']['view_node']['field'] = 'view_node';
@@ -2499,18 +2719,24 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['view_node']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['view_node']['alter']['text'] = '[edit_node] | [delete_node]';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['filter_groups']['groups'] = array(
+    1 => 'AND',
+    2 => 'AND',
+  );
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Content: Type */
+  /* Filterkriterie: Indhold: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
     'volunteers' => 'volunteers',
   );
-  /* Filter criterion: Content: Status (field_rsvp) */
+  $handler->display->display_options['filters']['type']['group'] = 1;
+  /* Filterkriterie: Indhold: Status (field_rsvp) */
   $handler->display->display_options['filters']['field_rsvp_value']['id'] = 'field_rsvp_value';
   $handler->display->display_options['filters']['field_rsvp_value']['table'] = 'field_data_field_rsvp';
   $handler->display->display_options['filters']['field_rsvp_value']['field'] = 'field_rsvp_value';
+  $handler->display->display_options['filters']['field_rsvp_value']['group'] = 1;
   $handler->display->display_options['filters']['field_rsvp_value']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_rsvp_value']['expose']['operator_id'] = 'field_rsvp_value_op';
   $handler->display->display_options['filters']['field_rsvp_value']['expose']['label'] = 'RSVP';
@@ -2522,58 +2748,55 @@ function valhalla_views_views_default_views() {
   $handler = $view->new_display('page', 'Frivillige der ønsker at blive slettet', 'volunteers_for_removal');
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Content: Edit link */
+  /* Felt: Indhold: Redigér-link */
   $handler->display->display_options['fields']['edit_node']['id'] = 'edit_node';
   $handler->display->display_options['fields']['edit_node']['table'] = 'views_entity_node';
   $handler->display->display_options['fields']['edit_node']['field'] = 'edit_node';
-  $handler->display->display_options['fields']['edit_node']['label'] = 'Redigér-link';
   $handler->display->display_options['fields']['edit_node']['exclude'] = TRUE;
-  /* Field: Content: Delete link */
+  /* Felt: Indhold: Slet-link */
   $handler->display->display_options['fields']['delete_node']['id'] = 'delete_node';
   $handler->display->display_options['fields']['delete_node']['table'] = 'views_entity_node';
   $handler->display->display_options['fields']['delete_node']['field'] = 'delete_node';
-  $handler->display->display_options['fields']['delete_node']['label'] = 'Slet-link';
   $handler->display->display_options['fields']['delete_node']['exclude'] = TRUE;
-  /* Field: Content: Title */
+  /* Felt: Indhold: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
-  $handler->display->display_options['fields']['title']['label'] = 'Titel';
-  /* Field: Content: Link */
+  /* Felt: Indhold: Link */
   $handler->display->display_options['fields']['view_node']['id'] = 'view_node';
   $handler->display->display_options['fields']['view_node']['table'] = 'views_entity_node';
   $handler->display->display_options['fields']['view_node']['field'] = 'view_node';
   $handler->display->display_options['fields']['view_node']['label'] = '';
   $handler->display->display_options['fields']['view_node']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['view_node']['alter']['text'] = '[edit_node] | [delete_node]';
-  /* Field: Content: CPR Number */
+  /* Felt: Indhold: CPR Number */
   $handler->display->display_options['fields']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['fields']['entity_id']['table'] = 'field_data_field_cpr_number';
   $handler->display->display_options['fields']['entity_id']['field'] = 'field_cpr_number';
   $handler->display->display_options['fields']['entity_id']['label'] = 'CPR';
   $handler->display->display_options['fields']['entity_id']['exclude'] = TRUE;
-  /* Field: Content: Email */
+  /* Felt: Indhold: Email */
   $handler->display->display_options['fields']['entity_id_1']['id'] = 'entity_id_1';
   $handler->display->display_options['fields']['entity_id_1']['table'] = 'field_data_field_email';
   $handler->display->display_options['fields']['entity_id_1']['field'] = 'field_email';
   $handler->display->display_options['fields']['entity_id_1']['label'] = 'E-mail';
   $handler->display->display_options['fields']['entity_id_1']['exclude'] = TRUE;
-  /* Field: Field: Parti */
+  /* Felt: Felt: Parti */
   $handler->display->display_options['fields']['entity_id_2']['id'] = 'entity_id_2';
   $handler->display->display_options['fields']['entity_id_2']['table'] = 'field_data_field_party';
   $handler->display->display_options['fields']['entity_id_2']['field'] = 'field_party';
   $handler->display->display_options['fields']['entity_id_2']['type'] = 'taxonomy_term_reference_plain';
-  /* Field: Content: Telefon */
+  /* Felt: Indhold: Telefon */
   $handler->display->display_options['fields']['entity_id_3']['id'] = 'entity_id_3';
   $handler->display->display_options['fields']['entity_id_3']['table'] = 'field_data_field_phone';
   $handler->display->display_options['fields']['entity_id_3']['field'] = 'field_phone';
   $handler->display->display_options['fields']['entity_id_3']['exclude'] = TRUE;
-  /* Field: Content: Telefon 2 */
+  /* Felt: Indhold: Telefon 2 */
   $handler->display->display_options['fields']['entity_id_4']['id'] = 'entity_id_4';
   $handler->display->display_options['fields']['entity_id_4']['table'] = 'field_data_field_phone2';
   $handler->display->display_options['fields']['entity_id_4']['field'] = 'field_phone2';
   $handler->display->display_options['fields']['entity_id_4']['exclude'] = TRUE;
-  /* Field: Field: Polling Station */
+  /* Felt: Felt: Begræns adgang til følgende valgsteder */
   $handler->display->display_options['fields']['entity_id_5']['id'] = 'entity_id_5';
   $handler->display->display_options['fields']['entity_id_5']['table'] = 'field_data_field_polling_station';
   $handler->display->display_options['fields']['entity_id_5']['field'] = 'field_polling_station';
@@ -2585,92 +2808,96 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['entity_id_5']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['entity_id_5']['element_wrapper_type'] = 'span';
   $handler->display->display_options['fields']['entity_id_5']['element_default_classes'] = FALSE;
-  /* Field: Content: Status */
+  /* Felt: Indhold: Status */
   $handler->display->display_options['fields']['entity_id_6']['id'] = 'entity_id_6';
   $handler->display->display_options['fields']['entity_id_6']['table'] = 'field_data_field_rsvp';
   $handler->display->display_options['fields']['entity_id_6']['field'] = 'field_rsvp';
   $handler->display->display_options['fields']['entity_id_6']['label'] = 'RSVP';
   $handler->display->display_options['fields']['entity_id_6']['exclude'] = TRUE;
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['filter_groups']['groups'] = array(
+    1 => 'AND',
+    2 => 'AND',
+  );
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Content: Type */
+  /* Filterkriterie: Indhold: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
     'volunteers' => 'volunteers',
   );
-  /* Filter criterion: Content: Status (field_rsvp) */
+  $handler->display->display_options['filters']['type']['group'] = 1;
+  /* Filterkriterie: Indhold: Status (field_rsvp) */
   $handler->display->display_options['filters']['field_rsvp_value']['id'] = 'field_rsvp_value';
   $handler->display->display_options['filters']['field_rsvp_value']['table'] = 'field_data_field_rsvp';
   $handler->display->display_options['filters']['field_rsvp_value']['field'] = 'field_rsvp_value';
   $handler->display->display_options['filters']['field_rsvp_value']['value'] = array(
     3 => '3',
   );
+  $handler->display->display_options['filters']['field_rsvp_value']['group'] = 1;
   $handler->display->display_options['path'] = 'volunteers/list/off';
 
   /* Display: Frivillige der mangler at svare tilbage */
   $handler = $view->new_display('page', 'Frivillige der mangler at svare tilbage', 'volunteers_with_no_rsvp');
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Content: Edit link */
+  /* Felt: Indhold: Redigér-link */
   $handler->display->display_options['fields']['edit_node']['id'] = 'edit_node';
   $handler->display->display_options['fields']['edit_node']['table'] = 'views_entity_node';
   $handler->display->display_options['fields']['edit_node']['field'] = 'edit_node';
-  $handler->display->display_options['fields']['edit_node']['label'] = 'Redigér-link';
   $handler->display->display_options['fields']['edit_node']['exclude'] = TRUE;
-  /* Field: Content: Delete link */
+  /* Felt: Indhold: Slet-link */
   $handler->display->display_options['fields']['delete_node']['id'] = 'delete_node';
   $handler->display->display_options['fields']['delete_node']['table'] = 'views_entity_node';
   $handler->display->display_options['fields']['delete_node']['field'] = 'delete_node';
-  $handler->display->display_options['fields']['delete_node']['label'] = 'Slet-link';
   $handler->display->display_options['fields']['delete_node']['exclude'] = TRUE;
-  /* Field: Content: Title */
+  /* Felt: Indhold: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
-  $handler->display->display_options['fields']['title']['label'] = 'Titel';
-  /* Field: Content: CPR Number */
+  /* Felt: Indhold: CPR Number */
   $handler->display->display_options['fields']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['fields']['entity_id']['table'] = 'field_data_field_cpr_number';
   $handler->display->display_options['fields']['entity_id']['field'] = 'field_cpr_number';
   $handler->display->display_options['fields']['entity_id']['label'] = 'CPR';
   $handler->display->display_options['fields']['entity_id']['exclude'] = TRUE;
-  /* Field: Content: Email */
+  /* Felt: Indhold: Email */
   $handler->display->display_options['fields']['entity_id_1']['id'] = 'entity_id_1';
   $handler->display->display_options['fields']['entity_id_1']['table'] = 'field_data_field_email';
   $handler->display->display_options['fields']['entity_id_1']['field'] = 'field_email';
   $handler->display->display_options['fields']['entity_id_1']['label'] = 'E-mail';
   $handler->display->display_options['fields']['entity_id_1']['exclude'] = TRUE;
-  /* Field: Field: Parti */
+  /* Felt: Felt: Parti */
   $handler->display->display_options['fields']['entity_id_2']['id'] = 'entity_id_2';
   $handler->display->display_options['fields']['entity_id_2']['table'] = 'field_data_field_party';
   $handler->display->display_options['fields']['entity_id_2']['field'] = 'field_party';
   $handler->display->display_options['fields']['entity_id_2']['type'] = 'taxonomy_term_reference_plain';
-  /* Field: Content: Telefon */
+  /* Felt: Indhold: Telefon */
   $handler->display->display_options['fields']['entity_id_3']['id'] = 'entity_id_3';
   $handler->display->display_options['fields']['entity_id_3']['table'] = 'field_data_field_phone';
   $handler->display->display_options['fields']['entity_id_3']['field'] = 'field_phone';
   $handler->display->display_options['fields']['entity_id_3']['exclude'] = TRUE;
-  /* Field: Content: Telefon 2 */
+  /* Felt: Indhold: Telefon 2 */
   $handler->display->display_options['fields']['entity_id_4']['id'] = 'entity_id_4';
   $handler->display->display_options['fields']['entity_id_4']['table'] = 'field_data_field_phone2';
   $handler->display->display_options['fields']['entity_id_4']['field'] = 'field_phone2';
   $handler->display->display_options['fields']['entity_id_4']['exclude'] = TRUE;
-  /* Field: Field: Polling Station */
-  $handler->display->display_options['fields']['entity_id_5']['id'] = 'entity_id_5';
-  $handler->display->display_options['fields']['entity_id_5']['table'] = 'field_data_field_polling_station';
-  $handler->display->display_options['fields']['entity_id_5']['field'] = 'field_polling_station';
-  $handler->display->display_options['fields']['entity_id_5']['relationship'] = 'field_polling_station_nid';
-  $handler->display->display_options['fields']['entity_id_5']['label'] = 'Valgsted';
-  $handler->display->display_options['fields']['entity_id_5']['type'] = 'node_reference_plain';
-  /* Field: Content: Status */
+  /* Felt: Felt: Begræns adgang til følgende valgsteder */
+  $handler->display->display_options['fields']['field_polling_station']['id'] = 'field_polling_station';
+  $handler->display->display_options['fields']['field_polling_station']['table'] = 'field_data_field_polling_station';
+  $handler->display->display_options['fields']['field_polling_station']['field'] = 'field_polling_station';
+  $handler->display->display_options['fields']['field_polling_station']['label'] = 'Valgsted';
+  $handler->display->display_options['fields']['field_polling_station']['hide_alter_empty'] = FALSE;
+  $handler->display->display_options['fields']['field_polling_station']['type'] = 'node_reference_plain';
+  $handler->display->display_options['fields']['field_polling_station']['delta_offset'] = '0';
+  /* Felt: Indhold: Status */
   $handler->display->display_options['fields']['entity_id_6']['id'] = 'entity_id_6';
   $handler->display->display_options['fields']['entity_id_6']['table'] = 'field_data_field_rsvp';
   $handler->display->display_options['fields']['entity_id_6']['field'] = 'field_rsvp';
   $handler->display->display_options['fields']['entity_id_6']['label'] = 'RSVP';
   $handler->display->display_options['fields']['entity_id_6']['exclude'] = TRUE;
-  /* Field: Content: Link */
+  /* Felt: Indhold: Link */
   $handler->display->display_options['fields']['view_node']['id'] = 'view_node';
   $handler->display->display_options['fields']['view_node']['table'] = 'views_entity_node';
   $handler->display->display_options['fields']['view_node']['field'] = 'view_node';
@@ -2678,15 +2905,20 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['view_node']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['view_node']['alter']['text'] = '[edit_node] | [delete_node]';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['filter_groups']['groups'] = array(
+    1 => 'AND',
+    2 => 'AND',
+  );
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Content: Type */
+  /* Filterkriterie: Indhold: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
     'volunteers' => 'volunteers',
   );
-  /* Filter criterion: Content: Status (field_rsvp) */
+  $handler->display->display_options['filters']['type']['group'] = 1;
+  /* Filterkriterie: Indhold: Status (field_rsvp) */
   $handler->display->display_options['filters']['field_rsvp_value']['id'] = 'field_rsvp_value';
   $handler->display->display_options['filters']['field_rsvp_value']['table'] = 'field_data_field_rsvp';
   $handler->display->display_options['filters']['field_rsvp_value']['field'] = 'field_rsvp_value';
@@ -2694,22 +2926,23 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['filters']['field_rsvp_value']['value'] = array(
     3 => '3',
   );
+  $handler->display->display_options['filters']['field_rsvp_value']['group'] = 1;
   $handler->display->display_options['path'] = 'volunteers/list/rsvp-missing';
   $translatables['volunteer_admin_lists'] = array(
     t('Standarder'),
-    t('more'),
-    t('Apply'),
-    t('Reset'),
-    t('Sort by'),
-    t('Asc'),
-    t('Desc'),
+    t('mere'),
+    t('Udfør'),
+    t('Gendan'),
+    t('Sortér efter'),
+    t('Stigende'),
+    t('Faldende'),
     t('Elementer pr. side'),
     t('- Alle -'),
     t('Forskydning'),
-    t('« first'),
-    t('‹ previous'),
-    t('next ›'),
-    t('last »'),
+    t('« første'),
+    t('‹ forrige'),
+    t('næste ›'),
+    t('sidste »'),
     t('term fra field_party'),
     t('field_polling_station'),
     t('Redigér-link'),
@@ -2743,6 +2976,7 @@ function valhalla_views_views_default_views() {
   /* Display: Defaults */
   $handler = $view->new_display('default', 'Defaults', 'default');
   $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'mere';
   $handler->display->display_options['access']['type'] = 'role';
   $handler->display->display_options['access']['role'] = array(
     3 => '3',
@@ -2751,8 +2985,12 @@ function valhalla_views_views_default_views() {
   );
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
-  $handler->display->display_options['query']['options']['query_comment'] = FALSE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Udfør';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Gendan';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortér efter';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Stigende';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Faldende';
   $handler->display->display_options['pager']['type'] = 'mini';
   $handler->display->display_options['pager']['options']['items_per_page'] = '10';
   $handler->display->display_options['pager']['options']['offset'] = '0';
@@ -2760,47 +2998,51 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elementer pr. side';
   $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
   $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Forskydning';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« første';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ forrige';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'næste ›';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'sidste »';
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['row_plugin'] = 'fields';
-  /* Relationship: Field: Parti (field_party) */
+  /* Forbindelse: Felt: Parti (field_party) */
   $handler->display->display_options['relationships']['field_party_tid']['id'] = 'field_party_tid';
   $handler->display->display_options['relationships']['field_party_tid']['table'] = 'field_data_field_party';
   $handler->display->display_options['relationships']['field_party_tid']['field'] = 'field_party_tid';
-  /* Field: Content: Title */
+  /* Felt: Indhold: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = 'Navn';
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
-  /* Field: Field: Parti */
+  /* Felt: Felt: Parti */
   $handler->display->display_options['fields']['entity_id_7']['id'] = 'entity_id_7';
   $handler->display->display_options['fields']['entity_id_7']['table'] = 'field_data_field_party';
   $handler->display->display_options['fields']['entity_id_7']['field'] = 'field_party';
   $handler->display->display_options['fields']['entity_id_7']['label'] = 'Party';
   $handler->display->display_options['fields']['entity_id_7']['type'] = 'taxonomy_term_reference_plain';
-  /* Field: Content: CPR Number */
+  /* Felt: Indhold: CPR Number */
   $handler->display->display_options['fields']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['fields']['entity_id']['table'] = 'field_data_field_cpr_number';
   $handler->display->display_options['fields']['entity_id']['field'] = 'field_cpr_number';
   $handler->display->display_options['fields']['entity_id']['label'] = 'CPR';
   $handler->display->display_options['fields']['entity_id']['exclude'] = TRUE;
-  /* Field: Content: Email */
+  /* Felt: Indhold: Email */
   $handler->display->display_options['fields']['entity_id_1']['id'] = 'entity_id_1';
   $handler->display->display_options['fields']['entity_id_1']['table'] = 'field_data_field_email';
   $handler->display->display_options['fields']['entity_id_1']['field'] = 'field_email';
   $handler->display->display_options['fields']['entity_id_1']['label'] = 'E-mail';
   $handler->display->display_options['fields']['entity_id_1']['exclude'] = TRUE;
-  /* Field: Content: Telefon */
+  /* Felt: Indhold: Telefon */
   $handler->display->display_options['fields']['entity_id_2']['id'] = 'entity_id_2';
   $handler->display->display_options['fields']['entity_id_2']['table'] = 'field_data_field_phone';
   $handler->display->display_options['fields']['entity_id_2']['field'] = 'field_phone';
   $handler->display->display_options['fields']['entity_id_2']['exclude'] = TRUE;
-  /* Field: Field: Polling Station */
+  /* Felt: Felt: Begræns adgang til følgende valgsteder */
   $handler->display->display_options['fields']['entity_id_3']['id'] = 'entity_id_3';
   $handler->display->display_options['fields']['entity_id_3']['table'] = 'field_data_field_polling_station';
   $handler->display->display_options['fields']['entity_id_3']['field'] = 'field_polling_station';
   $handler->display->display_options['fields']['entity_id_3']['label'] = 'Valgsted';
-  /* Field: Content: Polling Station post */
+  /* Felt: Indhold: Polling Station post */
   $handler->display->display_options['fields']['entity_id_4']['id'] = 'entity_id_4';
   $handler->display->display_options['fields']['entity_id_4']['table'] = 'field_data_field_polling_station_post';
   $handler->display->display_options['fields']['entity_id_4']['field'] = 'field_polling_station_post';
@@ -2810,35 +3052,37 @@ function valhalla_views_views_default_views() {
     'thousand_separator' => '',
     'prefix_suffix' => 0,
   );
-  /* Field: Content: Status */
+  /* Felt: Indhold: Status */
   $handler->display->display_options['fields']['entity_id_5']['id'] = 'entity_id_5';
   $handler->display->display_options['fields']['entity_id_5']['table'] = 'field_data_field_rsvp';
   $handler->display->display_options['fields']['entity_id_5']['field'] = 'field_rsvp';
   $handler->display->display_options['fields']['entity_id_5']['label'] = 'RSVP';
-  /* Field: Content: Token */
+  /* Felt: Indhold: Token */
   $handler->display->display_options['fields']['entity_id_6']['id'] = 'entity_id_6';
   $handler->display->display_options['fields']['entity_id_6']['table'] = 'field_data_field_token';
   $handler->display->display_options['fields']['entity_id_6']['field'] = 'field_token';
-  /* Field: Content: Nid */
+  $handler->display->display_options['fields']['entity_id_6']['label'] = 'Symbol';
+  /* Felt: Indhold: Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
   $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
-  /* Sort criterion: Content: Title */
+  /* Sorteringskriterie: Indhold: Titel */
   $handler->display->display_options['sorts']['title']['id'] = 'title';
   $handler->display->display_options['sorts']['title']['table'] = 'node';
   $handler->display->display_options['sorts']['title']['field'] = 'title';
-  /* Sort criterion: Field: Polling Station (field_polling_station) */
+  /* Sorteringskriterie: Felt: Begræns adgang til følgende valgsteder (field_polling_station) */
   $handler->display->display_options['sorts']['field_polling_station_nid']['id'] = 'field_polling_station_nid';
   $handler->display->display_options['sorts']['field_polling_station_nid']['table'] = 'field_data_field_polling_station';
   $handler->display->display_options['sorts']['field_polling_station_nid']['field'] = 'field_polling_station_nid';
-  /* Contextual filter: Field: Parti (field_party) */
+  /* Kontekstuelt filter: Felt: Parti (field_party) */
   $handler->display->display_options['arguments']['field_party_tid']['id'] = 'field_party_tid';
   $handler->display->display_options['arguments']['field_party_tid']['table'] = 'field_data_field_party';
   $handler->display->display_options['arguments']['field_party_tid']['field'] = 'field_party_tid';
+  $handler->display->display_options['arguments']['field_party_tid']['exception']['title'] = 'Alle';
   $handler->display->display_options['arguments']['field_party_tid']['default_argument_type'] = 'fixed';
   $handler->display->display_options['arguments']['field_party_tid']['summary']['format'] = 'default_summary';
-  /* Filter criterion: Content: Type */
+  /* Filterkriterie: Indhold: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
@@ -2888,30 +3132,30 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Field: Parti */
+  /* Felt: Felt: Parti */
   $handler->display->display_options['fields']['field_party']['id'] = 'field_party';
   $handler->display->display_options['fields']['field_party']['table'] = 'field_data_field_party';
   $handler->display->display_options['fields']['field_party']['field'] = 'field_party';
   $handler->display->display_options['fields']['field_party']['label'] = 'Liste';
   $handler->display->display_options['fields']['field_party']['hide_alter_empty'] = FALSE;
-  /* Field: Content: Title */
+  /* Felt: Indhold: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = 'Navn';
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
-  /* Field: Content: Email */
+  /* Felt: Indhold: Email */
   $handler->display->display_options['fields']['entity_id_1']['id'] = 'entity_id_1';
   $handler->display->display_options['fields']['entity_id_1']['table'] = 'field_data_field_email';
   $handler->display->display_options['fields']['entity_id_1']['field'] = 'field_email';
   $handler->display->display_options['fields']['entity_id_1']['label'] = 'E-mail';
   $handler->display->display_options['fields']['entity_id_1']['exclude'] = TRUE;
-  /* Field: Content: Telefon */
+  /* Felt: Indhold: Telefon */
   $handler->display->display_options['fields']['entity_id_2']['id'] = 'entity_id_2';
   $handler->display->display_options['fields']['entity_id_2']['table'] = 'field_data_field_phone';
   $handler->display->display_options['fields']['entity_id_2']['field'] = 'field_phone';
   $handler->display->display_options['fields']['entity_id_2']['exclude'] = TRUE;
-  /* Field: Content: Nid */
+  /* Felt: Indhold: Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
@@ -2919,58 +3163,62 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['nid']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['nid']['alter']['text'] = '<a href="/ajax/volunteers/station/add/[nid]/!2/!3/!4">Vælg</a>';
   $handler->display->display_options['defaults']['sorts'] = FALSE;
-  /* Sort criterion: Field: Polling Station (field_polling_station) */
+  /* Sorteringskriterie: Felt: Begræns adgang til følgende valgsteder (field_polling_station) */
   $handler->display->display_options['sorts']['field_polling_station_nid']['id'] = 'field_polling_station_nid';
   $handler->display->display_options['sorts']['field_polling_station_nid']['table'] = 'field_data_field_polling_station';
   $handler->display->display_options['sorts']['field_polling_station_nid']['field'] = 'field_polling_station_nid';
   $handler->display->display_options['sorts']['field_polling_station_nid']['order'] = 'DESC';
-  /* Sort criterion: Content: Title */
+  /* Sorteringskriterie: Indhold: Titel */
   $handler->display->display_options['sorts']['title']['id'] = 'title';
   $handler->display->display_options['sorts']['title']['table'] = 'node';
   $handler->display->display_options['sorts']['title']['field'] = 'title';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Field: Parti (field_party) */
+  /* Kontekstuelt filter: Felt: Parti (field_party) */
   $handler->display->display_options['arguments']['field_party_tid']['id'] = 'field_party_tid';
   $handler->display->display_options['arguments']['field_party_tid']['table'] = 'field_data_field_party';
   $handler->display->display_options['arguments']['field_party_tid']['field'] = 'field_party_tid';
+  $handler->display->display_options['arguments']['field_party_tid']['exception']['title'] = 'Alle';
   $handler->display->display_options['arguments']['field_party_tid']['default_argument_type'] = 'fixed';
   $handler->display->display_options['arguments']['field_party_tid']['summary']['format'] = 'default_summary';
-  /* Contextual filter: polling station id */
+  /* Kontekstuelt filter: polling station id */
   $handler->display->display_options['arguments']['null']['id'] = 'null';
   $handler->display->display_options['arguments']['null']['table'] = 'views';
   $handler->display->display_options['arguments']['null']['field'] = 'null';
   $handler->display->display_options['arguments']['null']['ui_name'] = 'polling station id';
+  $handler->display->display_options['arguments']['null']['exception']['title'] = 'Alle';
   $handler->display->display_options['arguments']['null']['default_argument_type'] = 'fixed';
   $handler->display->display_options['arguments']['null']['summary']['format'] = 'default_summary';
-  /* Contextual filter: seat number */
+  /* Kontekstuelt filter: seat number */
   $handler->display->display_options['arguments']['null_1']['id'] = 'null_1';
   $handler->display->display_options['arguments']['null_1']['table'] = 'views';
   $handler->display->display_options['arguments']['null_1']['field'] = 'null';
   $handler->display->display_options['arguments']['null_1']['ui_name'] = 'seat number';
+  $handler->display->display_options['arguments']['null_1']['exception']['title'] = 'Alle';
   $handler->display->display_options['arguments']['null_1']['default_argument_type'] = 'fixed';
   $handler->display->display_options['arguments']['null_1']['summary']['format'] = 'default_summary';
-  /* Contextual filter: post */
+  /* Kontekstuelt filter: post */
   $handler->display->display_options['arguments']['null_2']['id'] = 'null_2';
   $handler->display->display_options['arguments']['null_2']['table'] = 'views';
   $handler->display->display_options['arguments']['null_2']['field'] = 'null';
   $handler->display->display_options['arguments']['null_2']['ui_name'] = 'post';
+  $handler->display->display_options['arguments']['null_2']['exception']['title'] = 'Alle';
   $handler->display->display_options['arguments']['null_2']['default_argument_type'] = 'fixed';
   $handler->display->display_options['arguments']['null_2']['summary']['format'] = 'default_summary';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Content: Type */
+  /* Filterkriterie: Indhold: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
     'volunteers' => 'volunteers',
   );
-  /* Filter criterion: Content: Polling Station post (field_polling_station_post) */
+  /* Filterkriterie: Indhold: Polling Station post (field_polling_station_post) */
   $handler->display->display_options['filters']['field_polling_station_post_value']['id'] = 'field_polling_station_post_value';
   $handler->display->display_options['filters']['field_polling_station_post_value']['table'] = 'field_data_field_polling_station_post';
   $handler->display->display_options['filters']['field_polling_station_post_value']['field'] = 'field_polling_station_post_value';
   $handler->display->display_options['filters']['field_polling_station_post_value']['operator'] = 'empty';
-  /* Filter criterion: Content: Title */
+  /* Filterkriterie: Indhold: Titel */
   $handler->display->display_options['filters']['title']['id'] = 'title';
   $handler->display->display_options['filters']['title']['table'] = 'node';
   $handler->display->display_options['filters']['title']['field'] = 'title';
@@ -3075,7 +3323,7 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['relationships'] = FALSE;
-  /* Relationship: Parti */
+  /* Forbindelse: Parti */
   $handler->display->display_options['relationships']['term_node_tid']['id'] = 'term_node_tid';
   $handler->display->display_options['relationships']['term_node_tid']['table'] = 'node';
   $handler->display->display_options['relationships']['term_node_tid']['field'] = 'term_node_tid';
@@ -3088,13 +3336,13 @@ function valhalla_views_views_default_views() {
     'valgtype' => 0,
   );
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Content: Title */
+  /* Felt: Indhold: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = 'Navn';
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
-  /* Field: Field: Parti */
+  /* Felt: Felt: Parti */
   $handler->display->display_options['fields']['entity_id_7']['id'] = 'entity_id_7';
   $handler->display->display_options['fields']['entity_id_7']['table'] = 'field_data_field_party';
   $handler->display->display_options['fields']['entity_id_7']['field'] = 'field_party';
@@ -3108,31 +3356,31 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['entity_id_7']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['entity_id_7']['hide_empty'] = TRUE;
   $handler->display->display_options['fields']['entity_id_7']['type'] = 'taxonomy_term_reference_plain';
-  /* Field: Content: CPR Number */
+  /* Felt: Indhold: CPR Number */
   $handler->display->display_options['fields']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['fields']['entity_id']['table'] = 'field_data_field_cpr_number';
   $handler->display->display_options['fields']['entity_id']['field'] = 'field_cpr_number';
   $handler->display->display_options['fields']['entity_id']['label'] = 'CPR';
   $handler->display->display_options['fields']['entity_id']['exclude'] = TRUE;
-  /* Field: Content: Email */
+  /* Felt: Indhold: Email */
   $handler->display->display_options['fields']['entity_id_1']['id'] = 'entity_id_1';
   $handler->display->display_options['fields']['entity_id_1']['table'] = 'field_data_field_email';
   $handler->display->display_options['fields']['entity_id_1']['field'] = 'field_email';
   $handler->display->display_options['fields']['entity_id_1']['label'] = 'E-mail';
   $handler->display->display_options['fields']['entity_id_1']['exclude'] = TRUE;
-  /* Field: Content: Telefon */
+  /* Felt: Indhold: Telefon */
   $handler->display->display_options['fields']['entity_id_2']['id'] = 'entity_id_2';
   $handler->display->display_options['fields']['entity_id_2']['table'] = 'field_data_field_phone';
   $handler->display->display_options['fields']['entity_id_2']['field'] = 'field_phone';
   $handler->display->display_options['fields']['entity_id_2']['label'] = 'Phone';
   $handler->display->display_options['fields']['entity_id_2']['exclude'] = TRUE;
-  /* Field: Field: Polling Station */
+  /* Felt: Felt: Begræns adgang til følgende valgsteder */
   $handler->display->display_options['fields']['entity_id_3']['id'] = 'entity_id_3';
   $handler->display->display_options['fields']['entity_id_3']['table'] = 'field_data_field_polling_station';
   $handler->display->display_options['fields']['entity_id_3']['field'] = 'field_polling_station';
   $handler->display->display_options['fields']['entity_id_3']['label'] = 'Valgsted';
   $handler->display->display_options['fields']['entity_id_3']['exclude'] = TRUE;
-  /* Field: Content: Polling Station post */
+  /* Felt: Indhold: Polling Station post */
   $handler->display->display_options['fields']['entity_id_4']['id'] = 'entity_id_4';
   $handler->display->display_options['fields']['entity_id_4']['table'] = 'field_data_field_polling_station_post';
   $handler->display->display_options['fields']['entity_id_4']['field'] = 'field_polling_station_post';
@@ -3143,23 +3391,24 @@ function valhalla_views_views_default_views() {
     'thousand_separator' => '',
     'prefix_suffix' => 0,
   );
-  /* Field: Content: Status */
+  /* Felt: Indhold: Status */
   $handler->display->display_options['fields']['entity_id_5']['id'] = 'entity_id_5';
   $handler->display->display_options['fields']['entity_id_5']['table'] = 'field_data_field_rsvp';
   $handler->display->display_options['fields']['entity_id_5']['field'] = 'field_rsvp';
   $handler->display->display_options['fields']['entity_id_5']['label'] = 'RSVP';
   $handler->display->display_options['fields']['entity_id_5']['exclude'] = TRUE;
-  /* Field: Content: Token */
+  /* Felt: Indhold: Token */
   $handler->display->display_options['fields']['entity_id_6']['id'] = 'entity_id_6';
   $handler->display->display_options['fields']['entity_id_6']['table'] = 'field_data_field_token';
   $handler->display->display_options['fields']['entity_id_6']['field'] = 'field_token';
+  $handler->display->display_options['fields']['entity_id_6']['label'] = 'Symbol';
   $handler->display->display_options['fields']['entity_id_6']['exclude'] = TRUE;
-  /* Field: Content: Nid */
+  /* Felt: Indhold: Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
   $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
-  /* Field: Field: Parti */
+  /* Felt: Felt: Parti */
   $handler->display->display_options['fields']['entity_id_8']['id'] = 'entity_id_8';
   $handler->display->display_options['fields']['entity_id_8']['table'] = 'field_data_field_party';
   $handler->display->display_options['fields']['entity_id_8']['field'] = 'field_party';
@@ -3168,10 +3417,11 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['entity_id_8']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['entity_id_8']['alter']['text'] = '[entity_id_8]';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Field: Parti (field_party) */
+  /* Kontekstuelt filter: Felt: Parti (field_party) */
   $handler->display->display_options['arguments']['field_party_tid']['id'] = 'field_party_tid';
   $handler->display->display_options['arguments']['field_party_tid']['table'] = 'field_data_field_party';
   $handler->display->display_options['arguments']['field_party_tid']['field'] = 'field_party_tid';
+  $handler->display->display_options['arguments']['field_party_tid']['exception']['title'] = 'Alle';
   $handler->display->display_options['arguments']['field_party_tid']['default_argument_type'] = 'fixed';
   $handler->display->display_options['arguments']['field_party_tid']['summary']['format'] = 'default_summary';
   $handler->display->display_options['allow']['use_pager'] = 0;
@@ -3287,7 +3537,7 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['relationships'] = FALSE;
-  /* Relationship: Parti */
+  /* Forbindelse: Parti */
   $handler->display->display_options['relationships']['term_node_tid']['id'] = 'term_node_tid';
   $handler->display->display_options['relationships']['term_node_tid']['table'] = 'node';
   $handler->display->display_options['relationships']['term_node_tid']['field'] = 'term_node_tid';
@@ -3300,14 +3550,14 @@ function valhalla_views_views_default_views() {
     'valgtype' => 0,
   );
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Content: Title */
+  /* Felt: Indhold: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = 'Navn';
   $handler->display->display_options['fields']['title']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
-  /* Field: Field: Parti */
+  /* Felt: Felt: Parti */
   $handler->display->display_options['fields']['entity_id_7']['id'] = 'entity_id_7';
   $handler->display->display_options['fields']['entity_id_7']['table'] = 'field_data_field_party';
   $handler->display->display_options['fields']['entity_id_7']['field'] = 'field_party';
@@ -3321,31 +3571,31 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['entity_id_7']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['entity_id_7']['hide_empty'] = TRUE;
   $handler->display->display_options['fields']['entity_id_7']['type'] = 'taxonomy_term_reference_plain';
-  /* Field: Content: CPR Number */
+  /* Felt: Indhold: CPR Number */
   $handler->display->display_options['fields']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['fields']['entity_id']['table'] = 'field_data_field_cpr_number';
   $handler->display->display_options['fields']['entity_id']['field'] = 'field_cpr_number';
   $handler->display->display_options['fields']['entity_id']['label'] = 'CPR';
   $handler->display->display_options['fields']['entity_id']['exclude'] = TRUE;
-  /* Field: Content: Email */
+  /* Felt: Indhold: Email */
   $handler->display->display_options['fields']['entity_id_1']['id'] = 'entity_id_1';
   $handler->display->display_options['fields']['entity_id_1']['table'] = 'field_data_field_email';
   $handler->display->display_options['fields']['entity_id_1']['field'] = 'field_email';
   $handler->display->display_options['fields']['entity_id_1']['label'] = 'E-mail';
   $handler->display->display_options['fields']['entity_id_1']['exclude'] = TRUE;
-  /* Field: Content: Telefon */
+  /* Felt: Indhold: Telefon */
   $handler->display->display_options['fields']['entity_id_2']['id'] = 'entity_id_2';
   $handler->display->display_options['fields']['entity_id_2']['table'] = 'field_data_field_phone';
   $handler->display->display_options['fields']['entity_id_2']['field'] = 'field_phone';
   $handler->display->display_options['fields']['entity_id_2']['label'] = 'Phone';
   $handler->display->display_options['fields']['entity_id_2']['exclude'] = TRUE;
-  /* Field: Field: Polling Station */
+  /* Felt: Felt: Begræns adgang til følgende valgsteder */
   $handler->display->display_options['fields']['entity_id_3']['id'] = 'entity_id_3';
   $handler->display->display_options['fields']['entity_id_3']['table'] = 'field_data_field_polling_station';
   $handler->display->display_options['fields']['entity_id_3']['field'] = 'field_polling_station';
   $handler->display->display_options['fields']['entity_id_3']['label'] = 'Valgsted';
   $handler->display->display_options['fields']['entity_id_3']['exclude'] = TRUE;
-  /* Field: Content: Polling Station post */
+  /* Felt: Indhold: Polling Station post */
   $handler->display->display_options['fields']['entity_id_4']['id'] = 'entity_id_4';
   $handler->display->display_options['fields']['entity_id_4']['table'] = 'field_data_field_polling_station_post';
   $handler->display->display_options['fields']['entity_id_4']['field'] = 'field_polling_station_post';
@@ -3356,23 +3606,24 @@ function valhalla_views_views_default_views() {
     'thousand_separator' => '',
     'prefix_suffix' => 0,
   );
-  /* Field: Content: Status */
+  /* Felt: Indhold: Status */
   $handler->display->display_options['fields']['entity_id_5']['id'] = 'entity_id_5';
   $handler->display->display_options['fields']['entity_id_5']['table'] = 'field_data_field_rsvp';
   $handler->display->display_options['fields']['entity_id_5']['field'] = 'field_rsvp';
   $handler->display->display_options['fields']['entity_id_5']['label'] = 'RSVP';
   $handler->display->display_options['fields']['entity_id_5']['exclude'] = TRUE;
-  /* Field: Content: Token */
+  /* Felt: Indhold: Token */
   $handler->display->display_options['fields']['entity_id_6']['id'] = 'entity_id_6';
   $handler->display->display_options['fields']['entity_id_6']['table'] = 'field_data_field_token';
   $handler->display->display_options['fields']['entity_id_6']['field'] = 'field_token';
+  $handler->display->display_options['fields']['entity_id_6']['label'] = 'Symbol';
   $handler->display->display_options['fields']['entity_id_6']['exclude'] = TRUE;
-  /* Field: Content: Nid */
+  /* Felt: Indhold: Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
   $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
-  /* Field: Field: Parti */
+  /* Felt: Felt: Parti */
   $handler->display->display_options['fields']['entity_id_8']['id'] = 'entity_id_8';
   $handler->display->display_options['fields']['entity_id_8']['table'] = 'field_data_field_party';
   $handler->display->display_options['fields']['entity_id_8']['field'] = 'field_party';
@@ -3381,10 +3632,11 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['entity_id_8']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['entity_id_8']['alter']['text'] = '[entity_id_8]';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Field: Parti (field_party) */
+  /* Kontekstuelt filter: Felt: Parti (field_party) */
   $handler->display->display_options['arguments']['field_party_tid']['id'] = 'field_party_tid';
   $handler->display->display_options['arguments']['field_party_tid']['table'] = 'field_data_field_party';
   $handler->display->display_options['arguments']['field_party_tid']['field'] = 'field_party_tid';
+  $handler->display->display_options['arguments']['field_party_tid']['exception']['title'] = 'Alle';
   $handler->display->display_options['arguments']['field_party_tid']['default_argument_type'] = 'fixed';
   $handler->display->display_options['arguments']['field_party_tid']['summary']['format'] = 'default_summary';
   $handler->display->display_options['pane_category']['name'] = 'Oversigter';
@@ -3416,42 +3668,42 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
   $handler->display->display_options['defaults']['empty'] = FALSE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Content: Title */
+  /* Felt: Indhold: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = 'Navn';
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
-  /* Field: Field: Parti */
+  /* Felt: Felt: Parti */
   $handler->display->display_options['fields']['entity_id_7']['id'] = 'entity_id_7';
   $handler->display->display_options['fields']['entity_id_7']['table'] = 'field_data_field_party';
   $handler->display->display_options['fields']['entity_id_7']['field'] = 'field_party';
   $handler->display->display_options['fields']['entity_id_7']['label'] = 'Party';
   $handler->display->display_options['fields']['entity_id_7']['type'] = 'taxonomy_term_reference_plain';
-  /* Field: Content: CPR Number */
+  /* Felt: Indhold: CPR Number */
   $handler->display->display_options['fields']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['fields']['entity_id']['table'] = 'field_data_field_cpr_number';
   $handler->display->display_options['fields']['entity_id']['field'] = 'field_cpr_number';
   $handler->display->display_options['fields']['entity_id']['label'] = 'CPR';
   $handler->display->display_options['fields']['entity_id']['exclude'] = TRUE;
-  /* Field: Content: Email */
+  /* Felt: Indhold: Email */
   $handler->display->display_options['fields']['entity_id_1']['id'] = 'entity_id_1';
   $handler->display->display_options['fields']['entity_id_1']['table'] = 'field_data_field_email';
   $handler->display->display_options['fields']['entity_id_1']['field'] = 'field_email';
   $handler->display->display_options['fields']['entity_id_1']['label'] = 'E-mail';
   $handler->display->display_options['fields']['entity_id_1']['exclude'] = TRUE;
-  /* Field: Content: Telefon */
+  /* Felt: Indhold: Telefon */
   $handler->display->display_options['fields']['entity_id_2']['id'] = 'entity_id_2';
   $handler->display->display_options['fields']['entity_id_2']['table'] = 'field_data_field_phone';
   $handler->display->display_options['fields']['entity_id_2']['field'] = 'field_phone';
   $handler->display->display_options['fields']['entity_id_2']['label'] = 'Phone';
   $handler->display->display_options['fields']['entity_id_2']['exclude'] = TRUE;
-  /* Field: Field: Polling Station */
+  /* Felt: Felt: Begræns adgang til følgende valgsteder */
   $handler->display->display_options['fields']['entity_id_3']['id'] = 'entity_id_3';
   $handler->display->display_options['fields']['entity_id_3']['table'] = 'field_data_field_polling_station';
   $handler->display->display_options['fields']['entity_id_3']['field'] = 'field_polling_station';
   $handler->display->display_options['fields']['entity_id_3']['label'] = 'Valgsted';
-  /* Field: Content: Polling Station post */
+  /* Felt: Indhold: Polling Station post */
   $handler->display->display_options['fields']['entity_id_4']['id'] = 'entity_id_4';
   $handler->display->display_options['fields']['entity_id_4']['table'] = 'field_data_field_polling_station_post';
   $handler->display->display_options['fields']['entity_id_4']['field'] = 'field_polling_station_post';
@@ -3461,25 +3713,27 @@ function valhalla_views_views_default_views() {
     'thousand_separator' => '',
     'prefix_suffix' => 0,
   );
-  /* Field: Content: Status */
+  /* Felt: Indhold: Status */
   $handler->display->display_options['fields']['entity_id_5']['id'] = 'entity_id_5';
   $handler->display->display_options['fields']['entity_id_5']['table'] = 'field_data_field_rsvp';
   $handler->display->display_options['fields']['entity_id_5']['field'] = 'field_rsvp';
   $handler->display->display_options['fields']['entity_id_5']['label'] = 'RSVP';
-  /* Field: Content: Token */
+  /* Felt: Indhold: Token */
   $handler->display->display_options['fields']['entity_id_6']['id'] = 'entity_id_6';
   $handler->display->display_options['fields']['entity_id_6']['table'] = 'field_data_field_token';
   $handler->display->display_options['fields']['entity_id_6']['field'] = 'field_token';
-  /* Field: Content: Nid */
+  $handler->display->display_options['fields']['entity_id_6']['label'] = 'Symbol';
+  /* Felt: Indhold: Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
   $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Field: Parti (field_party) */
+  /* Kontekstuelt filter: Felt: Parti (field_party) */
   $handler->display->display_options['arguments']['field_party_tid']['id'] = 'field_party_tid';
   $handler->display->display_options['arguments']['field_party_tid']['table'] = 'field_data_field_party';
   $handler->display->display_options['arguments']['field_party_tid']['field'] = 'field_party_tid';
+  $handler->display->display_options['arguments']['field_party_tid']['exception']['title'] = 'Alle';
   $handler->display->display_options['arguments']['field_party_tid']['default_argument_type'] = 'fixed';
   $handler->display->display_options['arguments']['field_party_tid']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['field_party_tid']['specify_validation'] = TRUE;
@@ -3494,18 +3748,19 @@ function valhalla_views_views_default_views() {
   $handler = $view->new_display('page', 'Page', 'page_1');
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
   $handler->display->display_options['defaults']['relationships'] = FALSE;
-  /* Relationship: Polling station */
+  /* Forbindelse: Polling station */
   $handler->display->display_options['relationships']['field_polling_station_nid']['id'] = 'field_polling_station_nid';
   $handler->display->display_options['relationships']['field_polling_station_nid']['table'] = 'field_data_field_polling_station';
   $handler->display->display_options['relationships']['field_polling_station_nid']['field'] = 'field_polling_station_nid';
   $handler->display->display_options['relationships']['field_polling_station_nid']['ui_name'] = 'Polling station';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Content: Nid */
+  /* Kontekstuelt filter: Indhold: Nid */
   $handler->display->display_options['arguments']['nid']['id'] = 'nid';
   $handler->display->display_options['arguments']['nid']['table'] = 'node';
   $handler->display->display_options['arguments']['nid']['field'] = 'nid';
   $handler->display->display_options['arguments']['nid']['relationship'] = 'field_polling_station_nid';
   $handler->display->display_options['arguments']['nid']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['nid']['exception']['title'] = 'Alle';
   $handler->display->display_options['arguments']['nid']['default_argument_type'] = 'node';
   $handler->display->display_options['arguments']['nid']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['nid']['specify_validation'] = TRUE;
@@ -3518,42 +3773,42 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['defaults']['empty'] = FALSE;
   $handler->display->display_options['defaults']['relationships'] = FALSE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Content: Title */
+  /* Felt: Indhold: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = 'Navn';
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
-  /* Field: Field: Parti */
+  /* Felt: Felt: Parti */
   $handler->display->display_options['fields']['entity_id_7']['id'] = 'entity_id_7';
   $handler->display->display_options['fields']['entity_id_7']['table'] = 'field_data_field_party';
   $handler->display->display_options['fields']['entity_id_7']['field'] = 'field_party';
   $handler->display->display_options['fields']['entity_id_7']['label'] = 'Party';
   $handler->display->display_options['fields']['entity_id_7']['type'] = 'taxonomy_term_reference_plain';
-  /* Field: Content: CPR Number */
+  /* Felt: Indhold: CPR Number */
   $handler->display->display_options['fields']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['fields']['entity_id']['table'] = 'field_data_field_cpr_number';
   $handler->display->display_options['fields']['entity_id']['field'] = 'field_cpr_number';
   $handler->display->display_options['fields']['entity_id']['label'] = 'CPR';
   $handler->display->display_options['fields']['entity_id']['exclude'] = TRUE;
-  /* Field: Content: Email */
+  /* Felt: Indhold: Email */
   $handler->display->display_options['fields']['entity_id_1']['id'] = 'entity_id_1';
   $handler->display->display_options['fields']['entity_id_1']['table'] = 'field_data_field_email';
   $handler->display->display_options['fields']['entity_id_1']['field'] = 'field_email';
   $handler->display->display_options['fields']['entity_id_1']['label'] = 'E-mail';
   $handler->display->display_options['fields']['entity_id_1']['exclude'] = TRUE;
-  /* Field: Content: Telefon */
+  /* Felt: Indhold: Telefon */
   $handler->display->display_options['fields']['entity_id_2']['id'] = 'entity_id_2';
   $handler->display->display_options['fields']['entity_id_2']['table'] = 'field_data_field_phone';
   $handler->display->display_options['fields']['entity_id_2']['field'] = 'field_phone';
   $handler->display->display_options['fields']['entity_id_2']['label'] = 'Phone';
   $handler->display->display_options['fields']['entity_id_2']['exclude'] = TRUE;
-  /* Field: Field: Polling Station */
+  /* Felt: Felt: Begræns adgang til følgende valgsteder */
   $handler->display->display_options['fields']['entity_id_3']['id'] = 'entity_id_3';
   $handler->display->display_options['fields']['entity_id_3']['table'] = 'field_data_field_polling_station';
   $handler->display->display_options['fields']['entity_id_3']['field'] = 'field_polling_station';
   $handler->display->display_options['fields']['entity_id_3']['label'] = 'Valgsted';
-  /* Field: Content: Polling Station post */
+  /* Felt: Indhold: Polling Station post */
   $handler->display->display_options['fields']['entity_id_4']['id'] = 'entity_id_4';
   $handler->display->display_options['fields']['entity_id_4']['table'] = 'field_data_field_polling_station_post';
   $handler->display->display_options['fields']['entity_id_4']['field'] = 'field_polling_station_post';
@@ -3563,30 +3818,32 @@ function valhalla_views_views_default_views() {
     'thousand_separator' => '',
     'prefix_suffix' => 0,
   );
-  /* Field: Content: Status */
+  /* Felt: Indhold: Status */
   $handler->display->display_options['fields']['entity_id_5']['id'] = 'entity_id_5';
   $handler->display->display_options['fields']['entity_id_5']['table'] = 'field_data_field_rsvp';
   $handler->display->display_options['fields']['entity_id_5']['field'] = 'field_rsvp';
   $handler->display->display_options['fields']['entity_id_5']['label'] = 'RSVP';
-  /* Field: Content: Token */
+  /* Felt: Indhold: Token */
   $handler->display->display_options['fields']['entity_id_6']['id'] = 'entity_id_6';
   $handler->display->display_options['fields']['entity_id_6']['table'] = 'field_data_field_token';
   $handler->display->display_options['fields']['entity_id_6']['field'] = 'field_token';
-  /* Field: Content: Nid */
+  $handler->display->display_options['fields']['entity_id_6']['label'] = 'Symbol';
+  /* Felt: Indhold: Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
   $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
   $handler->display->display_options['defaults']['sorts'] = FALSE;
-  /* Sort criterion: Content: Title */
+  /* Sorteringskriterie: Indhold: Titel */
   $handler->display->display_options['sorts']['title']['id'] = 'title';
   $handler->display->display_options['sorts']['title']['table'] = 'node';
   $handler->display->display_options['sorts']['title']['field'] = 'title';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Content: Nid */
+  /* Kontekstuelt filter: Indhold: Nid */
   $handler->display->display_options['arguments']['nid']['id'] = 'nid';
   $handler->display->display_options['arguments']['nid']['table'] = 'node';
   $handler->display->display_options['arguments']['nid']['field'] = 'nid';
+  $handler->display->display_options['arguments']['nid']['exception']['title'] = 'Alle';
   $handler->display->display_options['arguments']['nid']['default_argument_type'] = 'fixed';
   $handler->display->display_options['arguments']['nid']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['nid']['specify_validation'] = TRUE;
@@ -3596,7 +3853,7 @@ function valhalla_views_views_default_views() {
   );
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Content: Type */
+  /* Filterkriterie: Indhold: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
@@ -3646,30 +3903,30 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Field: Parti */
+  /* Felt: Felt: Parti */
   $handler->display->display_options['fields']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['fields']['entity_id']['table'] = 'field_data_field_party';
   $handler->display->display_options['fields']['entity_id']['field'] = 'field_party';
   $handler->display->display_options['fields']['entity_id']['label'] = 'Liste';
   $handler->display->display_options['fields']['entity_id']['type'] = 'taxonomy_term_reference_plain';
-  /* Field: Content: Title */
+  /* Felt: Indhold: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = 'Navn';
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
-  /* Field: Content: Email */
+  /* Felt: Indhold: Email */
   $handler->display->display_options['fields']['entity_id_1']['id'] = 'entity_id_1';
   $handler->display->display_options['fields']['entity_id_1']['table'] = 'field_data_field_email';
   $handler->display->display_options['fields']['entity_id_1']['field'] = 'field_email';
   $handler->display->display_options['fields']['entity_id_1']['label'] = 'E-mail';
   $handler->display->display_options['fields']['entity_id_1']['exclude'] = TRUE;
-  /* Field: Content: Telefon */
+  /* Felt: Indhold: Telefon */
   $handler->display->display_options['fields']['entity_id_2']['id'] = 'entity_id_2';
   $handler->display->display_options['fields']['entity_id_2']['table'] = 'field_data_field_phone';
   $handler->display->display_options['fields']['entity_id_2']['field'] = 'field_phone';
   $handler->display->display_options['fields']['entity_id_2']['exclude'] = TRUE;
-  /* Field: Content: Nid */
+  /* Felt: Indhold: Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
@@ -3677,17 +3934,17 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['nid']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['nid']['alter']['text'] = '<a href="/ajax/volunteers/station/add/[nid]/!2/!3/!4">Vælg</a>';
   $handler->display->display_options['defaults']['sorts'] = FALSE;
-  /* Sort criterion: Field: Polling Station (field_polling_station) */
+  /* Sorteringskriterie: Felt: Begræns adgang til følgende valgsteder (field_polling_station) */
   $handler->display->display_options['sorts']['field_polling_station_nid']['id'] = 'field_polling_station_nid';
   $handler->display->display_options['sorts']['field_polling_station_nid']['table'] = 'field_data_field_polling_station';
   $handler->display->display_options['sorts']['field_polling_station_nid']['field'] = 'field_polling_station_nid';
   $handler->display->display_options['sorts']['field_polling_station_nid']['order'] = 'DESC';
-  /* Sort criterion: Content: Title */
+  /* Sorteringskriterie: Indhold: Titel */
   $handler->display->display_options['sorts']['title']['id'] = 'title';
   $handler->display->display_options['sorts']['title']['table'] = 'node';
   $handler->display->display_options['sorts']['title']['field'] = 'title';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: parti id */
+  /* Kontekstuelt filter: parti id */
   $handler->display->display_options['arguments']['null_3']['id'] = 'null_3';
   $handler->display->display_options['arguments']['null_3']['table'] = 'views';
   $handler->display->display_options['arguments']['null_3']['field'] = 'null';
@@ -3697,42 +3954,45 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['arguments']['null_3']['default_argument_type'] = 'fixed';
   $handler->display->display_options['arguments']['null_3']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['null_3']['specify_validation'] = TRUE;
-  /* Contextual filter: polling station id */
+  /* Kontekstuelt filter: polling station id */
   $handler->display->display_options['arguments']['null']['id'] = 'null';
   $handler->display->display_options['arguments']['null']['table'] = 'views';
   $handler->display->display_options['arguments']['null']['field'] = 'null';
   $handler->display->display_options['arguments']['null']['ui_name'] = 'polling station id';
+  $handler->display->display_options['arguments']['null']['exception']['title'] = 'Alle';
   $handler->display->display_options['arguments']['null']['default_argument_type'] = 'fixed';
   $handler->display->display_options['arguments']['null']['summary']['format'] = 'default_summary';
-  /* Contextual filter: seat number */
+  /* Kontekstuelt filter: seat number */
   $handler->display->display_options['arguments']['null_1']['id'] = 'null_1';
   $handler->display->display_options['arguments']['null_1']['table'] = 'views';
   $handler->display->display_options['arguments']['null_1']['field'] = 'null';
   $handler->display->display_options['arguments']['null_1']['ui_name'] = 'seat number';
+  $handler->display->display_options['arguments']['null_1']['exception']['title'] = 'Alle';
   $handler->display->display_options['arguments']['null_1']['default_argument_type'] = 'fixed';
   $handler->display->display_options['arguments']['null_1']['summary']['format'] = 'default_summary';
-  /* Contextual filter: post */
+  /* Kontekstuelt filter: post */
   $handler->display->display_options['arguments']['null_2']['id'] = 'null_2';
   $handler->display->display_options['arguments']['null_2']['table'] = 'views';
   $handler->display->display_options['arguments']['null_2']['field'] = 'null';
   $handler->display->display_options['arguments']['null_2']['ui_name'] = 'post';
+  $handler->display->display_options['arguments']['null_2']['exception']['title'] = 'Alle';
   $handler->display->display_options['arguments']['null_2']['default_argument_type'] = 'fixed';
   $handler->display->display_options['arguments']['null_2']['summary']['format'] = 'default_summary';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Content: Type */
+  /* Filterkriterie: Indhold: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
     'volunteers' => 'volunteers',
   );
-  /* Filter criterion: Content: Polling Station post (field_polling_station_post) */
+  /* Filterkriterie: Indhold: Polling Station post (field_polling_station_post) */
   $handler->display->display_options['filters']['field_polling_station_post_value']['id'] = 'field_polling_station_post_value';
   $handler->display->display_options['filters']['field_polling_station_post_value']['table'] = 'field_data_field_polling_station_post';
   $handler->display->display_options['filters']['field_polling_station_post_value']['field'] = 'field_polling_station_post_value';
   $handler->display->display_options['filters']['field_polling_station_post_value']['operator'] = 'empty';
-  /* Filter criterion: Content: Title */
+  /* Filterkriterie: Indhold: Titel */
   $handler->display->display_options['filters']['title']['id'] = 'title';
   $handler->display->display_options['filters']['title']['table'] = 'node';
   $handler->display->display_options['filters']['title']['field'] = 'title';
@@ -3742,26 +4002,19 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['filters']['title']['expose']['label'] = 'Navn';
   $handler->display->display_options['filters']['title']['expose']['operator'] = 'title_op';
   $handler->display->display_options['filters']['title']['expose']['identifier'] = 'name';
-  /* Filter criterion: Liste */
+  /* Filterkriterie: Liste */
   $handler->display->display_options['filters']['field_bogstav_value']['id'] = 'field_bogstav_value';
   $handler->display->display_options['filters']['field_bogstav_value']['table'] = 'field_data_field_bogstav';
   $handler->display->display_options['filters']['field_bogstav_value']['field'] = 'field_bogstav_value';
   $handler->display->display_options['filters']['field_bogstav_value']['relationship'] = 'field_party_tid';
   $handler->display->display_options['filters']['field_bogstav_value']['ui_name'] = 'Liste';
+  $handler->display->display_options['filters']['field_bogstav_value']['group'] = '0';
   $handler->display->display_options['filters']['field_bogstav_value']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_bogstav_value']['expose']['operator_id'] = 'field_bogstav_value_op';
   $handler->display->display_options['filters']['field_bogstav_value']['expose']['label'] = 'Liste';
   $handler->display->display_options['filters']['field_bogstav_value']['expose']['operator'] = 'field_bogstav_value_op';
   $handler->display->display_options['filters']['field_bogstav_value']['expose']['identifier'] = 'liste';
   $handler->display->display_options['path'] = 'available-volunteers';
-
-  /* Display: Feed */
-  $handler = $view->new_display('feed', 'Feed', 'feed_1');
-  $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
-  $handler->display->display_options['pager']['type'] = 'some';
-  $handler->display->display_options['style_plugin'] = 'rss';
-  $handler->display->display_options['row_plugin'] = 'node_rss';
-  $handler->display->display_options['path'] = 'alletilforordnedeexport.csv';
 
   /* Display: Data export */
   $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export_1');
@@ -3771,41 +4024,41 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Content: Title */
+  /* Felt: Indhold: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = 'Navn';
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
-  /* Field: Field: Parti */
+  /* Felt: Felt: Parti */
   $handler->display->display_options['fields']['entity_id_7']['id'] = 'entity_id_7';
   $handler->display->display_options['fields']['entity_id_7']['table'] = 'field_data_field_party';
   $handler->display->display_options['fields']['entity_id_7']['field'] = 'field_party';
   $handler->display->display_options['fields']['entity_id_7']['label'] = 'Party';
   $handler->display->display_options['fields']['entity_id_7']['type'] = 'taxonomy_term_reference_plain';
-  /* Field: Content: CPR Number */
+  /* Felt: Indhold: CPR Number */
   $handler->display->display_options['fields']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['fields']['entity_id']['table'] = 'field_data_field_cpr_number';
   $handler->display->display_options['fields']['entity_id']['field'] = 'field_cpr_number';
   $handler->display->display_options['fields']['entity_id']['label'] = 'CPR';
   $handler->display->display_options['fields']['entity_id']['hide_alter_empty'] = FALSE;
-  /* Field: Content: Email */
+  /* Felt: Indhold: Email */
   $handler->display->display_options['fields']['entity_id_1']['id'] = 'entity_id_1';
   $handler->display->display_options['fields']['entity_id_1']['table'] = 'field_data_field_email';
   $handler->display->display_options['fields']['entity_id_1']['field'] = 'field_email';
   $handler->display->display_options['fields']['entity_id_1']['label'] = 'E-mail';
   $handler->display->display_options['fields']['entity_id_1']['exclude'] = TRUE;
-  /* Field: Content: Telefon */
+  /* Felt: Indhold: Telefon */
   $handler->display->display_options['fields']['entity_id_2']['id'] = 'entity_id_2';
   $handler->display->display_options['fields']['entity_id_2']['table'] = 'field_data_field_phone';
   $handler->display->display_options['fields']['entity_id_2']['field'] = 'field_phone';
   $handler->display->display_options['fields']['entity_id_2']['exclude'] = TRUE;
-  /* Field: Field: Polling Station */
+  /* Felt: Felt: Begræns adgang til følgende valgsteder */
   $handler->display->display_options['fields']['entity_id_3']['id'] = 'entity_id_3';
   $handler->display->display_options['fields']['entity_id_3']['table'] = 'field_data_field_polling_station';
   $handler->display->display_options['fields']['entity_id_3']['field'] = 'field_polling_station';
   $handler->display->display_options['fields']['entity_id_3']['label'] = 'Valgsted';
-  /* Field: Content: Polling Station post */
+  /* Felt: Indhold: Polling Station post */
   $handler->display->display_options['fields']['entity_id_4']['id'] = 'entity_id_4';
   $handler->display->display_options['fields']['entity_id_4']['table'] = 'field_data_field_polling_station_post';
   $handler->display->display_options['fields']['entity_id_4']['field'] = 'field_polling_station_post';
@@ -3815,16 +4068,17 @@ function valhalla_views_views_default_views() {
     'thousand_separator' => '',
     'prefix_suffix' => 0,
   );
-  /* Field: Content: Status */
+  /* Felt: Indhold: Status */
   $handler->display->display_options['fields']['entity_id_5']['id'] = 'entity_id_5';
   $handler->display->display_options['fields']['entity_id_5']['table'] = 'field_data_field_rsvp';
   $handler->display->display_options['fields']['entity_id_5']['field'] = 'field_rsvp';
   $handler->display->display_options['fields']['entity_id_5']['label'] = 'RSVP';
-  /* Field: Content: Token */
+  /* Felt: Indhold: Token */
   $handler->display->display_options['fields']['entity_id_6']['id'] = 'entity_id_6';
   $handler->display->display_options['fields']['entity_id_6']['table'] = 'field_data_field_token';
   $handler->display->display_options['fields']['entity_id_6']['field'] = 'field_token';
-  /* Field: Content: Nid */
+  $handler->display->display_options['fields']['entity_id_6']['label'] = 'Symbol';
+  /* Felt: Indhold: Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
@@ -3841,41 +4095,41 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['style_options']['provide_file'] = 1;
   $handler->display->display_options['style_options']['parent_sort'] = 0;
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Content: Title */
+  /* Felt: Indhold: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = 'Navn';
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
-  /* Field: Field: Parti */
+  /* Felt: Felt: Parti */
   $handler->display->display_options['fields']['entity_id_7']['id'] = 'entity_id_7';
   $handler->display->display_options['fields']['entity_id_7']['table'] = 'field_data_field_party';
   $handler->display->display_options['fields']['entity_id_7']['field'] = 'field_party';
   $handler->display->display_options['fields']['entity_id_7']['label'] = 'Party';
   $handler->display->display_options['fields']['entity_id_7']['type'] = 'taxonomy_term_reference_plain';
-  /* Field: Content: CPR Number */
+  /* Felt: Indhold: CPR Number */
   $handler->display->display_options['fields']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['fields']['entity_id']['table'] = 'field_data_field_cpr_number';
   $handler->display->display_options['fields']['entity_id']['field'] = 'field_cpr_number';
   $handler->display->display_options['fields']['entity_id']['label'] = 'CPR';
   $handler->display->display_options['fields']['entity_id']['hide_alter_empty'] = FALSE;
-  /* Field: Content: Email */
+  /* Felt: Indhold: Email */
   $handler->display->display_options['fields']['entity_id_1']['id'] = 'entity_id_1';
   $handler->display->display_options['fields']['entity_id_1']['table'] = 'field_data_field_email';
   $handler->display->display_options['fields']['entity_id_1']['field'] = 'field_email';
   $handler->display->display_options['fields']['entity_id_1']['label'] = 'E-mail';
   $handler->display->display_options['fields']['entity_id_1']['exclude'] = TRUE;
-  /* Field: Content: Telefon */
+  /* Felt: Indhold: Telefon */
   $handler->display->display_options['fields']['entity_id_2']['id'] = 'entity_id_2';
   $handler->display->display_options['fields']['entity_id_2']['table'] = 'field_data_field_phone';
   $handler->display->display_options['fields']['entity_id_2']['field'] = 'field_phone';
   $handler->display->display_options['fields']['entity_id_2']['exclude'] = TRUE;
-  /* Field: Field: Polling Station */
+  /* Felt: Felt: Begræns adgang til følgende valgsteder */
   $handler->display->display_options['fields']['entity_id_3']['id'] = 'entity_id_3';
   $handler->display->display_options['fields']['entity_id_3']['table'] = 'field_data_field_polling_station';
   $handler->display->display_options['fields']['entity_id_3']['field'] = 'field_polling_station';
   $handler->display->display_options['fields']['entity_id_3']['label'] = 'Valgsted';
-  /* Field: Content: Polling Station post */
+  /* Felt: Indhold: Polling Station post */
   $handler->display->display_options['fields']['entity_id_4']['id'] = 'entity_id_4';
   $handler->display->display_options['fields']['entity_id_4']['table'] = 'field_data_field_polling_station_post';
   $handler->display->display_options['fields']['entity_id_4']['field'] = 'field_polling_station_post';
@@ -3885,25 +4139,25 @@ function valhalla_views_views_default_views() {
     'thousand_separator' => '',
     'prefix_suffix' => 0,
   );
-  /* Field: Content: Status */
+  /* Felt: Indhold: Status */
   $handler->display->display_options['fields']['entity_id_5']['id'] = 'entity_id_5';
   $handler->display->display_options['fields']['entity_id_5']['table'] = 'field_data_field_rsvp';
   $handler->display->display_options['fields']['entity_id_5']['field'] = 'field_rsvp';
   $handler->display->display_options['fields']['entity_id_5']['label'] = 'RSVP';
-  /* Field: Content: Token */
+  /* Felt: Indhold: Token */
   $handler->display->display_options['fields']['entity_id_6']['id'] = 'entity_id_6';
   $handler->display->display_options['fields']['entity_id_6']['table'] = 'field_data_field_token';
   $handler->display->display_options['fields']['entity_id_6']['field'] = 'field_token';
-  /* Field: Content: Nid */
+  $handler->display->display_options['fields']['entity_id_6']['label'] = 'Symbol';
+  /* Felt: Indhold: Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
   $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
   $handler->display->display_options['path'] = 'frivexp.xls';
 
-  /* Display: Available volunteers - electionsecretary */
-  $handler = $view->new_display('page', 'Available volunteers - electionsecretary', 'available_volunteers_filtered_secretary');
-  $handler->display->display_options['defaults']['use_ajax'] = FALSE;
+  /* Display: Available volunteers secretary */
+  $handler = $view->new_display('page', 'Available volunteers secretary', 'available_volunteers_filtered_secretary');
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
   $handler->display->display_options['style_plugin'] = 'table';
@@ -3943,36 +4197,31 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['defaults']['style_options'] = FALSE;
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
   $handler->display->display_options['defaults']['row_options'] = FALSE;
-  $handler->display->display_options['defaults']['relationships'] = FALSE;
-  /* Relationship: Field: Parti (field_party) */
-  $handler->display->display_options['relationships']['field_party_tid']['id'] = 'field_party_tid';
-  $handler->display->display_options['relationships']['field_party_tid']['table'] = 'field_data_field_party';
-  $handler->display->display_options['relationships']['field_party_tid']['field'] = 'field_party_tid';
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Field: Parti */
+  /* Felt: Felt: Parti */
   $handler->display->display_options['fields']['field_party']['id'] = 'field_party';
   $handler->display->display_options['fields']['field_party']['table'] = 'field_data_field_party';
   $handler->display->display_options['fields']['field_party']['field'] = 'field_party';
   $handler->display->display_options['fields']['field_party']['label'] = 'Liste';
   $handler->display->display_options['fields']['field_party']['hide_alter_empty'] = FALSE;
-  /* Field: Content: Title */
+  /* Felt: Indhold: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = 'Navn';
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
-  /* Field: Content: Email */
+  /* Felt: Indhold: Email */
   $handler->display->display_options['fields']['entity_id_1']['id'] = 'entity_id_1';
   $handler->display->display_options['fields']['entity_id_1']['table'] = 'field_data_field_email';
   $handler->display->display_options['fields']['entity_id_1']['field'] = 'field_email';
   $handler->display->display_options['fields']['entity_id_1']['label'] = 'E-mail';
   $handler->display->display_options['fields']['entity_id_1']['exclude'] = TRUE;
-  /* Field: Content: Telefon */
+  /* Felt: Indhold: Telefon */
   $handler->display->display_options['fields']['entity_id_2']['id'] = 'entity_id_2';
   $handler->display->display_options['fields']['entity_id_2']['table'] = 'field_data_field_phone';
   $handler->display->display_options['fields']['entity_id_2']['field'] = 'field_phone';
   $handler->display->display_options['fields']['entity_id_2']['exclude'] = TRUE;
-  /* Field: Content: Nid */
+  /* Felt: Indhold: Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
@@ -3980,58 +4229,62 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['nid']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['nid']['alter']['text'] = '<a href="/ajax/volunteers/station/add/[nid]/!2/!3/!4">Vælg</a>';
   $handler->display->display_options['defaults']['sorts'] = FALSE;
-  /* Sort criterion: Field: Polling Station (field_polling_station) */
+  /* Sorteringskriterie: Felt: Begræns adgang til følgende valgsteder (field_polling_station) */
   $handler->display->display_options['sorts']['field_polling_station_nid']['id'] = 'field_polling_station_nid';
   $handler->display->display_options['sorts']['field_polling_station_nid']['table'] = 'field_data_field_polling_station';
   $handler->display->display_options['sorts']['field_polling_station_nid']['field'] = 'field_polling_station_nid';
   $handler->display->display_options['sorts']['field_polling_station_nid']['order'] = 'DESC';
-  /* Sort criterion: Content: Title */
+  /* Sorteringskriterie: Indhold: Titel */
   $handler->display->display_options['sorts']['title']['id'] = 'title';
   $handler->display->display_options['sorts']['title']['table'] = 'node';
   $handler->display->display_options['sorts']['title']['field'] = 'title';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Field: Parti (field_party) */
+  /* Kontekstuelt filter: Felt: Parti (field_party) */
   $handler->display->display_options['arguments']['field_party_tid']['id'] = 'field_party_tid';
   $handler->display->display_options['arguments']['field_party_tid']['table'] = 'field_data_field_party';
   $handler->display->display_options['arguments']['field_party_tid']['field'] = 'field_party_tid';
+  $handler->display->display_options['arguments']['field_party_tid']['exception']['title'] = 'Alle';
   $handler->display->display_options['arguments']['field_party_tid']['default_argument_type'] = 'fixed';
   $handler->display->display_options['arguments']['field_party_tid']['summary']['format'] = 'default_summary';
-  /* Contextual filter: polling station id */
+  /* Kontekstuelt filter: polling station id */
   $handler->display->display_options['arguments']['null']['id'] = 'null';
   $handler->display->display_options['arguments']['null']['table'] = 'views';
   $handler->display->display_options['arguments']['null']['field'] = 'null';
   $handler->display->display_options['arguments']['null']['ui_name'] = 'polling station id';
+  $handler->display->display_options['arguments']['null']['exception']['title'] = 'Alle';
   $handler->display->display_options['arguments']['null']['default_argument_type'] = 'fixed';
   $handler->display->display_options['arguments']['null']['summary']['format'] = 'default_summary';
-  /* Contextual filter: seat number */
+  /* Kontekstuelt filter: seat number */
   $handler->display->display_options['arguments']['null_1']['id'] = 'null_1';
   $handler->display->display_options['arguments']['null_1']['table'] = 'views';
   $handler->display->display_options['arguments']['null_1']['field'] = 'null';
   $handler->display->display_options['arguments']['null_1']['ui_name'] = 'seat number';
+  $handler->display->display_options['arguments']['null_1']['exception']['title'] = 'Alle';
   $handler->display->display_options['arguments']['null_1']['default_argument_type'] = 'fixed';
   $handler->display->display_options['arguments']['null_1']['summary']['format'] = 'default_summary';
-  /* Contextual filter: post */
+  /* Kontekstuelt filter: post */
   $handler->display->display_options['arguments']['null_2']['id'] = 'null_2';
   $handler->display->display_options['arguments']['null_2']['table'] = 'views';
   $handler->display->display_options['arguments']['null_2']['field'] = 'null';
   $handler->display->display_options['arguments']['null_2']['ui_name'] = 'post';
+  $handler->display->display_options['arguments']['null_2']['exception']['title'] = 'Alle';
   $handler->display->display_options['arguments']['null_2']['default_argument_type'] = 'fixed';
   $handler->display->display_options['arguments']['null_2']['summary']['format'] = 'default_summary';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Content: Type */
+  /* Filterkriterie: Indhold: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
     'volunteers' => 'volunteers',
   );
-  /* Filter criterion: Content: Polling Station post (field_polling_station_post) */
+  /* Filterkriterie: Indhold: Polling Station post (field_polling_station_post) */
   $handler->display->display_options['filters']['field_polling_station_post_value']['id'] = 'field_polling_station_post_value';
   $handler->display->display_options['filters']['field_polling_station_post_value']['table'] = 'field_data_field_polling_station_post';
   $handler->display->display_options['filters']['field_polling_station_post_value']['field'] = 'field_polling_station_post_value';
   $handler->display->display_options['filters']['field_polling_station_post_value']['operator'] = 'empty';
-  /* Filter criterion: Content: Title */
+  /* Filterkriterie: Indhold: Titel */
   $handler->display->display_options['filters']['title']['id'] = 'title';
   $handler->display->display_options['filters']['title']['table'] = 'node';
   $handler->display->display_options['filters']['title']['field'] = 'title';
@@ -4041,42 +4294,41 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['filters']['title']['expose']['label'] = 'Navn';
   $handler->display->display_options['filters']['title']['expose']['operator'] = 'title_op';
   $handler->display->display_options['filters']['title']['expose']['identifier'] = 'name';
-  /* Filter criterion: Field: Parti (field_party) */
+  /* Filterkriterie: Felt: Parti (field_party) */
   $handler->display->display_options['filters']['field_party_tid']['id'] = 'field_party_tid';
   $handler->display->display_options['filters']['field_party_tid']['table'] = 'field_data_field_party';
   $handler->display->display_options['filters']['field_party_tid']['field'] = 'field_party_tid';
   $handler->display->display_options['filters']['field_party_tid']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_party_tid']['expose']['operator_id'] = 'field_party_tid_op';
-  $handler->display->display_options['filters']['field_party_tid']['expose']['label'] = 'Liste';
+  $handler->display->display_options['filters']['field_party_tid']['expose']['label'] = 'Parti';
   $handler->display->display_options['filters']['field_party_tid']['expose']['operator'] = 'field_party_tid_op';
   $handler->display->display_options['filters']['field_party_tid']['expose']['identifier'] = 'field_party_tid';
-  $handler->display->display_options['filters']['field_party_tid']['expose']['remember'] = TRUE;
   $handler->display->display_options['filters']['field_party_tid']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
-    5 => 0,
     3 => 0,
     4 => 0,
+    8 => 0,
   );
   $handler->display->display_options['filters']['field_party_tid']['type'] = 'select';
   $handler->display->display_options['filters']['field_party_tid']['vocabulary'] = 'partier';
   $handler->display->display_options['path'] = 'available-volunteers';
   $translatables['volunteers'] = array(
     t('Defaults'),
-    t('more'),
-    t('Apply'),
-    t('Reset'),
-    t('Sort by'),
-    t('Asc'),
-    t('Desc'),
+    t('mere'),
+    t('Udfør'),
+    t('Gendan'),
+    t('Sortér efter'),
+    t('Stigende'),
+    t('Faldende'),
     t('Elementer pr. side'),
     t('- Alle -'),
     t('Forskydning'),
-    t('« first'),
-    t('‹ previous'),
-    t('next ›'),
-    t('last »'),
-    t('term from field_party'),
+    t('« første'),
+    t('‹ forrige'),
+    t('næste ›'),
+    t('sidste »'),
+    t('term fra field_party'),
     t('Navn'),
     t('Party'),
     t('CPR'),
@@ -4085,9 +4337,9 @@ function valhalla_views_views_default_views() {
     t('Valgsted'),
     t('Placering'),
     t('RSVP'),
-    t('Token'),
+    t('Symbol'),
     t('Nid'),
-    t('All'),
+    t('Alle'),
     t('Available volunteers'),
     t('Liste'),
     t('<a href="/ajax/volunteers/station/add/[nid]/!2/!3/!4">Vælg</a>'),
@@ -4105,11 +4357,9 @@ function valhalla_views_views_default_views() {
     t('field_polling_station'),
     t('Volunteers Block'),
     t('Available volunteers - unfiltered'),
-    t('Alle'),
-    t('Feed'),
     t('Data export'),
     t('Data export Excel'),
-    t('Available volunteers - electionsecretary'),
+    t('Available volunteers secretary'),
   );
   $export['volunteers'] = $view;
 
