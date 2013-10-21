@@ -857,9 +857,10 @@ function valhalla_volunteers_add_form_validate($form, &$form_state) {
   if (!empty($form_state['values']['email']) && !valid_email_address($form_state['values']['email'])) {
     form_set_error('email', t('E-mail adressen er ikke gyldig.'));
   }
-
-  if (!_valhalla_helper_validate_polling_post($form_state['values']['polling_station'], $form_state['values']['roles_id'], $form_state['values']['party'])){
-    form_set_error('roles_id', t('Ugyldigt valg, rollen er allerede optaget på valgstedet'));
+  if($form_state['values']['polling_station'] && $form_state['values']['roles_id'] && $form_state['values']['party']){
+    if (!_valhalla_helper_validate_polling_post($form_state['values']['polling_station'], $form_state['values']['roles_id'], $form_state['values']['party'])){
+      form_set_error('roles_id', t('Ugyldigt valg, rollen er allerede optaget på valgstedet'));
+    }
   }
 
   // cpr validation
@@ -935,10 +936,11 @@ function valhalla_volunteers_add_form_submit($form, &$form_state) {
     }
 
     // tth: Add the volunteer to the polling station right away
-    $station_role_id = $form_state['values']['party'] . $form_state['values']['roles_id'] . $form_state['values']['polling_station'];
+    if($form_state['values']['polling_station'] && $form_state['values']['roles_id'] && $form_state['values']['party']){
+      $station_role_id = $form_state['values']['party'] . $form_state['values']['roles_id'] . $form_state['values']['polling_station'];
 
-    $node->field_polling_station_post[$language->language][0]['value'] = $station_role_id;
-
+      $node->field_polling_station_post[$language->language][0]['value'] = $station_role_id;
+    }
     node_save($node);
     drupal_set_message(t('Den frivillige "@name" er nu blevet oprettet.', array('@name' => $node->title), array('langcode' => $language->language)));
   }
