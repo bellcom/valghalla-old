@@ -411,20 +411,22 @@ EOM;
       if ($position){
         $position_node = node_load($position);
 
-        $position_info = $position_node->title;
-        $wrapper = entity_metadata_wrapper('node', $position_node);
-        if(isset($position_node->field_description)){
-          if(!empty($position_node->field_description)){
-            $position_info = $position_node->field_description->value();
+      if (is_object($position_node)) {
+          $position_info = $position_node->title;
+          $wrapper = entity_metadata_wrapper('node', $position_node);
+          if(isset($position_node->field_description)){
+            if(is_object($position_node->field_description)){
+              $position_info = $position_node->field_description->value();
+            }
           }
         }
       }
       $wrapper = entity_metadata_wrapper('node', $polling_station);
- 
+
       $polling_station_address = array();
       $polling_station_address[] = $wrapper->field_address_road->value() . ' ' . $wrapper->field_address_road_no->value();
       $polling_station_address[] = $wrapper->field_address_zipcode->value() . ' ' . $wrapper->field_address_city->value();
-      
+
       $params = array_merge($params, array(
           '!polling_station' => $polling_station->title,
           '!polling_station_address' => implode("\n", $polling_station_address),
