@@ -19,7 +19,6 @@ function valhalla_settings_menu() {
 }
 
 function valhalla_admin_settings_form($form, &$form_state) {
-
   $form['valhalla_settings_polling_station_lock'] = array(
       '#type' => 'checkbox',
       '#title' => 'Lås valgsteds opsætningen',
@@ -29,7 +28,6 @@ function valhalla_admin_settings_form($form, &$form_state) {
   return system_settings_form($form);
 }
 
-
 function valhalla_settings_form_alter(&$form, &$form_state, $form_id) {
   if($form_id == 'user_profile_form'){
     global $user;
@@ -38,7 +36,6 @@ function valhalla_settings_form_alter(&$form, &$form_state, $form_id) {
       $form['field_polling_station']['#disabled'] = FALSE;
     }
   }
-
 
   if (variable_get('valhalla_settings_polling_station_lock', FALSE)) {
     _valhalla_settings_lock_field($form, $form_state);
