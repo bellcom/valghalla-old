@@ -575,7 +575,7 @@ function valhalla_volunteers_to_polling_station_ajax($action) {
 
         $node->field_polling_station_post[$language->language][0]['value'] = $station_role_id;
 
-        $node->field_label[$language->language][0]['value'] = $role_id;
+        $node->field_label[$language->language][0]['value'] = $post;
         $node->field_rolle_id['und'][0]['nid'] = $role_id;
         $node->field_meeting_time['und'][0]['tid'] = $meeting_time;
 

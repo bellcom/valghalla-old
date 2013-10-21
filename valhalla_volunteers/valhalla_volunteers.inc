@@ -396,7 +396,7 @@ EOM;
                   ->distinct()
                   ->fields('n', array('nid', 'title'))   
                   ->condition('n.type', 'roles')
-                 ->condition('n.nid', $field_label[0]['value'])
+                 ->condition('n.title', $field_label[0]['value'])
                   ->execute()
                   ->fetchColumn();
       // tth@bellcom.dk
@@ -406,6 +406,7 @@ EOM;
       // is not set we show the title, otherwise we show the description.
       // Get the info from the node and put it in the $params array...
       // Have a nice day!
+      //
       $position_info ='';
       if ($position){
         $position_node = node_load($position);
