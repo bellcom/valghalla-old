@@ -343,7 +343,6 @@ function valhalla_volunteers_to_polling_station($station_id = NULL) {
   if(in_array('Valgsekretær', $user->roles) && !$user_party_id){
     // tth: If the user is administrator and theres no party chosen, show all parties!
     $taxonomy = taxonomy_vocabulary_machine_name_load('partier');
-
     foreach (taxonomy_get_tree($taxonomy->vid) as $term) {
       if (is_array($restrict_polling_stations) && !in_array($polling_station->nid, $restrict_polling_stations)) {
         continue;
@@ -371,15 +370,18 @@ function valhalla_volunteers_to_polling_station_markup($polling_station, $user_p
   // Get values
   $posts_array = valhalla_volunteers_to_polling_station_roles($polling_station, $user_party_id);
 
-  arsort($roles_array['posts_to_fill'], SORT_REGULAR);
 
-  // Return the themed values
-  return theme('station', array(
-          'posts_to_fill' => $posts_array['posts_to_fill'],
-          'party_id' => $posts_array['user_party_id'],
-          'station_id' => $posts_array['station_id'],
-          'existing' => $posts_array['existing'],
-      ));
+  if(!empty($posts_array['posts_to_fill'])){
+    arsort($posts_array['posts_to_fill'], SORT_REGULAR);
+
+    // Return the themed values
+    return theme('station', array(
+            'posts_to_fill' => $posts_array['posts_to_fill'],
+            'party_id' => $posts_array['user_party_id'],
+            'station_id' => $posts_array['station_id'],
+            'existing' => $posts_array['existing'],
+          ));
+  }
 }
 
 /**
@@ -445,10 +447,14 @@ function valhalla_volunteers_to_polling_station_roles($polling_station, $user_pa
 
   // tth: Populate "existing"-array with volunteer data
   foreach($posts_to_fill as $key => $value){
+    $id = NULL;
+
     $station_role_id = $user_party_id . $role_array[$value] . $station_id;
 
     // tth: Check if there is a volunteer with the role
-    $id = reset(array_shift($volunteers[$value]));
+    if(is_array($volunteers[$value])){
+      $id = reset(array_shift($volunteers[$value]));
+    }
     if($id){
       $existing[$id] = array(
           'data' => _valhalla_helper_wrap_name(node_load($id)),
