@@ -450,9 +450,8 @@ function valhalla_volunteers_to_polling_station_roles($polling_station, $user_pa
     $id = NULL;
 
     $station_role_id = $user_party_id . $role_array[$value] . $station_id;
-
     // tth: Check if there is a volunteer with the role
-    if(is_array($volunteers[$value])){
+    if(!empty($volunteers[$value])){
       $id = reset(array_shift($volunteers[$value]));
     }
     if($id){
