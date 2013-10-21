@@ -1,0 +1,285 @@
+<?php
+
+/*
+ *
+ * @author Jesper Mathiassen <jm@bellcom.dk>
+ * @copyright Bellcom Open Source aps.
+ */
+
+/**
+ * Implementation of hook_menu()
+ *
+ */
+function valhalla_mail_menu() {
+  $items['admin/valhalla/mails'] = array(
+      'title' => 'Mails',
+      'description' => 'Tilretning af standard mails.',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('valhalla_volunteers_admin_mail_form'),
+      'access arguments' => array('administer valhalla'),
+      'file' => 'valhalla_mail_admin.inc',
+      'type' => MENU_LOCAL_TASK,
+      'weight' => -4,
+  );
+  $items['admin/valhalla/sendmail'] = array(
+      'title' => 'Send mails til frivillige',
+      'description' => 'Her kan der udsendes mails til alle, eller udvalgte segmenter, af de frivillige.',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('valhalla_mail_sendmail_form'),
+      'access arguments' => array('administer valhalla'),
+      'type' => MENU_LOCAL_TASK,
+      'weight' => -5,
+  );
+  return $items;
+}
+
+/**
+ * Handles valhalla templated mail sendout.
+ * 
+ * @param type $key
+ * @param type $message
+ * @param type $params 
+ */
+function valhalla_mail_mail($key, &$message, $params) {
+
+  $options = array(
+      'langcode' => $message['language']->language,
+  );
+
+  switch ($key) {
+    case 'rsvp_reminder':
+      $email = &drupal_static(__FUNCTION__ . 'rsvp_reminder', FALSE);
+      if (!$email) {
+        $email = new stdClass;
+        module_load_include('inc', 'valhalla_mail', 'valhalla_mail_admin');
+        $email->subject = variable_get('valhalla_rsvp_reminder_subject', _valhalla_volunteers_default_rsvp_reminder('subject'));
+        $email->body = variable_get('valhalla_rsvp_reminder_body', _valhalla_volunteers_default_rsvp_reminder('body'));
+      }
+      $message['subject'] = t($email->subject, $params, $options);
+      $message['body'][] = t($email->body, $params, $options);
+      break;
+    case 'rsvp':
+      $email = &drupal_static(__FUNCTION__ . 'rsvp_email', FALSE);
+      if (!$email) {
+        module_load_include('inc', 'valhalla_mail', 'valhalla_mail_admin');
+        $email = new stdClass;
+        $email->subject = variable_get('valhalla_rsvp_email_subject', _valhalla_volunteers_default_rsvp_email('subject'));
+        $email->body = variable_get('valhalla_rsvp_email_body', _valhalla_volunteers_default_rsvp_email('body'));
+      }
+      $message['subject'] = t($email->subject, $params, $options);
+      $message['body'][] = t($email->body, $params, $options);
+      break;
+    case 'rsvp_confirm':
+      $email = &drupal_static(__FUNCTION__ . 'rsvp_status', FALSE);
+      if (!$email) {
+        $email = new stdClass;
+        module_load_include('inc', 'valhalla_mail', 'valhalla_mail_admin');
+        if (in_array($params['rsvp_type'], array('yes', 'no', 'never'))) {
+          $email->subject = variable_get('valhalla_rsvp_status_subject_' . $params['rsvp_type'], _valhalla_volunteers_default_rsvp_status('subject_' . $params['rsvp_type']));
+          $email->body = variable_get('valhalla_rsvp_status_body_' . $params['rsvp_type'], _valhalla_volunteers_default_rsvp_status('body_' . $params['rsvp_type']));
+        }
+      }
+      $message['subject'] = t($email->subject, $params, $options);
+      $message['body'][] = t($email->body, $params, $options);
+      break;
+    case 'default':
+      $message['subject'] = t($params['subject'], $params['replacements'], $options);
+      $message['body'][] = t($params['message'], $params['replacements'], $options);
+      break;
+  }
+}
+
+/**
+ * Implementation of hook_form for the send mail page.
+ *
+ * @return array
+ */
+function valhalla_mail_sendmail_form($form, $form_state) {
+  if (isset($form_state['storage']['confirm'])) {
+     // ALSO do $form definition here. Your final submit handler (after user clicks Yes, I Confirm) will 
+    // only see $form_state info defined here. Form you create here passed as param1 to confirm_form
+    return confirm_form($form, 
+      t('Er du sikker på du vil udsende mail til @count modtagere ?', array('@count' => $form_state['storage']['count'])), 
+      'admin/valhalla', 
+      'Mailens indhold:<br/><h3>' . $form_state['values']['subject'] . '</h3><pre>' . $form_state['values']['body'] . '</pre>', 
+      'Send!', 
+      'Afbryd'
+    ); //Had better luck leaving off last param 'name'
+  }
+  
+  module_load_include('inc', 'valhalla_volunteers');
+  module_load_include('inc', 'valhalla_mail');
+
+  // Get parties from Term objects.
+  $taxonomy=taxonomy_vocabulary_machine_name_load('partier');
+
+  foreach (taxonomy_get_tree($taxonomy->vid) as $tid => $term) {
+    $parties[$term->tid] = $term->name;
+  }
+  $ps = db_select('node', 'n')
+          ->fields('n', array('nid', 'title'))
+          ->condition('type', 'polling_station')
+          ->execute()->fetchAllKeyed();
+  
+    $roles=array();
+    $res = db_select('node', 'n')
+                             ->distinct()
+                             ->fields('n', array('nid', 'title'))   
+                               ->condition('n.type', 'roles')
+                              ->execute();
+
+         
+         while($rec=$res->fetchAssoc()){
+              $roles[$rec['nid']]= $rec['title'];
+
+         }  
+  $form['content'] = array(
+      '#type' => 'fieldset',
+      '#title' => 'Mail indhold',
+  );
+  $form['content']['subject'] = array(
+      '#type' => 'textfield',
+      '#title' => 'Emne',
+      '#required' => TRUE,
+  );
+  $form['content']['body'] = array(
+      '#type' => 'textarea',
+      '#title' => 'Indhold',
+      '#rows' => 15,
+      '#required' => TRUE,
+      '#suffix' => _valhalla_helper_get_volunteer_info_params('info'),
+  );
+  $form['recipents'] = array(
+      '#type' => 'fieldset',
+      '#title' => 'Modtagere',
+      '#description' => t('Hold CTRL nede for at vælge flere. Ingen valgte vil sende til alle.'),
+  );
+  $form['recipents']['rsvp_status'] = array(
+      '#type' => 'select',
+      '#title' => 'RSVP Status',
+      '#multiple' => true,
+      '#options' => array(
+          '1' => t('Ja'),
+          '2' => t('Nej'),
+          '3' => t('Aldrig'),
+          '0' => t('Ubesvaret'),
+      ),
+      '#size' => 5,
+      '#prefix' => '<div style="float:left;margin-right:2em">',
+      '#suffix' => '</div>'
+  );
+  $form['recipents']['volunteer_type'] = array(
+      '#type' => 'select',
+      '#title' => 'Frivillig type',
+      '#multiple' => true,
+      '#options' => $roles,
+      '#size' => 5,
+      '#prefix' => '<div style="float:left;margin-right:2em">',
+      '#suffix' => '</div>'
+  );
+  $form['recipents']['party'] = array(
+      '#type' => 'select',
+      '#title' => 'Parti',
+      '#multiple' => true,
+      '#options' => $parties,
+      '#size' => 5,
+      '#prefix' => '<div style="float:left;margin-right:2em">',
+      '#suffix' => '</div>'
+  );
+  $form['recipents']['polling_station'] = array(
+      '#type' => 'select',
+      '#title' => 'Valgsted',
+      '#multiple' => true,
+      '#options' => $ps,
+      '#size' => 5,
+      '#prefix' => '<div style="float:left;margin-right:2em">',
+      '#suffix' => '</div>'
+  );
+
+  $form['send'] = array(
+      '#type' => 'submit',
+      '#value' => 'Send!',
+  );
+  return $form;
+}
+
+function valhalla_mail_sendmail_form_submit($form, &$form_state) {
+  global $language;
+
+  module_load_include('inc', 'valhalla_volunteers');
+
+  $volunteers_nids = $form_state['storage']['nids'];
+
+  if (empty($volunteers_nids) or !isset($volunteers_nids) ) {
+    $rsvp_status = count($form_state['values']['rsvp_status']) > 0 ? $form_state['values']['rsvp_status'] : false;
+    $volunteer_type = count($form_state['values']['volunteer_type']) > 0 ? $form_state['values']['volunteer_type'] : false;
+    $party = count($form_state['values']['party']) > 0 ? $form_state['values']['party'] : false;
+    $polling_station = count($form_state['values']['polling_station']) > 0 ? $form_state['values']['polling_station'] : false;
+
+    // Prepare statement.
+    $query = db_select('node', 'n');
+    $query->fields('n', array('nid'));
+    $query->condition('type', 'volunteers');
+
+    if ($rsvp_status) {
+      $query->leftjoin('field_revision_field_rsvp', 'r', 'n.nid = r.entity_id');
+      $sql = '{field_rsvp_value} IN (' . implode(',', $rsvp_status) . ')';
+      if (in_array('0', $rsvp_status)) {
+        $sql .= ' OR {field_rsvp_value} IS NULL';
+      }
+      $query->where($sql);
+    }
+    if ($volunteer_type) {
+      $query->join('field_revision_field_label', 'v', 'n.nid = v.entity_id');
+      $query->condition('field_label_value', $volunteer_type);
+    }
+    if ($party) {
+      $query->join('field_revision_field_party', 'p', 'n.nid = p.entity_id');
+      $query->condition('field_party_tid', $party);
+    }
+
+    if ($polling_station) {
+      $query->join('field_revision_field_polling_station', 'ps', 'n.nid = ps.entity_id');
+      $query->condition('field_polling_station_nid', $polling_station);
+    }
+
+    // Get the results
+    $volunteers_nids = $query->execute()->fetchAll(PDO::FETCH_COLUMN);
+  }
+
+  if (!isset($form_state['storage']['confirm'])) {
+    $form_state['storage']['confirm'] = TRUE; // this will cause the form to be rebuilt, entering the confirm part of the form
+    $form_state['storage']['count'] = count($volunteers_nids);
+    $form_state['storage']['nids'] = $volunteers_nids;
+    $form_state['storage']['body'] = $form_state['values']['body'];
+    $form_state['storage']['subject'] = $form_state['values']['subject'];
+    $form_state['rebuild'] = TRUE; // along with this
+    return;
+  }
+
+  // find active election
+  $nid = db_select('field_data_field_election_status', 'es')
+      ->fields('es', array('entity_id'))
+      ->condition('es.bundle', 'election')
+      ->condition('es.field_election_status_value', 1)
+      ->execute()
+      ->fetchColumn()
+  ;
+  // load election node
+  $election = node_load($nid);
+
+  // We got our data, lets start spamming
+  foreach (node_load_multiple($volunteers_nids) as $volunteer_node) {
+    $to = $volunteer_node->field_email[$language->language][0]['email'];
+    $from = variable_get('site_mail', 'admin@example.com');
+
+    $params = array(
+        'message' => $form_state['storage']['body'],
+        'subject' => $form_state['storage']['subject'],
+        'replacements' => _valhalla_helper_get_volunteer_info_params($volunteer_node),
+    );
+    drupal_mail('valhalla_mail', 'default', $to, $language, $params, $from, TRUE);
+  }
+  drupal_set_message('Mails udsendt.', 'status');
+  drupal_goto('admin/valhalla');
+}

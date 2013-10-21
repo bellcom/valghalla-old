@@ -1,0 +1,16 @@
+<?php
+/**
+ * Implements hook_install()
+ */
+
+function valhalla_field_instances_install()
+{
+	include_once 'valhalla_field_instances.features.field_instance.inc';
+
+	$instances = valhalla_field_instances_field_default_field_instances();
+
+	foreach($instances as $instance)
+	{
+		field_create_instance($instance);
+	}
+}

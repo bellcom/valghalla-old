@@ -1,0 +1,11 @@
+name = content_type_roles
+core = 7.x
+package = Features
+dependencies[] = features
+dependencies[] = field_sql_storage
+dependencies[] = node
+dependencies[] = text
+dependencies[] = valhalla_field_bases
+dependencies[] = valhalla_field_instances
+features[features_api][] = api:2
+features[node][] = roles

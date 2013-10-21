@@ -1,0 +1,16 @@
+name = valhalla_page_manager_pages
+core = 7.x
+package = Features
+php = 5.2.4
+dependencies[] = ctools
+dependencies[] = field_group
+dependencies[] = page_manager
+features[ctools][] = page_manager:pages_default:1
+features[features_api][] = api:1
+features[page_manager_pages][] = alle_partiets_tilforordnede
+features[page_manager_pages][] = forside
+features[page_manager_pages][] = haandter_frivillige
+features[page_manager_pages][] = mangler_svar
+features[page_manager_pages][] = overblik
+features[page_manager_pages][] = parti_status
+features[page_manager_pages][] = vil_fjernes

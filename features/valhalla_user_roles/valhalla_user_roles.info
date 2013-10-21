@@ -1,0 +1,10 @@
+name = valhalla_user_roles
+core = 7.x
+package = Features
+dependencies[] = ctools
+dependencies[] = features
+dependencies[] = field_group
+features[features_api][] = api:2
+features[user_role][] = Partisekretær
+features[user_role][] = Valgsekretær
+features[user_role][] = administrator

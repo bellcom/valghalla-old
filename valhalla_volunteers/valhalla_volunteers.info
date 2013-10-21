@@ -1,0 +1,13 @@
+; $Id$
+name = valhalla volunteers
+description = holds functionality to add volunteers and for volunteers to give feedback
+package = valhalla
+core = 7.x
+version = "7.x-1.1"
+
+configure = admin/config/valhalla/volunteers
+
+files[] = valhalla_volunteers.module
+files[] = valhalla_volunteers_admin.inc
+
+dependencies[] = "valhalla_mail"
