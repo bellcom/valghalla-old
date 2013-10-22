@@ -927,7 +927,13 @@ function valhalla_volunteers_add_form_submit($form, &$form_state) {
     if (!empty($form_state['values']['polling_station'])) {
       $node->field_polling_station[$language->language][0]['nid'] = (int) $form_state['values']['polling_station'];
     }
-    $node->field_rolle_id['und'][0]['nid'] = (int) $form_state['values']['roles_id'];
+
+    if($form_state['values']['roles_id']){
+      // Set the role label on the volunteer
+      $roles_array = _valhalla_helper_get_roles();
+
+      $node->field_label[$language->language][0]['value'] = strtolower($roles_array[$form_state['values']['roles_id']]);
+    }
 
     $party = FALSE;
     if (!empty($form_state['values']['party'])) {

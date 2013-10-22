@@ -392,26 +392,19 @@ EOM;
 
     // Gather polling station info
     $field_polling_station=field_get_items('node', $node, 'field_polling_station');
-    $polling_station =node_load($field_polling_station[0]['nid']);
-    
+    $polling_station = node_load($field_polling_station[0]['nid']);
+
     $field_label=field_get_items('node', $node, 'field_label');
     if (FALSE != $polling_station) {
       // build address "field"
       $position = db_select('node', 'n')
                   ->distinct()
-                  ->fields('n', array('nid', 'title'))   
+                  ->fields('n', array('nid', 'title'))
                   ->condition('n.type', 'roles')
                  ->condition('n.title', $field_label[0]['value'])
                   ->execute()
                   ->fetchColumn();
-      // tth@bellcom.dk
-      // The positions are no longer just a textstring, but a node instead.
-      // I havent taken in to account what happens up to this point, but this seems to work
-      // Load the node from the id in the field fetched to $position. If the description
-      // is not set we show the title, otherwise we show the description.
-      // Get the info from the node and put it in the $params array...
-      // Have a nice day!
-      //
+
       $position_info ='';
       if ($position){
         $position_node = node_load($position);
@@ -426,18 +419,42 @@ EOM;
           }
         }
       }
-      
+
+      // tth: Fetch info for token !time.
+      // Since the party set on the volunteer is not nessecarily the same
+      // as the posts party we need to extract it from the polling_station_post
+      // key.
+      // Removing the role id and the pollingstation id from this key,
+      // leaves us the party id.
+      $polling_station_post = field_get_items('node', $node, 'field_polling_station_post');
+      $polling_station_id = field_get_items('node', $node, 'field_polling_station');
+
+      $partial_key = $position . $polling_station_id[0]['nid'];
+      $party = str_replace($partial_key, '', $polling_station_post[0]['value']);
+
+      $field_collections = field_get_items('node', $polling_station, 'field_volunteers_pr_party_1');
+      $fc_entities = entity_load('field_collection_item', $field_collections);
+        //entity_load('field_collection_item', array($item_id));
+
+      foreach($fc_entities as $fc_entity){
+        if($fc_entity->field_party_list[LANGUAGE_NONE][0]['party_list'] == $party){
+          $meeting_time_tid = $fc_entity->{'field_role_n'.$position}[LANGUAGE_NONE][0]['meeting_time'];
+          $term = taxonomy_term_load($meeting_time_tid);
+          $time = $term->name;
+        }
+      }
+
       $wrapper = entity_metadata_wrapper('node', $polling_station);
- 
+
       $polling_station_address = array();
       $polling_station_address[] = $wrapper->field_address_road->value() . ' ' . $wrapper->field_address_road_no->value();
       $polling_station_address[] = $wrapper->field_address_zipcode->value() . ' ' . $wrapper->field_address_city->value();
-      
+
       $params = array_merge($params, array(
           '!polling_station' => $polling_station->title,
           '!polling_station_address' => implode("\n", $polling_station_address),
-         // '!position' => strtoupper($node->field_label[$language->language][0]['value']),
           '!position' => $position_info,
+          '!time' => $time,
           '!responsible' => $wrapper->field_contact->value(),
           ));
     }
