@@ -149,9 +149,14 @@ function _valhalla_helper_validate_polling_post($polling_station_id, $role_id, $
 
   $role_array = _valhalla_helper_get_role_array();
 
-  // Get free posts
-  $free_posts = array_diff_assoc($posts_array['posts_to_fill'], $posts_array['existing']);
-
+  // If existing in the posts_array is empty, then all posts are vacant
+  if(!is_array($posts_array['existing'])){
+    $free_posts = $posts_array['posts_to_fill'];
+  }
+  else {
+    // Get the remaining free posts
+    $free_posts = array_diff_assoc($posts_array['posts_to_fill'], $posts_array['existing']);
+  }
   // Check if one of the free posts has the correct role id.
   foreach($free_posts as $post){
     if($role_array[$post['title']] == $role_id){
@@ -411,7 +416,7 @@ EOM;
       if ($position){
         $position_node = node_load($position);
 
-      if (is_object($position_node)) {
+        if (is_object($position_node)) {
           $position_info = $position_node->title;
           $wrapper = entity_metadata_wrapper('node', $position_node);
           if(isset($position_node->field_description)){
@@ -421,12 +426,13 @@ EOM;
           }
         }
       }
+      
       $wrapper = entity_metadata_wrapper('node', $polling_station);
-
+ 
       $polling_station_address = array();
       $polling_station_address[] = $wrapper->field_address_road->value() . ' ' . $wrapper->field_address_road_no->value();
       $polling_station_address[] = $wrapper->field_address_zipcode->value() . ' ' . $wrapper->field_address_city->value();
-
+      
       $params = array_merge($params, array(
           '!polling_station' => $polling_station->title,
           '!polling_station_address' => implode("\n", $polling_station_address),
