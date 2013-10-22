@@ -629,6 +629,24 @@ function valhalla_volunteers_data($id) {
 }
 
 /**
+ * implements hook_node_insert()
+ */
+function valhalla_volunteers_node_insert($node){
+  // Send a mail when volunteer is added from form.
+  global $language;
+
+  if (($node->type == 'volunteers') &&
+      isset($node->field_polling_station[$language->language][0]['nid']) &&
+      isset($node->field_polling_station_post[$language->language][0]['value']) &&
+      ($node->field_polling_station_post[$language->language][0]['value'] > 0) &&
+      ($node->field_rsvp[$language->language][0]['value'] == '') &&
+      empty($_POST['rsvp'])
+  ) {
+    valhalla_volunteers_send_rsvp($node);
+  }
+}
+
+/**
  * hook_node_update implementation
  *
  * @param stdClass $node
@@ -707,7 +725,7 @@ function valhalla_volunteers_send_rsvp($node) {
 
   $to = $node->field_email[$language->language][0]['email'];
   $from = variable_get('site_mail', 'admin@example.com');
-  
+
   $params = _valhalla_helper_get_volunteer_info_params($node);
 
   $language = language_default();

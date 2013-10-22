@@ -362,9 +362,9 @@ EOM;
 
   if (empty($params)) {
     global $language;
-    $email=field_get_items('node', $node, 'field_email');
-    $phone=field_get_items('node', $node, 'field_phone');
-    $token=field_get_items('node', $node, 'field_token');
+    $email = field_get_items('node', $node, 'field_email');
+    $phone = field_get_items('node', $node, 'field_phone');
+    $token = field_get_items('node', $node, 'field_token');
     // Set up base info
     $params = array(
         '!name' => $node->title,
@@ -378,16 +378,18 @@ EOM;
 
     // If no current election, so omit info
     if (FALSE != $election) {
-       $election_date = field_get_items('node', $election, 'field_date');
-       list($election_date, $time) = preg_split("|T|", $election_date[0]['value']);
-       $today_date = strtotime(date('Y-m-d'));
-       $election_date1 = strtotime($election_date);
-       $days_to_election = floor(($election_date1 - $today_date) / 86400);
-      
+      $election_date = field_get_items('node', $election, 'field_date');
+      list($election_date, $time) = preg_split("|T|", $election_date[0]['value']);
+      $today_date = strtotime(date('Y-m-d'));
+      $election_date1 = strtotime($election_date);
+      $days_to_election = floor(($election_date1 - $today_date) / 86400);
+
+      $election_date = date('d.m.Y', $election_date1);
+
       $params = array_merge($params, array(
-          '!election_date' => $election_date,
-          '!days' => $days_to_election,
-          ));
+        '!election_date' => $election_date,
+        '!days' => $days_to_election,
+      ));
     }
 
     // Gather polling station info
@@ -405,17 +407,17 @@ EOM;
                   ->execute()
                   ->fetchColumn();
 
+      // Get position (role) info
       $position_info ='';
+
       if ($position){
         $position_node = node_load($position);
 
         if (is_object($position_node)) {
           $position_info = $position_node->title;
-          $wrapper = entity_metadata_wrapper('node', $position_node);
-          if(isset($position_node->field_description)){
-            if(is_object($position_node->field_description)){
-              $position_info = $position_node->field_description->value();
-            }
+          $description = field_get_items('node', $position_node, 'field_description');
+          if($description) {
+            $position_info = $description[0]['value'];
           }
         }
       }
@@ -429,21 +431,25 @@ EOM;
       $polling_station_post = field_get_items('node', $node, 'field_polling_station_post');
       $polling_station_id = field_get_items('node', $node, 'field_polling_station');
 
-      $partial_key = $position . $polling_station_id[0]['nid'];
-      $party = str_replace($partial_key, '', $polling_station_post[0]['value']);
+      if($polling_station_post && $polling_station_id){
+        $partial_key = $position . $polling_station_id[0]['nid'];
+        $party = str_replace($partial_key, '', $polling_station_post[0]['value']);
 
-      $field_collections = field_get_items('node', $polling_station, 'field_volunteers_pr_party_1');
-      $fc_entities = entity_load('field_collection_item', $field_collections);
-        //entity_load('field_collection_item', array($item_id));
+        $field_collections = field_get_items('node', $polling_station, 'field_volunteers_pr_party_1');
 
-      foreach($fc_entities as $fc_entity){
-        if($fc_entity->field_party_list[LANGUAGE_NONE][0]['party_list'] == $party){
-          $meeting_time_tid = $fc_entity->{'field_role_n'.$position}[LANGUAGE_NONE][0]['meeting_time'];
-          $term = taxonomy_term_load($meeting_time_tid);
-          $time = $term->name;
+        // Bug in field_collection / entity
+        // https://drupal.org/node/1164982
+        // quick fix: silence the errors
+        @$fc_entities = entity_load('field_collection_item', $field_collections);
+
+        foreach($fc_entities as $fc_entity){
+          if($fc_entity->field_party_list[LANGUAGE_NONE][0]['party_list'] == $party){
+            $meeting_time_tid = $fc_entity->{'field_role_n'.$position}[LANGUAGE_NONE][0]['meeting_time'];
+            $term = taxonomy_term_load($meeting_time_tid);
+            $time = $term->name;
+          }
         }
       }
-
       $wrapper = entity_metadata_wrapper('node', $polling_station);
 
       $polling_station_address = array();
