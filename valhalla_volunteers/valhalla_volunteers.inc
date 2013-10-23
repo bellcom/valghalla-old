@@ -371,7 +371,7 @@ EOM;
         '!email' => $email[0]['email'],
         '!phone' => (empty($phone[0]['safe_value']) ? '' : $phone[0]['safe_value']),
         '!date' => date('j/m Y'),
-        '!link' => url('volunteers/rsvp/' . $token[0]['safe_value'], array('absolute' => TRUE)),
+        '!link' => url('volunteers/rsvp/' . $token[0]['value'], array('absolute' => TRUE)),
     );
 
     $election = _valhalla_helper_get_active_election();
