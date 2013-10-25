@@ -440,7 +440,11 @@ function valhalla_volunteers_to_polling_station_roles($polling_station, $user_pa
     $station_role_id = $user_party_id . $role_array[$value] . $station_id;
 
     $volunteer_query = new EntityFieldQuery();
-    $volunteer_query->fieldCondition('field_polling_station_post', 'value', $station_role_id, 'like');
+    $volunteer_query->fieldCondition('field_polling_station_post', 'value', $station_role_id, 'like')
+      ->entityCondition('bundle', 'volunteers')
+      ->entityCondition('entity_type', 'node')
+      ->propertyCondition('status', 1);
+
 
     $volunteers[$value] = reset($volunteer_query->execute());
   }
