@@ -110,7 +110,7 @@ function valhalla_blocks_block_view($delta = '') {
         $query->condition('p.bundle', 'volunteers');
         $query = $query->execute();
 
-        $total = 0;
+        $total_volunteers = 0;
         $yes = 0;
         $no = 0;
         $missing = 0;
@@ -126,9 +126,12 @@ function valhalla_blocks_block_view($delta = '') {
           }
 
           if (isset($node->field_polling_station_post[$language->language][0]['value'])) {
-            $total++;
-
+            $rolle_id = '';
             $rolle_id = field_get_items('node', $node, 'field_rolle_id');
+            if($rolle_id){
+              $total_volunteers++;
+              $total_volunteers_role[$roles[$rolle_id[0]['nid']]]++;
+            }
 
             if (empty ($node->field_rsvp[$language->language][0]['value'])) {
               $missing++;
@@ -163,8 +166,8 @@ function valhalla_blocks_block_view($delta = '') {
 
             <tr>
               <td><div class="partistatusenhed">Status total</div></td>
-              <td><div class="partistatusenhedvaerdi">' . ($yes + $missing) . '/' . $grand_total . '</div> </td>
-              <td> <div class="partistatusenhedvaerdi">' . ($grand_total - ($yes + $missing)) . '</div> </td>
+              <td><div class="partistatusenhedvaerdi">' . ($total_volunteers) . '/' . $grand_total . '</div> </td>
+              <td> <div class="partistatusenhedvaerdi">' . ($grand_total - ($total_volunteers)) . '</div> </td>
             </tr>
 
             <tr>
@@ -174,16 +177,17 @@ function valhalla_blocks_block_view($delta = '') {
             </tr>
 
             <tr>
+              <td>Afviste</td>
+              <td><div class="partistatusenhedvaerdi">' . $no . '</div> </td>
+              <td></td>
+            </tr>
+
+            <tr>
               <td>Afventer svar</td>
               <td><div class="partistatusenhedvaerdi">' . $missing . '</div> </td>
               <td></td>
             </tr>
 
-            <tr>
-              <td>Afviste</td>
-              <td><div class="partistatusenhedvaerdi">' . $no . '</div> </td>
-              <td></td>
-            </tr>
           </table>';
 
 
@@ -203,8 +207,8 @@ function valhalla_blocks_block_view($delta = '') {
             $no = 'volunteer-status-cancelled';
           }
 
-          if(!$missing_role[$title]){
-            $missing_role[$title] = 0;
+          if(!$total_volunteers_role[$title]){
+            $total_volunteers_role[$title] = 0;
           }
 
           if(!$total_role[$title]){
@@ -214,8 +218,8 @@ function valhalla_blocks_block_view($delta = '') {
           $block['content'] .= '
               <tr>
                 <td><div class="partistatusenhed">'. $title .'</div></td>
-                <td><div class="partistatusenhedvaerdi '. $no .'">'. $missing_role[$title] . '/' . $total_role[$title] . '</div> </td>
-                <td><div class="partistatusenhedvaerdi">' . ($total_role[$title] - ($yes_role[$title] + $missing_role[$title])) . '</div> </td>
+                <td><div class="partistatusenhedvaerdi '. $no .'">'. $total_volunteers_role[$title] . '/' . $total_role[$title] . '</div> </td>
+                <td><div class="partistatusenhedvaerdi">' . ($total_role[$title] - ($total_volunteers_role[$title])) . '</div> </td>
               </tr>';
         }
 
@@ -293,7 +297,7 @@ function valhalla_blocks_block_view($delta = '') {
           // Restrict list on frontpage, so the user cannot to see other polling stations
           // than he is allowed to.
           if (is_array($restrict_polling_stations) && !in_array($id, $restrict_polling_stations)) {
-                continue;
+            continue;
           }
 
           $volunteers_data=array();
@@ -326,17 +330,23 @@ function valhalla_blocks_block_view($delta = '') {
               ->propertyCondition('status', 1);
             $volunteers_array = reset($volunteer_query->execute());
 
-            // tth: This might be a little heavy. We want to alert the user that a volunteer has replied no
-            // we load the volunteer to access the field with the info.
+            $volunteer_nids = array_keys($volunteers_array);
+
             $role_cancelled = '';
-            foreach($volunteers_array as $volunteer){
-              $rsvp = field_get_items('node', node_load($volunteer->nid), 'field_rsvp');
-              if($rsvp){
-                // If the status is either 2 or 3 the volunteer has cancelled
-                if($rsvp > 1){
-                  $role_cancelled = ' volunteer-status-cancelled';
-                }
-              }
+
+            $rsvp = db_query('SELECT *
+              FROM  `field_data_field_rsvp`
+              WHERE  `entity_id`
+              IN ( :volunteer_nids )
+              AND `field_rsvp_value`
+              IN ( :rsvp_values) ', array(
+                ':volunteer_nids' => $volunteer_nids,
+                ':rsvp_values' => array(2, 3))
+              )
+              ->fetchAll();
+
+            if(!empty($rsvp)){
+              $role_cancelled = ' volunteer-status-cancelled';
             }
 
             // tth: Count on an empty array returned 1. Workaround be here.:
@@ -379,6 +389,5 @@ function valhalla_blocks_block_view($delta = '') {
       $block['content'] = $output;
       break;
     }
-
   return $block;
 }
