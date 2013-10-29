@@ -663,7 +663,8 @@ function valhalla_volunteers_node_update($node) {
       isset($node->field_polling_station_post[$language->language][0]['value']) &&
       ($node->field_polling_station_post[$language->language][0]['value'] > 0) &&
       ($node->field_rsvp[$language->language][0]['value'] == '') &&
-      empty($_POST['rsvp'])
+      empty($_POST['rsvp']) &&
+      arg(2) . arg(0) !== 'nodeedit'
   ) {
     valhalla_volunteers_send_rsvp($node);
   }

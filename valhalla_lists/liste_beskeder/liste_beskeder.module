@@ -5,3 +5,7 @@
  */
 
 include_once 'liste_beskeder.features.inc';
+
+function liste_beskeder_valhalla_lists(){
+
+}
