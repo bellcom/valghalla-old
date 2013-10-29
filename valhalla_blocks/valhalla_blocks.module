@@ -122,7 +122,9 @@ function valhalla_blocks_block_view($delta = '') {
             ->propertyCondition('status', 1);
           $volunteers_array = reset($volunteer_query->execute());
 
-          $volunteers_result = array_keys($volunteers_array);
+          if(is_array($volunteers_array)){
+            $volunteers_result = array_keys($volunteers_array);
+          }
 
           if($volunteers_result){
             // tth: $volunteers_nids_array will end up containing node ids for all volunteers
