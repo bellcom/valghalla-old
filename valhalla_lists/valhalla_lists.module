@@ -20,7 +20,7 @@ function valhalla_lists_page(){
   <li><a href="/valgstederU">Valgstyrere og tilforordnede</a></li>
   <li><a href="/valgsteder">Kvitteringslister for di&aelig;ter</a></li>
   <li><a href="/parti-oversigt">Parti oversigt</a></li>
-  <li><a href="/frivillige-uden-email">Uden email</a></li>
+  <li><a href="/beskeder">Parti oversigt</a></li>
 </ul>
 ';
 

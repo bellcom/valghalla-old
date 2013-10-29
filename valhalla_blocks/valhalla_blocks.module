@@ -27,7 +27,7 @@ function valhalla_blocks_block_info() {
  */
 function valhalla_blocks_block_view($delta = '') {
   global $user, $language;
-  
+
   $user_party_id = &drupal_static(__FUNCTION__);
 
   if (is_null($user_party_id)) {
@@ -48,15 +48,15 @@ function valhalla_blocks_block_view($delta = '') {
     }
   }
   $roles=array();
-            $res = db_select('node', 'n')
-                             ->distinct()
-                             ->fields('n', array('nid', 'title'))   
-                               ->condition('n.type', 'roles')
-                              ->execute();
+  $res = db_select('node', 'n')
+                    ->distinct()
+                    ->fields('n', array('nid', 'title'))   
+                      ->condition('n.type', 'roles')
+                    ->execute();
 
-         while($rec = $res->fetchAssoc()) {
-            $roles[$rec['nid']] = $rec['title'];
-         }
+  while($rec = $res->fetchAssoc()) {
+    $roles[$rec['nid']] = $rec['title'];
+  }
 
   if (!user_access('administer volunteers') && (FALSE === $user_party_id)) {
     return array();
