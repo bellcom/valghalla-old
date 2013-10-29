@@ -106,7 +106,8 @@ function valhalla_blocks_block_view($delta = '') {
         }
         else {
           // tth: Otherwise, we populate it with all terms
-          $taxonomy_tree = taxonomy_get_tree(1);
+          $taxonomy = taxonomy_vocabulary_machine_name_load('partier');
+          $taxonomy_tree = taxonomy_get_tree($taxonomy->vid);
         }
 
         // tth: Get all volunteer nodes
