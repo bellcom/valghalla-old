@@ -5,6 +5,7 @@
  *  tth: Thomas Thune Hansen <tth@bellcom.dk>
  */
 
+require_once 'valhalla_volunteers.inc';
 
 /**
  * implement hook_permission for the volunteers module
