@@ -357,7 +357,12 @@ function valhalla_blocks_block_view($delta = '') {
               ->propertyCondition('status', 1);
             $volunteers_array = reset($volunteer_query->execute());
 
-            $volunteer_nids = array_keys($volunteers_array);
+            if(is_array($volunteers_array)){
+              $volunteer_nids = array_keys($volunteers_array);
+            }
+            else {
+              $volunteer_nids = '';
+            }
 
             $role_cancelled = '';
 
