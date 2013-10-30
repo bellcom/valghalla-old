@@ -452,6 +452,7 @@ function valhalla_volunteers_to_polling_station_roles($polling_station, $user_pa
 
   // tth: Populate "existing"-array with volunteer data
   foreach($posts_to_fill as $key => $value){
+    unset($posts_to_fill[$key]);
     $id = NULL;
 
     $station_role_id = $user_party_id . $role_array[$value] . $station_id;
@@ -464,14 +465,20 @@ function valhalla_volunteers_to_polling_station_roles($polling_station, $user_pa
           'data' => _valhalla_helper_wrap_name(node_load($id)),
           'nid' => $id
         );
-      unset($posts_to_fill[$key]);
     }
     else {
-      $id = $key;
+      // tth: The id is used when the js inserts the volunteer info on the page
+      // previously the id was just a running number, which caused the volunteer
+      // info to be places in numerous fields on the list, although the volunteer
+      // was only added to one post.
+      // The problem only existed when watching multiple parties on the polling 
+      // station. Fix: insert a number that is not repeated.
+      $id = rand(1,9) . rand(1,9) . rand(1,9);
       $value = $value;
     }
 
     $posts_to_fill[$id] = array('title' => $value, 'party_id' => $user_party_id);
+
     $id = NULL;
   }
 
