@@ -116,23 +116,28 @@ function valhalla_mail_sendmail_form($form, $form_state) {
   foreach (taxonomy_get_tree($taxonomy->vid) as $tid => $term) {
     $parties[$term->tid] = $term->name;
   }
+
   $ps = db_select('node', 'n')
           ->fields('n', array('nid', 'title'))
           ->condition('type', 'polling_station')
           ->execute()->fetchAllKeyed();
-  
-    $roles=array();
-    $res = db_select('node', 'n')
-                             ->distinct()
-                             ->fields('n', array('nid', 'title'))   
-                               ->condition('n.type', 'roles')
-                              ->execute();
 
-         
-         while($rec=$res->fetchAssoc()){
-              $roles[$rec['nid']]= $rec['title'];
 
-         }  
+  // tth: field_label no longer holds a node id but now the title
+  // of the role in lowercase
+  $roles=array();
+  $res = db_select('node', 'n')
+          ->distinct()
+          ->fields('n', array('nid', 'title'))   
+            ->condition('n.type', 'roles')
+          ->execute();
+
+  // tth: populate roles array
+  while($rec=$res->fetchAssoc()){
+    $rid = strtolower($rec['title']);
+    $roles[$rid]= $rec['title'];
+  }
+
   $form['content'] = array(
       '#type' => 'fieldset',
       '#title' => 'Mail indhold',
@@ -222,7 +227,7 @@ function valhalla_mail_sendmail_form_submit($form, &$form_state) {
     $query->condition('type', 'volunteers');
 
     if ($rsvp_status) {
-      $query->leftjoin('field_revision_field_rsvp', 'r', 'n.nid = r.entity_id');
+      $query->leftjoin('field_data_field_rsvp', 'r', 'n.nid = r.entity_id');
       $sql = '{field_rsvp_value} IN (' . implode(',', $rsvp_status) . ')';
       if (in_array('0', $rsvp_status)) {
         $sql .= ' OR {field_rsvp_value} IS NULL';
@@ -230,21 +235,22 @@ function valhalla_mail_sendmail_form_submit($form, &$form_state) {
       $query->where($sql);
     }
     if ($volunteer_type) {
-      $query->join('field_revision_field_label', 'v', 'n.nid = v.entity_id');
+      $query->join('field_data_field_label', 'v', 'n.nid = v.entity_id');
       $query->condition('field_label_value', $volunteer_type);
     }
     if ($party) {
-      $query->join('field_revision_field_party', 'p', 'n.nid = p.entity_id');
+      $query->join('field_data_field_party', 'p', 'n.nid = p.entity_id');
       $query->condition('field_party_tid', $party);
     }
 
     if ($polling_station) {
-      $query->join('field_revision_field_polling_station', 'ps', 'n.nid = ps.entity_id');
+      $query->join('field_data_field_polling_station', 'ps', 'n.nid = ps.entity_id');
       $query->condition('field_polling_station_nid', $polling_station);
     }
 
     // Get the results
     $volunteers_nids = $query->execute()->fetchAll(PDO::FETCH_COLUMN);
+
   }
 
   if (!isset($form_state['storage']['confirm'])) {
