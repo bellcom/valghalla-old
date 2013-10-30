@@ -4,7 +4,7 @@ function valhalla_lists_menu(){
   $items = array();
 
   $items['valhalla-lists'] = array(
-    'title' => t('Valghalla Lists'),
+    'title' => 'Valghalla Lister',
     'page callback' => 'valhalla_lists_page',
     'access callback' => array('user_is_logged_in'),
   );
@@ -20,8 +20,7 @@ function valhalla_lists_page(){
   <li><a href="/valgstederU">Valgstyrere og tilforordnede</a></li>
   <li><a href="/valgsteder">Kvitteringslister for di&aelig;ter</a></li>
   <li><a href="/parti-oversigt">Parti oversigt</a></li>
-  <li><a href="/beskeder">Beskeder</a></li>
-  <li><a href="/frivillige-uden-email">Frivillige Uden email</a></li>
+  <li><a href="/frivillige-uden-email">Uden email</a></li>
 </ul>
 ';
 
