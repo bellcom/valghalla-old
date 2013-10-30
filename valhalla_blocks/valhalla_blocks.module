@@ -114,6 +114,8 @@ function valhalla_blocks_block_view($delta = '') {
         foreach ($taxonomy_tree as $term) {
           $party_id = $term->tid;
 
+          $volunteers_result = NULL;
+
           // tth: Query the volunteers node
           $volunteer_query = new EntityFieldQuery();
           $volunteer_query->fieldCondition('field_polling_station_post', 'value', $party_id.$nid.'%', 'like')
