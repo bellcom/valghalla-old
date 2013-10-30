@@ -98,15 +98,15 @@ function valhalla_mail_sendmail_form($form, $form_state) {
   if (isset($form_state['storage']['confirm'])) {
      // ALSO do $form definition here. Your final submit handler (after user clicks Yes, I Confirm) will 
     // only see $form_state info defined here. Form you create here passed as param1 to confirm_form
-    return confirm_form($form, 
+    return confirm_form($form,
       t('Er du sikker på du vil udsende mail til @count modtagere ?', array('@count' => $form_state['storage']['count'])), 
-      'admin/valhalla', 
+      'admin/valhalla',
       'Mailens indhold:<br/><h3>' . $form_state['values']['subject'] . '</h3><pre>' . $form_state['values']['body'] . '</pre>', 
-      'Send!', 
+      'Send!',
       'Afbryd'
     ); //Had better luck leaving off last param 'name'
   }
-  
+
   module_load_include('inc', 'valhalla_volunteers');
   module_load_include('inc', 'valhalla_mail');
 
@@ -120,19 +120,18 @@ function valhalla_mail_sendmail_form($form, $form_state) {
           ->fields('n', array('nid', 'title'))
           ->condition('type', 'polling_station')
           ->execute()->fetchAllKeyed();
-  
-    $roles=array();
-    $res = db_select('node', 'n')
-                             ->distinct()
-                             ->fields('n', array('nid', 'title'))   
-                               ->condition('n.type', 'roles')
-                              ->execute();
 
-         
-         while($rec=$res->fetchAssoc()){
-              $roles[$rec['nid']]= $rec['title'];
+  $roles=array();
+  $res = db_select('node', 'n')
+          ->distinct()
+          ->fields('n', array('nid', 'title'))
+            ->condition('n.type', 'roles')
+          ->execute();
 
-         }  
+  while($rec=$res->fetchAssoc()){
+    $roles[$rec['nid']]= $rec['title'];
+  }
+
   $form['content'] = array(
       '#type' => 'fieldset',
       '#title' => 'Mail indhold',

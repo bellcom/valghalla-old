@@ -553,8 +553,16 @@ function valhalla_volunteers_to_polling_station_ajax($action) {
         $old_node->field_polling_station_post = array();
         $old_node->field_label = array();
         $old_node->field_election_mails_send = array();
+
+        // tth: get rsvp status, and reset it if the volunteer has replied never
+        $rsvp = field_get_items('node', $old_node, 'field_rsvp');
+
+
+        if($rsvp[0]['value'] != 3){
+          $old_node->field_rsvp=array();
+        }
+
         $old_node->field_rolle_id=array();
-        $old_node->field_rsvp=array();
         $old_node->field_meeting_time=array();
         node_save($old_node);
         $old_node = NULL;
@@ -616,7 +624,14 @@ function valhalla_volunteers_to_polling_station_ajax($action) {
         $node->field_polling_station = array();
         $node->field_polling_station_post = array();
         $node->field_election_mails_send = array();
-        $node->field_rsvp=array();
+
+        // tth: get rsvp status, and reset it if the volunteer has replied never
+        $rsvp = field_get_items('node', $node, 'field_rsvp');
+
+        if($rsvp[0]['value'] != 3){
+          $node->field_rsvp = array();
+        }
+
         $node->field_rolle_id=array();
         node_save($node);
 
