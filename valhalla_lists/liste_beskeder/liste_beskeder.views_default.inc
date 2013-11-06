@@ -15,7 +15,7 @@ function liste_beskeder_views_default_views() {
   $view->description = '';
   $view->tag = 'default';
   $view->base_table = 'node';
-  $view->human_name = 'Beskeder';
+  $view->human_name = 'Liste Beskeder';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -97,16 +97,6 @@ function liste_beskeder_views_default_views() {
   $handler->display->display_options['fields']['field_party']['table'] = 'field_data_field_party';
   $handler->display->display_options['fields']['field_party']['field'] = 'field_party';
   $handler->display->display_options['fields']['field_party']['hide_alter_empty'] = FALSE;
-  /* Sorteringskriterie: Indhold: Status besked (field_rsvp_comment) */
-  $handler->display->display_options['sorts']['field_rsvp_comment_value']['id'] = 'field_rsvp_comment_value';
-  $handler->display->display_options['sorts']['field_rsvp_comment_value']['table'] = 'field_data_field_rsvp_comment';
-  $handler->display->display_options['sorts']['field_rsvp_comment_value']['field'] = 'field_rsvp_comment_value';
-  $handler->display->display_options['sorts']['field_rsvp_comment_value']['order'] = 'DESC';
-  /* Sorteringskriterie: Indhold: Oprettelsesdato */
-  $handler->display->display_options['sorts']['created']['id'] = 'created';
-  $handler->display->display_options['sorts']['created']['table'] = 'node';
-  $handler->display->display_options['sorts']['created']['field'] = 'created';
-  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
   /* Sorteringskriterie: Indhold: Opdateringsdato */
   $handler->display->display_options['sorts']['changed']['id'] = 'changed';
   $handler->display->display_options['sorts']['changed']['table'] = 'node';
@@ -130,12 +120,13 @@ function liste_beskeder_views_default_views() {
   $handler->display->display_options['filters']['field_rsvp_comment_value']['id'] = 'field_rsvp_comment_value';
   $handler->display->display_options['filters']['field_rsvp_comment_value']['table'] = 'field_data_field_rsvp_comment';
   $handler->display->display_options['filters']['field_rsvp_comment_value']['field'] = 'field_rsvp_comment_value';
-  $handler->display->display_options['filters']['field_rsvp_comment_value']['operator'] = 'not empty';
+  $handler->display->display_options['filters']['field_rsvp_comment_value']['operator'] = 'longerthan';
+  $handler->display->display_options['filters']['field_rsvp_comment_value']['value'] = '1';
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
-  $handler->display->display_options['path'] = 'beskeder';
+  $handler->display->display_options['path'] = 'valhalla_lists/beskeder';
   $translatables['Beskeder'] = array(
     t('Master'),
     t('Beskeder'),

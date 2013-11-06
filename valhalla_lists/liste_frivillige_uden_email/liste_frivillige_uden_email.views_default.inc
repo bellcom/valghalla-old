@@ -135,7 +135,7 @@ function liste_frivillige_uden_email_views_default_views() {
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
-  $handler->display->display_options['path'] = 'frivillige-uden-email';
+  $handler->display->display_options['path'] = 'valhalla_lists/frivillige-uden-email';
   $translatables['frivillige_uden_email'] = array(
     t('Master'),
     t('Frivillige uden email'),
