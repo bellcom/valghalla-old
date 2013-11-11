@@ -22,6 +22,9 @@ function valhalla_lists_page(){
   <li><a href="/parti-oversigt">Parti oversigt</a></li>
   <li><a href="/valhalla_lists/frivillige-uden-email">Uden email</a></li>
   <li><a href="/valhalla_lists/beskeder">Beskeder</a></li>
+  <li><a href="/valhalla_lists/valghalla-export.csv">Export: CSV</a></li>
+  <li><a href="/valhalla_lists/valghalla.xls">Export: XLS</a></li>
+  <li><a href="/valhalla_lists/valgstederm">Valgsteder m. CPR nummer</a></li>
 </ul>
 ';
 

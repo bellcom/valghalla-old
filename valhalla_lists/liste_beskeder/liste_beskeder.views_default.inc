@@ -53,70 +53,140 @@ function liste_beskeder_views_default_views() {
   $handler->display->display_options['pager']['options']['tags']['last'] = 'sidste »';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
-    'title' => 'title',
+    'timestamp' => 'timestamp',
+    'title' => 'field_rsvp_comment',
+    'field_label' => 'timestamp',
+    'field_rsvp' => 'timestamp',
+    'field_polling_station' => 'field_rsvp_comment',
     'field_rsvp_comment' => 'field_rsvp_comment',
+    'last_updated' => 'last_updated',
+    'field_party' => 'timestamp',
   );
   $handler->display->display_options['style_options']['default'] = '-1';
   $handler->display->display_options['style_options']['info'] = array(
+    'timestamp' => array(
+      'align' => '',
+      'separator' => ' / ',
+      'empty_column' => 0,
+    ),
     'title' => array(
       'sortable' => 0,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_label' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_rsvp' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_polling_station' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
     ),
     'field_rsvp_comment' => array(
       'sortable' => 0,
       'default_sort_order' => 'asc',
       'align' => '',
+      'separator' => '<br />',
+      'empty_column' => 0,
+    ),
+    'last_updated' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
       'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_party' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
     ),
   );
-  /* Felt: Indhold: Titel */
+  /* Field: Content: Has new content */
+  $handler->display->display_options['fields']['timestamp']['id'] = 'timestamp';
+  $handler->display->display_options['fields']['timestamp']['table'] = 'history';
+  $handler->display->display_options['fields']['timestamp']['field'] = 'timestamp';
+  $handler->display->display_options['fields']['timestamp']['label'] = 'Status';
+  $handler->display->display_options['fields']['timestamp']['element_label_colon'] = FALSE;
+  /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = '';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
-  /* Felt: Indhold: Status besked */
+  /* Field: Content: Label */
+  $handler->display->display_options['fields']['field_label']['id'] = 'field_label';
+  $handler->display->display_options['fields']['field_label']['table'] = 'field_data_field_label';
+  $handler->display->display_options['fields']['field_label']['field'] = 'field_label';
+  $handler->display->display_options['fields']['field_label']['label'] = '';
+  $handler->display->display_options['fields']['field_label']['element_label_colon'] = FALSE;
+  /* Field: Content: Status */
+  $handler->display->display_options['fields']['field_rsvp']['id'] = 'field_rsvp';
+  $handler->display->display_options['fields']['field_rsvp']['table'] = 'field_data_field_rsvp';
+  $handler->display->display_options['fields']['field_rsvp']['field'] = 'field_rsvp';
+  $handler->display->display_options['fields']['field_rsvp']['label'] = '';
+  $handler->display->display_options['fields']['field_rsvp']['element_label_colon'] = FALSE;
+  /* Field: Field: Begræns adgang til følgende valgsteder */
+  $handler->display->display_options['fields']['field_polling_station']['id'] = 'field_polling_station';
+  $handler->display->display_options['fields']['field_polling_station']['table'] = 'field_data_field_polling_station';
+  $handler->display->display_options['fields']['field_polling_station']['field'] = 'field_polling_station';
+  $handler->display->display_options['fields']['field_polling_station']['label'] = 'valgsted';
+  $handler->display->display_options['fields']['field_polling_station']['delta_offset'] = '0';
+  /* Field: Content: Status besked */
   $handler->display->display_options['fields']['field_rsvp_comment']['id'] = 'field_rsvp_comment';
   $handler->display->display_options['fields']['field_rsvp_comment']['table'] = 'field_data_field_rsvp_comment';
   $handler->display->display_options['fields']['field_rsvp_comment']['field'] = 'field_rsvp_comment';
   $handler->display->display_options['fields']['field_rsvp_comment']['label'] = '';
   $handler->display->display_options['fields']['field_rsvp_comment']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_rsvp_comment']['hide_alter_empty'] = FALSE;
-  /* Felt: Indhold: Opdateret/kommenteret dato */
+  /* Field: Content: Updated/commented date */
   $handler->display->display_options['fields']['last_updated']['id'] = 'last_updated';
   $handler->display->display_options['fields']['last_updated']['table'] = 'node_comment_statistics';
   $handler->display->display_options['fields']['last_updated']['field'] = 'last_updated';
   $handler->display->display_options['fields']['last_updated']['label'] = 'Opdateret';
   $handler->display->display_options['fields']['last_updated']['hide_alter_empty'] = FALSE;
-  $handler->display->display_options['fields']['last_updated']['date_format'] = 'long';
-  /* Felt: Felt: Parti */
+  $handler->display->display_options['fields']['last_updated']['date_format'] = 'time ago';
+  /* Field: Field: Parti */
   $handler->display->display_options['fields']['field_party']['id'] = 'field_party';
   $handler->display->display_options['fields']['field_party']['table'] = 'field_data_field_party';
   $handler->display->display_options['fields']['field_party']['field'] = 'field_party';
   $handler->display->display_options['fields']['field_party']['hide_alter_empty'] = FALSE;
-  /* Sorteringskriterie: Indhold: Opdateringsdato */
+  /* Sort criterion: Content: Updated date */
   $handler->display->display_options['sorts']['changed']['id'] = 'changed';
   $handler->display->display_options['sorts']['changed']['table'] = 'node';
   $handler->display->display_options['sorts']['changed']['field'] = 'changed';
   $handler->display->display_options['sorts']['changed']['order'] = 'DESC';
-  /* Filterkriterie: Indhold: Udgivet */
+  /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
   $handler->display->display_options['filters']['status']['value'] = 1;
   $handler->display->display_options['filters']['status']['group'] = 0;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filterkriterie: Indhold: Type */
+  /* Filter criterion: Content: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
     'volunteers' => 'volunteers',
   );
-  /* Filterkriterie: Indhold: Status besked (field_rsvp_comment) */
+  /* Filter criterion: Content: Status besked (field_rsvp_comment) */
   $handler->display->display_options['filters']['field_rsvp_comment_value']['id'] = 'field_rsvp_comment_value';
   $handler->display->display_options['filters']['field_rsvp_comment_value']['table'] = 'field_data_field_rsvp_comment';
   $handler->display->display_options['filters']['field_rsvp_comment_value']['field'] = 'field_rsvp_comment_value';
@@ -143,9 +213,12 @@ function liste_beskeder_views_default_views() {
     t('‹ forrige'),
     t('næste ›'),
     t('sidste »'),
+    t('Status'),
+    t('valgsted'),
     t('Opdateret'),
     t('Parti'),
     t('Page'),
+    t('more'),
   );
   $export['Beskeder'] = $view;
 

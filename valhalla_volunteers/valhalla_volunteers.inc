@@ -25,9 +25,21 @@ function _valhalla_helper_wrap_name($node, $container = 'p') {
 
   $party = taxonomy_term_load($node->field_party[$language->language][0]['tid']);
 
+  $rsvp_markup;
+
+  $rsvp_message = field_get_items('node', $node, 'field_rsvp_comment');
+
+  error_log(__FILE__.':'.__LINE__. print_r($rsvp_message, 1)); // tth@bellcom.dk debugging
+
+  if($rsvp_message){
+    if(!empty($rsvp_message[0]['value'])){
+      $rsvp_markup = '<span class="rsvp-message-icon"></span><span style="display:none;" class="rsvp-message">' . $rsvp_message[0]['value'] . '</span>';
+    }
+  }
+
   $rsvp = empty($node->field_rsvp[$language->language][0]['value']) ? 0 : $node->field_rsvp[$language->language][0]['value'];
-  $display = '(' . $party->name. ') ' . $node->title . ' (' . $rsvp_map[$rsvp] . ')';
-  return '<' . $container . ' class="' . $rsvp_class_map[$rsvp] . '">' . $display . '</' . $container . '>';
+  $display = '(' . $party->name. ') ' . $node->title . ' (' . $rsvp_map[$rsvp] . ')' . $rsvp_markup ;
+  return '<' . $container . ' class="volunteer ' . $rsvp_class_map[$rsvp] . '">' . $display . '</' . $container . '>';
 }
 
 /**
