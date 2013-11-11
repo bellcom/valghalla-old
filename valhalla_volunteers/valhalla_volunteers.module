@@ -626,7 +626,9 @@ function valhalla_volunteers_to_polling_station_ajax($action) {
         $rsvp = field_get_items('node', $node, 'field_rsvp');
 
         if($rsvp[0]['value'] != 3){
+          // tth: empty both rsvp, and comment
           $node->field_rsvp = array();
+          $node->field_rsvp_comment = array();
         }
 
         $node->field_rolle_id=array();
