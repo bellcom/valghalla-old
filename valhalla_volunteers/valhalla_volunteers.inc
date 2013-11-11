@@ -29,8 +29,6 @@ function _valhalla_helper_wrap_name($node, $container = 'p') {
 
   $rsvp_message = field_get_items('node', $node, 'field_rsvp_comment');
 
-  error_log(__FILE__.':'.__LINE__. print_r($rsvp_message, 1)); // tth@bellcom.dk debugging
-
   if($rsvp_message){
     if(!empty($rsvp_message[0]['value'])){
       $rsvp_markup = '<span class="rsvp-message-icon"></span><span style="display:none;" class="rsvp-message">' . $rsvp_message[0]['value'] . '</span>';

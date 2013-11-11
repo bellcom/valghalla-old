@@ -173,12 +173,32 @@ function valhalla_volunteers_rsvp() {
     $rsvp = $_SESSION['valhalla_volunteer']->field_rsvp[$language->language][0]['value'];
   }
 
+  $polling_station = node_load($_SESSION['valhalla_volunteer']->field_polling_station[$language->language][0]['nid']);
+
+  $params = _valhalla_helper_get_volunteer_info_params($_SESSION['valhalla_volunteer']);
+
+  $form = drupal_get_form('valhalla_volunteers_rsvp_form');
+
+  $post_script = filter_xss(variable_get('valhalla_rsvp_update_message'));
+
+  if(!$rsvp || variable_get('valhalla_allow_rsvp_update', FALSE)){
+    $post_script = drupal_render($form);
+  }
+
+  $rsvp_map = array(
+    1 => 'Ja',
+    2 => 'Nej, ikke denne gang',
+    3 => 'Nej, og jeg vil gerne fjernes fra listen',
+  );
+
   return theme('rsvp', array(
           'rsvp' => $rsvp,
+          'status' => $rsvp_map[$rsvp],
           'name' => $_SESSION['valhalla_volunteer']->title,
           'phone' => $_SESSION['valhalla_volunteer']->field_phone[$language->language][0]['safe_value'],
           'email' => $_SESSION['valhalla_volunteer']->field_email[$language->language][0]['email'],
-          'form' => drupal_get_form('valhalla_volunteers_rsvp_form'),
+          'params' => $params,
+          'post_script' => $post_script,
       ));
 }
 
@@ -1251,4 +1271,19 @@ function valhalla_volunteers_export() {
   die($data);
 }
 
+/**
+ * Implement hook_form_FORM_ID_alter()
+ */
+function valhalla_volunteers_form_valhalla_admin_settings_form_alter(&$form, &$form_state, $form_id){
+  $form['valhalla_allow_rsvp_update'] = array(
+    '#type' => 'checkbox',
+    '#title' => 'Tillad den tilforordnede at opdatere sin status',
+    '#default_value' => variable_get('valhalla_allow_rsvp_update'),
+  );
 
+  $form['valhalla_rsvp_update_message'] = array(
+    '#type' => 'textarea',
+    '#title' => 'Besked til den frivillige efter svar er afgivet',
+    '#default_value' => variable_get('valhalla_rsvp_update_message'),
+  );
+}
