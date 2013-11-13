@@ -572,14 +572,6 @@ function valhalla_volunteers_to_polling_station_ajax($action) {
         $old_node->field_label = array();
         $old_node->field_election_mails_send = array();
 
-        // tth: get rsvp status, and reset it if the volunteer has replied never
-        $rsvp = field_get_items('node', $old_node, 'field_rsvp');
-
-
-        if($rsvp[0]['value'] != 3){
-          $old_node->field_rsvp=array();
-        }
-
         $old_node->field_rolle_id=array();
         $old_node->field_meeting_time=array();
         node_save($old_node);
@@ -623,6 +615,9 @@ function valhalla_volunteers_to_polling_station_ajax($action) {
         $node->field_rolle_id['und'][0]['nid'] = $role_id;
         $node->field_meeting_time['und'][0]['tid'] = $meeting_time;
 
+        $node->field_rsvp = array();
+        $node->field_rsvp_comment = array();
+
         node_save($node);
 
         $output->status = TRUE;
@@ -641,16 +636,6 @@ function valhalla_volunteers_to_polling_station_ajax($action) {
         $node->field_polling_station = array();
         $node->field_polling_station_post = array();
         $node->field_election_mails_send = array();
-
-        // tth: get rsvp status, and reset it if the volunteer has not replied never
-        $rsvp = field_get_items('node', $node, 'field_rsvp');
-
-        if($rsvp[0]['value'] != 3){
-          // tth: empty both rsvp, and comment
-          $node->field_rsvp = array();
-          $node->field_rsvp_comment = array();
-        }
-
         $node->field_rolle_id=array();
         node_save($node);
 

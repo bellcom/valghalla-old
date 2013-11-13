@@ -36,7 +36,15 @@ function _valhalla_helper_wrap_name($node, $container = 'p') {
   }
 
   $rsvp = empty($node->field_rsvp[$language->language][0]['value']) ? 0 : $node->field_rsvp[$language->language][0]['value'];
-  $display = '(' . $party->name. ') ' . $node->title . ' (' . $rsvp_map[$rsvp] . ')' . $rsvp_markup ;
+
+  $reply_link = '';
+
+  if($rsvp == 0){
+    $field_token = field_get_items('node', $node, 'field_token');
+    $reply_link = '<a title="Svar for denne tilforordnede" class="edit reply" href="/volunteers/rsvp/' . $field_token[0]['value'] . '">Svar</a>';
+  }
+
+  $display = '(' . $party->name. ') ' . $node->title . ' (' . $rsvp_map[$rsvp] . ')' . $rsvp_markup . $reply_link ;
   return '<' . $container . ' class="volunteer ' . $rsvp_class_map[$rsvp] . '">' . $display . '</' . $container . '>';
 }
 
