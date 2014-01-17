@@ -41,6 +41,7 @@ features[field_base][] = field_contact
 features[field_base][] = field_cpr_number
 features[field_base][] = field_cpr_valid_date
 features[field_base][] = field_date
+features[field_base][] = field_description
 features[field_base][] = field_diaet
 features[field_base][] = field_digital_election_list
 features[field_base][] = field_election_mails_send
