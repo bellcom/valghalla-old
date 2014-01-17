@@ -65,4 +65,10 @@ jQuery(function(){
     jQuery('#dialog').load(loc, jQuery(this).serialize());
   });
 
+  jQuery('.volunteer').hover(function(){
+    jQuery(this).find('.rsvp-message').show();
+  },
+  function(){
+    jQuery(this).find('.rsvp-message').hide();
+  });
 });

@@ -25,9 +25,27 @@ function _valhalla_helper_wrap_name($node, $container = 'p') {
 
   $party = taxonomy_term_load($node->field_party[$language->language][0]['tid']);
 
+  $rsvp_markup;
+
+  $rsvp_message = field_get_items('node', $node, 'field_rsvp_comment');
+
+  if($rsvp_message){
+    if(!empty($rsvp_message[0]['value'])){
+      $rsvp_markup = '<span class="rsvp-message-icon"></span><span style="display:none;" class="rsvp-message">' . $rsvp_message[0]['value'] . '</span>';
+    }
+  }
+
   $rsvp = empty($node->field_rsvp[$language->language][0]['value']) ? 0 : $node->field_rsvp[$language->language][0]['value'];
-  $display = '(' . $party->name. ') ' . $node->title . ' (' . $rsvp_map[$rsvp] . ')';
-  return '<' . $container . ' class="' . $rsvp_class_map[$rsvp] . '">' . $display . '</' . $container . '>';
+
+  $reply_link = '';
+
+  if($rsvp == 0){
+    $field_token = field_get_items('node', $node, 'field_token');
+    $reply_link = '<a title="Svar for denne tilforordnede" class="edit reply" href="/volunteers/rsvp/' . $field_token[0]['value'] . '">Svar</a>';
+  }
+
+  $display = '(' . $party->name. ') ' . $node->title . ' (' . $rsvp_map[$rsvp] . ')' . $rsvp_markup . $reply_link ;
+  return '<' . $container . ' class="volunteer ' . $rsvp_class_map[$rsvp] . '">' . $display . '</' . $container . '>';
 }
 
 /**
@@ -362,82 +380,105 @@ EOM;
 
   if (empty($params)) {
     global $language;
-    $email=field_get_items('node', $node, 'field_email');
-    $phone=field_get_items('node', $node, 'field_phone');
-    $token=field_get_items('node', $node, 'field_token');
+    $email = field_get_items('node', $node, 'field_email');
+    $phone = field_get_items('node', $node, 'field_phone');
+    $token = field_get_items('node', $node, 'field_token');
     // Set up base info
     $params = array(
         '!name' => $node->title,
         '!email' => $email[0]['email'],
         '!phone' => (empty($phone[0]['safe_value']) ? '' : $phone[0]['safe_value']),
         '!date' => date('j/m Y'),
-        '!link' => url('volunteers/rsvp/' . $token[0]['safe_value'], array('absolute' => TRUE)),
+        '!link' => url('volunteers/rsvp/' . $token[0]['value'], array('absolute' => TRUE)),
     );
 
     $election = _valhalla_helper_get_active_election();
 
     // If no current election, so omit info
     if (FALSE != $election) {
-       $election_date = field_get_items('node', $election, 'field_date');
-       list($election_date, $time) = preg_split("|T|", $election_date[0]['value']);
-       $today_date = strtotime(date('Y-m-d'));
-       $election_date1 = strtotime($election_date);
-       $days_to_election = floor(($election_date1 - $today_date) / 86400);
-      
+      $election_date = field_get_items('node', $election, 'field_date');
+      list($election_date, $time) = preg_split("|T|", $election_date[0]['value']);
+      $today_date = strtotime(date('Y-m-d'));
+      $election_date1 = strtotime($election_date);
+      $days_to_election = floor(($election_date1 - $today_date) / 86400);
+
+      $election_date = date('d.m.Y', $election_date1);
+
       $params = array_merge($params, array(
-          '!election_date' => $election_date,
-          '!days' => $days_to_election,
-          ));
+        '!election_date' => $election_date,
+        '!days' => $days_to_election,
+      ));
     }
 
     // Gather polling station info
     $field_polling_station=field_get_items('node', $node, 'field_polling_station');
-    $polling_station =node_load($field_polling_station[0]['nid']);
-    
+    $polling_station = node_load($field_polling_station[0]['nid']);
+
     $field_label=field_get_items('node', $node, 'field_label');
     if (FALSE != $polling_station) {
       // build address "field"
       $position = db_select('node', 'n')
                   ->distinct()
-                  ->fields('n', array('nid', 'title'))   
+                  ->fields('n', array('nid', 'title'))
                   ->condition('n.type', 'roles')
                  ->condition('n.title', $field_label[0]['value'])
                   ->execute()
                   ->fetchColumn();
-      // tth@bellcom.dk
-      // The positions are no longer just a textstring, but a node instead.
-      // I havent taken in to account what happens up to this point, but this seems to work
-      // Load the node from the id in the field fetched to $position. If the description
-      // is not set we show the title, otherwise we show the description.
-      // Get the info from the node and put it in the $params array...
-      // Have a nice day!
-      //
+
+      // Get position (role) info
       $position_info ='';
+
       if ($position){
         $position_node = node_load($position);
 
         if (is_object($position_node)) {
           $position_info = $position_node->title;
-          $wrapper = entity_metadata_wrapper('node', $position_node);
-          if(isset($position_node->field_description)){
-            if(is_object($position_node->field_description)){
-              $position_info = $position_node->field_description->value();
-            }
+          $description = field_get_items('node', $position_node, 'field_description');
+          if($description) {
+            $position_info = $description[0]['value'];
           }
         }
       }
-      
+
+      // tth: Fetch info for token !time.
+      // Since the party set on the volunteer is not nessecarily the same
+      // as the posts party we need to extract it from the polling_station_post
+      // key.
+      // Removing the role id and the pollingstation id from this key,
+      // leaves us the party id.
+      $polling_station_post = field_get_items('node', $node, 'field_polling_station_post');
+      $polling_station_id = field_get_items('node', $node, 'field_polling_station');
+
+      if($polling_station_post && $polling_station_id){
+        $partial_key = $position . $polling_station_id[0]['nid'];
+        $party = str_replace($partial_key, '', $polling_station_post[0]['value']);
+
+        $field_collections = field_get_items('node', $polling_station, 'field_volunteers_pr_party_1');
+
+        // Bug in field_collection / entity
+        // https://drupal.org/node/1164982
+        // quick fix: silence the errors
+        @$fc_entities = entity_load('field_collection_item', $field_collections);
+
+        foreach($fc_entities as $fc_entity){
+          if($fc_entity->field_party_list[LANGUAGE_NONE][0]['party_list'] == $party){
+            $meeting_time_tid = $fc_entity->{'field_role_n'.$position}[LANGUAGE_NONE][0]['meeting_time'];
+            $term = taxonomy_term_load($meeting_time_tid);
+            $time = $term->name;
+          }
+        }
+      }
       $wrapper = entity_metadata_wrapper('node', $polling_station);
- 
+
       $polling_station_address = array();
       $polling_station_address[] = $wrapper->field_address_road->value() . ' ' . $wrapper->field_address_road_no->value();
       $polling_station_address[] = $wrapper->field_address_zipcode->value() . ' ' . $wrapper->field_address_city->value();
-      
+
       $params = array_merge($params, array(
           '!polling_station' => $polling_station->title,
           '!polling_station_address' => implode("\n", $polling_station_address),
-         // '!position' => strtoupper($node->field_label[$language->language][0]['value']),
           '!position' => $position_info,
+          '!time' => $time,
           '!responsible' => $wrapper->field_contact->value(),
           ));
     }

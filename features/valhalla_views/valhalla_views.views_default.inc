@@ -439,6 +439,7 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['arguments']['field_polling_station_nid']['table'] = 'field_data_field_polling_station';
   $handler->display->display_options['arguments']['field_polling_station_nid']['field'] = 'field_polling_station_nid';
   $handler->display->display_options['arguments']['field_polling_station_nid']['exception']['title_enable'] = TRUE;
+  $handler->display->display_options['arguments']['field_polling_station_nid']['exception']['title'] = 'Alle';
   $handler->display->display_options['arguments']['field_polling_station_nid']['default_argument_type'] = 'fixed';
   $handler->display->display_options['arguments']['field_polling_station_nid']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['field_polling_station_nid']['specify_validation'] = TRUE;
@@ -606,6 +607,7 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['arguments']['field_polling_station_nid']['table'] = 'field_data_field_polling_station';
   $handler->display->display_options['arguments']['field_polling_station_nid']['field'] = 'field_polling_station_nid';
   $handler->display->display_options['arguments']['field_polling_station_nid']['exception']['title_enable'] = TRUE;
+  $handler->display->display_options['arguments']['field_polling_station_nid']['exception']['title'] = 'Alle';
   $handler->display->display_options['arguments']['field_polling_station_nid']['default_argument_type'] = 'fixed';
   $handler->display->display_options['arguments']['field_polling_station_nid']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['field_polling_station_nid']['specify_validation'] = TRUE;
@@ -777,6 +779,16 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['nothing_1']['table'] = 'views';
   $handler->display->display_options['fields']['nothing_1']['field'] = 'nothing';
   $handler->display->display_options['fields']['nothing_1']['label'] = 'Kvittering';
+  $handler->display->display_options['argument_input'] = array(
+    'field_polling_station_nid' => array(
+      'type' => 'panel',
+      'context' => 'entity:user.field_polling_station',
+      'context_optional' => 0,
+      'panel' => '0',
+      'fixed' => '',
+      'label' => 'Felt: Begræns adgang til følgende valgsteder (field_polling_station)',
+    ),
+  );
 
   /* Display: Valgstyrere og tilforordnede */
   $handler = $view->new_display('page', 'Valgstyrere og tilforordnede', 'page_1');
@@ -1176,7 +1188,6 @@ function valhalla_views_views_default_views() {
     t('Kvittering'),
     t('Alle'),
     t('Content pane'),
-    t('All'),
     t('View panes'),
     t('Content pane Partivisning'),
     t('/ [entity_id_8]'),
@@ -2128,6 +2139,7 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['arguments']['type']['table'] = 'node';
   $handler->display->display_options['arguments']['type']['field'] = 'type';
   $handler->display->display_options['arguments']['type']['exception']['title_enable'] = TRUE;
+  $handler->display->display_options['arguments']['type']['exception']['title'] = 'Alle';
   $handler->display->display_options['arguments']['type']['default_argument_type'] = 'fixed';
   $handler->display->display_options['arguments']['type']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['type']['specify_validation'] = TRUE;
@@ -2419,7 +2431,7 @@ function valhalla_views_views_default_views() {
     t('Lokalekontakt'),
     t('Frivillige pr. parti'),
     t('Valgkreds'),
-    t('All'),
+    t('Alle'),
     t('Block'),
     t('Nid'),
     t('field_chairman'),

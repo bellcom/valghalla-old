@@ -14,6 +14,23 @@
 <div>
   <p><?php print t('Her kan du tilkendegive om du ønsker at udfylde den post vi har tiltænkt dig i det kommende valg.') ?></p>
 </div>
-
-<?php print drupal_render($form) ?>
-
+<?php if($rsvp): ?>
+<p> Vi har registreret følgende svar: <?php print $status; ?>.</p>
+<?php endif; ?>
+<table>
+  <tr>
+    <td>
+      <b>Funktion:</b><br />
+      <?php print $params['!position']; ?><br />
+      <b>Dato:</b><br />
+      <?php print $params['!election_date']; ?><br />
+    </td>
+    <td>
+      <b>Valgsted:</b><br />
+      <?php print $params['!polling_station']; ?><br />
+      <?php print nl2br($params['!polling_station_address']); ?><br />
+      <?php print $polling_station['address2']; ?>
+    </td>
+  </tr>
+</table>
+<?php print $post_script ?>

@@ -18,8 +18,7 @@ function valhalla_cron_rsvp_reminder($last_run_ts) {
       ->condition('es.bundle', 'election')
       ->condition('es.field_election_status_value', 1)
       ->execute()
-      ->fetchColumn()
-  ;
+      ->fetchColumn();
 
   // load election node
   $election = node_load($nid);
@@ -59,15 +58,15 @@ function valhalla_cron_rsvp_reminder($last_run_ts) {
 
   // find volunteers to notify, we only send to users whom has no rsvp status - and a valid email address
   foreach (entity_load('node', FALSE, array('type' => 'volunteers')) as $volunteer) {
-    
-    $email = field_get_items('node', $volunteer, 'field_email');
+    // tth: Check if the user deserves a reminder
     if (!empty($volunteer->field_rsvp) ||
-            empty($email[0]['email'])
+      empty($volunteer->field_email) ||
+      empty($volunteer->field_polling_station_post)
     ) {
       continue;
     }
 
-    // spam the volunteer
+    // Send reminder
     valhalla_cron_rsvp_reminder_send($election, $volunteer);
   }
 }
