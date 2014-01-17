@@ -64,23 +64,6 @@ function valhalla_menus_menu_default_menu_links() {
     'expanded' => '0',
     'weight' => '-46',
   );
-  $menu_links['main-menu:node/22'] = array(
-    'menu_name' => 'main-menu',
-    'link_path' => 'node/22',
-    'router_path' => 'node/22',
-    'link_title' => 'Lister',
-    'options' => array(
-      'attributes' => array(
-        'title' => '',
-      ),
-    ),
-    'module' => 'menu',
-    'hidden' => '0',
-    'external' => '0',
-    'has_children' => '0',
-    'expanded' => '0',
-    'weight' => '-44',
-  );
   // Exported menu link: menu-partisekret-r-menu:add-sub-secretary
   $menu_links['menu-partisekret-r-menu:add-sub-secretary'] = array(
     'menu_name' => 'menu-partisekret-r-menu',

@@ -10,20 +10,7 @@ function valhalla_field_volunteers_roles_field_info() {
   );
 }
 function valhalla_field_volunteers_roles_field_schema() {
-  $columns =
-      array(
-  /*    'role_vo' => array(
-      'description' => 'Role of volunteer',
-      'type' => 'varchar',
-     'not null' => TRUE,
-      'length' => 128,
-    ),
-       'role_desc' => array(
-      'description' => 'Description of the role',
-      'type' => 'varchar',
-     'not null' => TRUE,
-      'length' => 255,
-    ),    */
+  $columns = array(
     'number_vo' => array(
       'description' => 'Number of volunteer',
       'type' => 'int',
@@ -61,72 +48,54 @@ function valhalla_field_volunteers_roles_field_widget_info() {
 function valhalla_field_volunteers_roles_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
 
   $settings = $instance['widget']['settings'];
-  foreach (taxonomy_get_tree(4) as $item) {
-      $options[$item->tid] = $item->name;
-    }
+
+  $taxonomy = taxonomy_vocabulary_machine_name_load('volonteers_meeting_time');
+
+  foreach (taxonomy_get_tree($taxonomy->vid) as $item) {
+    $options[$item->tid] = $item->name;
+  }
+
   $fieldname=$instance['field_name'];
   $name_parts= explode("_", $fieldname);
   $nid= substr($name_parts[count($name_parts)-1],1);
   $node=node_load($nid);
-  // var_dump($node->field_description);
-  $field=field_get_items('node', $node, 'field_description');
-  $desc=isset($field[0]['value']) ?"(".$field[0]['value'].")" : '';
- // $role = isset($items[$delta]['role_vo']) ? $items[$delta]['role_vo'] : '';
-  $number_vo = isset($items[$delta]['number_vo']) ? $items[$delta]['number_vo'] : '0';
-  $time_meeting = isset($items[$delta]['meeting_time']) ? $items[$delta]['meeting_time'] : '0';
- // $role_desc = isset($items[$delta]['role_desc']) ? $items[$delta]['role_desc'] : '';
   
-  if ($instance['widget']['type'] == 'volunteers_roles_standart') {
-   $element=array('#prefix' => '<div class="container-inline"><table><tr><td style="width:170px;"><label>'.$node->title.$desc.' volunteers</label></td>', 
-        '#suffix' => '</tr></table>');
- 
-   /*b $element['role_vo']= array(
-      '#type' => 'textfield',
-      '#title' => t('Role'),
-      '#size' => 5,
-      '#default_value' => $role,
-    
-      
-    );
-   $element['role_desc'] = array(
-      '#type' => 'textfield',
-      '#title' => t('Description'),
-      '#size' => 30,
-      '#default_value' => $role_desc ,
-    
-    );*/
+  if(is_object($node)){
+    $field = field_get_items('node', $node, 'field_description');
 
-    $element['number_vo'] = array(
-      '#type' => 'textfield',
-      //'#title' => t('Volunteers'),
-      '#size' => 5,
-      '#default_value' => $number_vo ,
-      '#prefix' => '<td style="width:70px;">' ,
-      '#suffix' =>'</td>'
-        
-       
-    
-    );
+    $desc=isset($field[0]['value']) ?"(".$field[0]['value'].")" : '';
+    $number_vo = isset($items[$delta]['number_vo']) ? $items[$delta]['number_vo'] : '0';
+    $time_meeting = isset($items[$delta]['meeting_time']) ? $items[$delta]['meeting_time'] : '0';
 
-    $element['meeting_time'] = array(
-      '#type' => 'select',
-      '#title' => t('Time'),
-      '#options' => $options,
-      '#default_value' => $time_meeting,
-      '#prefix' => '<td>' ,
-      '#suffix' =>'</td>'
-        
-    );
-  //  if ($role=='VA'||$role=='TI')
-  //      $element['role_vo']['#attributes']=array('disabled'=>"TRUE");
+    if ($instance['widget']['type'] == 'volunteers_roles_standart') {
+      $element = array(
+        '#prefix' => '<div class="container-inline"><table><tr><td style="width:170px;"><label>'.$node->title.$desc.' volunteers</label></td>', 
+        '#suffix' => '</tr></table>'
+      );
+  
+
+      $element['number_vo'] = array(
+        '#type' => 'textfield',
+        '#default_value' => $number_vo ,
+        '#prefix' => '<td style="width:70px;">' ,
+        '#suffix' =>'</td>'
+      );
+
+      $element['meeting_time'] = array(
+        '#type' => 'select',
+        '#title' => t('Time'),
+        '#options' => $options,
+        '#default_value' => $time_meeting,
+        '#prefix' => '<td>' ,
+        '#suffix' =>'</td>'
+      );
+    }
   }
-  
   return $element;
 }
 
 
 function valhalla_field_volunteers_roles_field_formatter_info() {
- 
   return array(
     'volunteers_roles_default' => array(
       'label' => t('Default'),
@@ -135,30 +104,30 @@ function valhalla_field_volunteers_roles_field_formatter_info() {
   );
 }
 
-
 function valhalla_field_volunteers_roles_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
   $element = array();  
-   $settings = $instance['widget']['settings'];
+  $settings = $instance['widget']['settings'];
+
   foreach (taxonomy_get_tree(4) as $item) {
       $times[$item->tid] = $item->name;
-    }
+  }
+
   $fieldname=$instance['field_name'];
   $name_parts= explode("_", $fieldname);
   $nid=substr($name_parts[count($name_parts)-1],1);
-   $node=node_load($nid);
-     switch ($display['type']) {
-    case 'volunteers_roles_default':
-      foreach ($items as $delta => $item) {  
-       // var_dump($item);
-       // die;
-      $element[$delta]['#markup'] = '<div class="container-inline">'.$node->title.'&nbsp;'.t('Volunteers:') .'&nbsp;'. $item['number_vo'].'&nbsp;'.t('Meeting time').':'.$times[$item['meeting_time']] . '</div>';
-      }
-      break;
-  }
+  $node=node_load($nid);
 
+  if(is_object($node)){
+    switch ($display['type']) {
+      case 'volunteers_roles_default':
+        foreach ($items as $delta => $item) {  
+          $element[$delta]['#markup'] = '<div class="container-inline">'.$node->title.'&nbsp;'.t('Volunteers:') .'&nbsp;'. $item['number_vo'].'&nbsp;'.t('Meeting time').':'.$times[$item['meeting_time']] . '</div>';
+        }
+      break;
+    }
+  }
   return $element;
 }
-
 
 function valhalla_field_volunteers_roles_field_is_empty($item, $field) {
   return (int)$item['number_vo']==0;

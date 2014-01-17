@@ -2,7 +2,6 @@
 // valhalla_field_party_volunteers
 module_load_all();
 
-//тут вроде все правильно
 function valhalla_field_party_volunteers_v3_field_info() {
   return array(
     'party_volunteers_field_v3' => array(
@@ -13,16 +12,6 @@ function valhalla_field_party_volunteers_v3_field_info() {
     ),
   );
 }
-
-/*
- *здесь если я правильно понимаю дается описание столбцов в базе данных, где будут храиться значений поля
- * с party -  все понятно
- * а вот как хранить ссылку на список ролей?
- * если бы я делала это без Друпал, то было бы  таблицы , 
- * допустим со списком партий на избирательном участке party(party_id, ...) и roles(ID, party_id, role, number_of_vol, meeting_time)
- * а как это все реализовать при создании поля?
- * 
- */
 
 function valhalla_field_party_volunteers_v3_field_schema() {
   $columns = array(
@@ -43,7 +32,6 @@ function valhalla_field_party_volunteers_v3_field_schema() {
   );
 }
 
-//здесь вроде тоже все правильно
 function valhalla_field_party_volunteers_v3_field_widget_info() {
   $widgets = array();
 
@@ -58,8 +46,6 @@ function valhalla_field_party_volunteers_v3_field_widget_info() {
     )
   );
  
-  
-
   return $widgets;
 }
 

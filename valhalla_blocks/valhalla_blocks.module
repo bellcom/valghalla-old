@@ -145,42 +145,44 @@ function valhalla_blocks_block_view($delta = '') {
       $total_volunteers_role = array();
 
       // tth: start counting.
-      foreach($volunteers_nids_array as $volunteer_nids){
-        $role_title = key($volunteer_nids);
+      if(isset($volunteers_nids_array)){
+        foreach($volunteers_nids_array as $volunteer_nids){
+          $role_title = key($volunteer_nids);
 
-        $total_volunteers_role[$role_title] += count($volunteer_nids[$role_title]);
-        $total_volunteers += count(reset($volunteer_nids));
+          $total_volunteers_role[$role_title] += count($volunteer_nids[$role_title]);
+          $total_volunteers += count(reset($volunteer_nids));
 
-        // tth: Get rsvp status for volunteers
-        // No: rsvp_values(2/3)
-        $rsvp_no = db_query('SELECT *
-            FROM  `field_data_field_rsvp`
-            WHERE  `entity_id`
-            IN ( :volunteer_nids )
-            AND `field_rsvp_value`
-            IN ( :rsvp_values) ', array(
-              ':volunteer_nids' => $volunteer_nids[$role_title],
-              ':rsvp_values' => array(2, 3))
-            )
-            ->fetchAll();
+          // tth: Get rsvp status for volunteers
+          // No: rsvp_values(2/3)
+          $rsvp_no = db_query('SELECT *
+              FROM  `field_data_field_rsvp`
+              WHERE  `entity_id`
+              IN ( :volunteer_nids )
+              AND `field_rsvp_value`
+              IN ( :rsvp_values) ', array(
+                ':volunteer_nids' => $volunteer_nids[$role_title],
+                ':rsvp_values' => array(2, 3))
+              )
+              ->fetchAll();
 
-        $no_role[$role_title] += count($rsvp_no);
+          $no_role[$role_title] += count($rsvp_no);
 
-        $total_no += count($rsvp_no);
+          $total_no += count($rsvp_no);
 
-        // tth: Yes: (rsvp_values = 1)
-        $rsvp_yes = db_query('SELECT *
-            FROM  `field_data_field_rsvp`
-            WHERE  `entity_id`
-            IN ( :volunteer_nids )
-            AND `field_rsvp_value`
-            IN ( :rsvp_values) ', array(
-              ':volunteer_nids' => $volunteer_nids[$role_title],
-              ':rsvp_values' => array(1))
-            )
-            ->fetchAll();
+          // tth: Yes: (rsvp_values = 1)
+          $rsvp_yes = db_query('SELECT *
+              FROM  `field_data_field_rsvp`
+              WHERE  `entity_id`
+              IN ( :volunteer_nids )
+              AND `field_rsvp_value`
+              IN ( :rsvp_values) ', array(
+                ':volunteer_nids' => $volunteer_nids[$role_title],
+                ':rsvp_values' => array(1))
+              )
+              ->fetchAll();
 
-        $total_yes += count($rsvp_yes);
+          $total_yes += count($rsvp_yes);
+        }
       }
 
       // tth: Calculate number of missing replies
