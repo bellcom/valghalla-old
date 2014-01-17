@@ -795,7 +795,6 @@ function valhalla_field_instances_field_default_field_instances() {
     'label' => 'Dato',
     'required' => 1,
     'settings' => array(
-      'default_format' => 'medium',
       'default_value' => 'now',
       'default_value2' => 'blank',
       'default_value_code' => '',
@@ -810,7 +809,6 @@ function valhalla_field_instances_field_default_field_instances() {
         'input_format' => 'm/d/Y - H:i:s',
         'input_format_custom' => '',
         'label_position' => 'above',
-        'repeat_collapsed' => 0,
         'text_parts' => array(),
         'year_range' => '-3:+3',
       ),
@@ -2781,71 +2779,6 @@ function valhalla_field_instances_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'taxonomy_term-partier-field_partisek'
-  $field_instances['taxonomy_term-partier-field_partisek'] = array(
-    'bundle' => 'partier',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'inline',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 3,
-      ),
-    ),
-    'entity_type' => 'taxonomy_term',
-    'field_name' => 'field_partisek',
-    'label' => 'Partisekretær',
-    'required' => 1,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 5,
-    ),
-  );
-
-  // Exported field_instance: 'taxonomy_term-partier-field_secretary'
-  $field_instances['taxonomy_term-partier-field_secretary'] = array(
-    'bundle' => 'partier',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'user_reference',
-        'settings' => array(),
-        'type' => 'user_reference_default',
-        'weight' => 3,
-      ),
-    ),
-    'entity_type' => 'taxonomy_term',
-    'field_name' => 'field_secretary',
-    'label' => 'Partisekretær',
-    'required' => 0,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'options',
-      'settings' => array(),
-      'type' => 'options_select',
-      'weight' => 6,
-    ),
-  );
-
   // Exported field_instance: 'user-user-field_party'
   $field_instances['user-user-field_party'] = array(
     'bundle' => 'user',
@@ -2959,7 +2892,6 @@ function valhalla_field_instances_field_default_field_instances() {
   t('Nummer');
   t('Parti');
   t('Partiformandskab');
-  t('Partisekretær');
   t('Party');
   t('Pladser per bord');
   t('Polling Station');
