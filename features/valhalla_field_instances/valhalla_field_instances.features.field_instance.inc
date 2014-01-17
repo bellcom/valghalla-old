@@ -307,6 +307,39 @@ function valhalla_field_instances_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'field_collection_item-field_volunteers_pr_party_1-field_party_list'
+  $field_instances['field_collection_item-field_volunteers_pr_party_1-field_party_list'] = array(
+    'bundle' => 'field_volunteers_pr_party_1',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'valhalla_field_party_volunteers_v3',
+        'settings' => array(),
+        'type' => 'party_volunteers_default_v3',
+        'weight' => 4,
+      ),
+    ),
+    'entity_type' => 'field_collection_item',
+    'field_name' => 'field_party_list',
+    'label' => 'Party',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'valhalla_field_party_volunteers_v3',
+      'settings' => array(
+        'available_parties' => array(),
+      ),
+      'type' => 'party_volunteers_standard_v3',
+      'weight' => 0,
+    ),
+  );
+
   // Exported field_instance: 'node-absentee_ballot-body'
   $field_instances['node-absentee_ballot-body'] = array(
     'bundle' => 'absentee_ballot',
@@ -505,6 +538,7 @@ function valhalla_field_instances_field_default_field_instances() {
     'required' => FALSE,
     'settings' => array(
       'alt_field' => TRUE,
+      'default_image' => 0,
       'file_directory' => 'field/image',
       'file_extensions' => 'png gif jpg jpeg',
       'max_filesize' => '',
@@ -761,7 +795,6 @@ function valhalla_field_instances_field_default_field_instances() {
     'label' => 'Dato',
     'required' => 1,
     'settings' => array(
-      'default_format' => 'medium',
       'default_value' => 'now',
       'default_value2' => 'blank',
       'default_value_code' => '',
@@ -776,7 +809,6 @@ function valhalla_field_instances_field_default_field_instances() {
         'input_format' => 'm/d/Y - H:i:s',
         'input_format_custom' => '',
         'label_position' => 'above',
-        'repeat_collapsed' => 0,
         'text_parts' => array(),
         'year_range' => '-3:+3',
       ),
@@ -1443,6 +1475,49 @@ function valhalla_field_instances_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-polling_station-field_digital_election_list'
+  $field_instances['node-polling_station-field_digital_election_list'] = array(
+    'bundle' => 'polling_station',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 25,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_digital_election_list',
+    'label' => 'Digital valgiste',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 19,
+    ),
+  );
+
   // Exported field_instance: 'node-polling_station-field_party'
   $field_instances['node-polling_station-field_party'] = array(
     'bundle' => 'polling_station',
@@ -1690,8 +1765,8 @@ function valhalla_field_instances_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-polling_station-field_volunteers_pr_party'
-  $field_instances['node-polling_station-field_volunteers_pr_party'] = array(
+  // Exported field_instance: 'node-polling_station-field_volunteers_pr_party_1'
+  $field_instances['node-polling_station-field_volunteers_pr_party_1'] = array(
     'bundle' => 'polling_station',
     'default_value' => NULL,
     'deleted' => 0,
@@ -1699,9 +1774,16 @@ function valhalla_field_instances_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 14,
+        'module' => 'field_collection',
+        'settings' => array(
+          'add' => 'Add',
+          'delete' => 'Delete',
+          'description' => TRUE,
+          'edit' => 'Edit',
+          'view_mode' => 'full',
+        ),
+        'type' => 'field_collection_view',
+        'weight' => 24,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -1711,20 +1793,18 @@ function valhalla_field_instances_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_volunteers_pr_party',
-    'label' => 'Frivillige pr. parti',
-    'required' => 1,
+    'field_name' => 'field_volunteers_pr_party_1',
+    'label' => 'Frivillige pr. parti_v2',
+    'required' => 0,
     'settings' => array(
       'user_register_form' => FALSE,
     ),
     'widget' => array(
       'active' => 0,
-      'module' => 'valhalla_field_party_volunteers_v2',
-      'settings' => array(
-        'available_parties' => array(),
-      ),
-      'type' => 'party_volunteers_standard_v2',
-      'weight' => 14,
+      'module' => 'field_collection',
+      'settings' => array(),
+      'type' => 'field_collection_embed',
+      'weight' => 18,
     ),
   );
 
@@ -2111,7 +2191,7 @@ function valhalla_field_instances_field_default_field_instances() {
           'multiple_to' => '',
           'show_repeat_rule' => 'show',
         ),
-        'type' => 'date_short',
+        'type' => 'date_default',
         'weight' => 17,
       ),
       'teaser' => array(
@@ -2587,45 +2667,6 @@ function valhalla_field_instances_field_default_field_instances() {
     ),
   );
 
-  $field_instances['node-roles-field_description'] = array(
-    'bundle' => 'roles',
-      'default_value' => NULL,
-      'deleted' => '0',
-      'description' => '',
-      'display' => array(
-        'default' => array(
-          'label' => 'above',
-          'module' => 'text',
-          'settings' => array(),
-          'type' => 'text_default',
-          'weight' => 0,
-        ),
-        'teaser' => array(
-          'label' => 'above',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => 0,
-        ),
-      ),
-      'entity_type' => 'node',
-      'field_name' => 'field_description',
-      'label' => 'Description',
-      'required' => 0,
-      'settings' => array(
-        'text_processing' => '0',
-        'user_register_form' => FALSE,
-      ),
-      'widget' => array(
-        'active' => 1,
-        'module' => 'text',
-        'settings' => array(
-          'size' => '60',
-        ),
-        'type' => 'text_textfield',
-        'weight' => '-4',
-      ),
-    );
-
   // Exported field_instance: 'taxonomy_term-partier-field_bogstav'
   $field_instances['taxonomy_term-partier-field_bogstav'] = array(
     'bundle' => 'partier',
@@ -2683,6 +2724,7 @@ function valhalla_field_instances_field_default_field_instances() {
     'required' => 0,
     'settings' => array(
       'alt_field' => 0,
+      'default_image' => 0,
       'file_directory' => '',
       'file_extensions' => 'png gif jpg jpeg',
       'max_filesize' => '',
@@ -2734,71 +2776,6 @@ function valhalla_field_instances_field_default_field_instances() {
       ),
       'type' => 'text_textfield',
       'weight' => 1,
-    ),
-  );
-
-  // Exported field_instance: 'taxonomy_term-partier-field_partisek'
-  $field_instances['taxonomy_term-partier-field_partisek'] = array(
-    'bundle' => 'partier',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'inline',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 3,
-      ),
-    ),
-    'entity_type' => 'taxonomy_term',
-    'field_name' => 'field_partisek',
-    'label' => 'Partisekretær',
-    'required' => 1,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 5,
-    ),
-  );
-
-  // Exported field_instance: 'taxonomy_term-partier-field_secretary'
-  $field_instances['taxonomy_term-partier-field_secretary'] = array(
-    'bundle' => 'partier',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'user_reference',
-        'settings' => array(),
-        'type' => 'user_reference_default',
-        'weight' => 3,
-      ),
-    ),
-    'entity_type' => 'taxonomy_term',
-    'field_name' => 'field_secretary',
-    'label' => 'Partisekretær',
-    'required' => 1,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'options',
-      'settings' => array(),
-      'type' => 'options_select',
-      'weight' => 6,
     ),
   );
 
@@ -2876,273 +2853,6 @@ function valhalla_field_instances_field_default_field_instances() {
     ),
   );
 
-  $field_instances['field_collection_item-field_volunteers_pr_party_1-field_party_list'] = array(
-      'bundle' => 'field_volunteers_pr_party_1',
-      'default_value' => NULL,
-      'deleted' => '0',
-      'description' => '',
-      'display' => array(
-        'default' => array(
-          'label' => 'above',
-          'module' => 'valhalla_field_party_volunteers_v3',
-          'settings' => array(),
-          'type' => 'party_volunteers_default_v3',
-          'weight' => '4',
-        ),
-      ),
-      'entity_type' => 'field_collection_item',
-      'field_name' => 'field_party_list',
-      'label' => 'Party',
-      'required' => 0,
-      'settings' => array(
-        'user_register_form' => FALSE,
-      ),
-      'widget' => array(
-        'active' => 0,
-        'module' => 'valhalla_field_party_volunteers_v3',
-        'settings' => array(
-          'available_parties' => array(),
-        ),
-        'type' => 'party_volunteers_standard_v3',
-        'weight' => '0',
-      ),
-    );
-
-  // VA
-  $field_instances['field_collection_item-field_volunteers_pr_party_1-field_role_n41'] = array(
-      'bundle' => 'field_volunteers_pr_party_1',
-      'default_value' => NULL,
-      'deleted' => '0',
-      'description' => '',
-      'display' => array(
-        'default' => array(
-          'label' => 'above',
-          'module' => 'valhalla_field_volunteers_roles',
-          'settings' => array(),
-          'type' => 'volunteers_roles_default',
-          'weight' => 5,
-        ),
-      ),
-      'entity_type' => 'field_collection_item',
-      'field_name' => 'field_role_n41',
-      'label' => 'Role',
-      'required' => 0,
-      'settings' => array(
-        'user_register_form' => FALSE,
-      ),
-      'widget' => array(
-        'active' => 0,
-        'module' => 'valhalla_field_volunteers_roles',
-        'settings' => array(),
-        'type' => 'volunteers_roles_standart',
-        'weight' => '1',
-      ),
-    );
-
-  // TI
-  $field_instances['field_collection_item-field_volunteers_pr_party_1-field_role_n42'] = array(
-      'bundle' => 'field_volunteers_pr_party_1',
-      'default_value' => NULL,
-      'deleted' => '0',
-      'description' => '',
-      'display' => array(
-        'default' => array(
-          'label' => 'above',
-          'module' => 'valhalla_field_volunteers_roles',
-          'settings' => array(),
-          'type' => 'volunteers_roles_default',
-          'weight' => 6,
-        ),
-      ),
-      'entity_type' => 'field_collection_item',
-      'field_name' => 'field_role_n42',
-      'label' => 'Role',
-      'required' => TRUE,
-      'settings' => array(
-        'user_register_form' => FALSE,
-      ),
-      'widget' => array(
-        'module' => 'valhalla_field_volunteers_roles',
-        'settings' => array(),
-        'type' => 'volunteers_roles_standart',
-        'weight' => 2,
-      ),
-    );
-
-  // HO
-  $field_instances['field_collection_item-field_volunteers_pr_party_1-field_role_n43'] = array(
-      'bundle' => 'field_volunteers_pr_party_1',
-      'default_value' => NULL,
-      'deleted' => '0',
-      'description' => '',
-      'display' => array(
-        'default' => array(
-          'label' => 'above',
-          'module' => 'valhalla_field_volunteers_roles',
-          'settings' => array(),
-          'type' => 'volunteers_roles_default',
-          'weight' => 8,
-        ),
-      ),
-      'entity_type' => 'field_collection_item',
-      'field_name' => 'field_role_n43',
-      'label' => 'Role',
-      'required' => TRUE,
-      'settings' => array(
-        'user_register_form' => FALSE,
-      ),
-      'widget' => array(
-        'module' => 'valhalla_field_volunteers_roles',
-        'settings' => array(),
-        'type' => 'volunteers_roles_standart',
-        'weight' => 4,
-      ),
-    );
-
-  // HU
-  $field_instances['field_collection_item-field_volunteers_pr_party_1-field_role_n44'] = array(
-      'bundle' => 'field_volunteers_pr_party_1',
-      'default_value' => NULL,
-      'deleted' => '0',
-      'description' => '',
-      'display' => array(
-        'default' => array(
-          'label' => 'above',
-          'module' => 'valhalla_field_volunteers_roles',
-          'settings' => array(),
-          'type' => 'volunteers_roles_default',
-          'weight' => 9,
-        ),
-      ),
-      'entity_type' => 'field_collection_item',
-      'field_name' => 'field_role_n44',
-      'label' => 'Role',
-      'required' => TRUE,
-      'settings' => array(
-        'user_register_form' => FALSE,
-      ),
-      'widget' => array(
-        'module' => 'valhalla_field_volunteers_roles',
-        'settings' => array(),
-        'type' => 'volunteers_roles_standart',
-        'weight' => 5,
-      ),
-    );
-
-  // TA
-  $field_instances['field_collection_item-field_volunteers_pr_party_1-field_role_n45'] = array(
-      'bundle' => 'field_volunteers_pr_party_1',
-      'default_value' => NULL,
-      'deleted' => '0',
-      'description' => '',
-      'display' => array(
-        'default' => array(
-          'label' => 'above',
-          'module' => 'valhalla_field_volunteers_roles',
-          'settings' => array(),
-          'type' => 'volunteers_roles_default',
-          'weight' => 10,
-        ),
-      ),
-      'entity_type' => 'field_collection_item',
-      'field_name' => 'field_role_n45',
-      'label' => 'Role',
-      'required' => TRUE,
-      'settings' => array(
-        'user_register_form' => FALSE,
-      ),
-      'widget' => array(
-        'module' => 'valhalla_field_volunteers_roles',
-        'settings' => array(),
-        'type' => 'volunteers_roles_standart',
-        'weight' => 6,
-      ),
-    );
-
-  $field_instances['node-polling_station-field_digital_election_list'] = array(
-      'bundle' => 'polling_station',
-      'default_value' => array(
-        0 => array(
-          'value' => 0,
-        ),
-      ),
-      'deleted' => '0',
-      'description' => '',
-      'display' => array(
-        'default' => array(
-          'label' => 'above',
-          'module' => 'list',
-          'settings' => array(),
-          'type' => 'list_default',
-          'weight' => 25,
-        ),
-        'teaser' => array(
-          'label' => 'above',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => 0,
-        ),
-      ),
-      'entity_type' => 'node',
-      'field_name' => 'field_digital_election_list',
-      'label' => 'Digital valgiste',
-      'required' => 0,
-      'settings' => array(
-        'user_register_form' => FALSE,
-      ),
-      'widget' => array(
-        'active' => 1,
-        'module' => 'options',
-        'settings' => array(
-          'display_label' => 1,
-        ),
-        'type' => 'options_onoff',
-        'weight' => '19',
-      ),
-    ); 
-
-  $field_instances['node-polling_station-field_volunteers_pr_party_1'] = array(
-      'bundle' => 'polling_station',
-      'default_value' => NULL,
-      'deleted' => '0',
-      'description' => '',
-      'display' => array(
-        'default' => array(
-          'label' => 'above',
-          'module' => 'field_collection',
-          'settings' => array(
-            'add' => 'Add',
-            'delete' => 'Delete',
-            'description' => TRUE,
-            'edit' => 'Edit',
-            'view_mode' => 'full',
-          ),
-          'type' => 'field_collection_view',
-          'weight' => 24,
-        ),
-        'teaser' => array(
-          'label' => 'above',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => 0,
-        ),
-      ),
-      'entity_type' => 'node',
-      'field_name' => 'field_volunteers_pr_party_1',
-      'label' => 'Frivillige pr. parti_v2',
-      'required' => 0,
-      'settings' => array(
-        'user_register_form' => FALSE,
-      ),
-      'widget' => array(
-        'active' => 0,
-        'module' => 'field_collection',
-        'settings' => array(),
-        'type' => 'field_collection_embed',
-        'weight' => '18',
-      ),
-    );
-
   // Translatables
   // Included for use with string extractors like potx.
   t('Address');
@@ -3161,8 +2871,8 @@ function valhalla_field_instances_field_default_field_instances() {
   t('City');
   t('Comment');
   t('Dato');
-  t('Diæt');
   t('Digital valgiste');
+  t('Diæt');
   t('Door / Side');
   t('Dør / Side');
   t('Email');
@@ -3170,7 +2880,6 @@ function valhalla_field_instances_field_default_field_instances() {
   t('Enter a comma-separated list of words to describe your content.');
   t('Floor');
   t('Formand');
-  t('Frivillige pr. parti');
   t('Frivillige pr. parti_v2');
   t('Fuldt partinavn');
   t('House no.');
@@ -3182,14 +2891,12 @@ function valhalla_field_instances_field_default_field_instances() {
   t('Noter');
   t('Nummer');
   t('Parti');
-  t('Party');
   t('Partiformandskab');
-  t('Partisekretær');
+  t('Party');
   t('Pladser per bord');
   t('Polling Station');
   t('Polling Station post');
   t('Postnummer');
-  t('Role');
   t('Sal');
   t('Sekretær');
   t('Skolekode');

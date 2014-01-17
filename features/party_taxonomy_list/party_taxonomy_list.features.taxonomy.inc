@@ -1,7 +1,11 @@
 <?php
+/**
+ * @file
+ * party_taxonomy_list.features.taxonomy.inc
+ */
 
 /**
- * Implementation of hook_taxonomy_default_vocabularies().
+ * Implements hook_taxonomy_default_vocabularies().
  */
 function party_taxonomy_list_taxonomy_default_vocabularies() {
   return array(
@@ -9,9 +13,9 @@ function party_taxonomy_list_taxonomy_default_vocabularies() {
       'name' => 'Partier',
       'machine_name' => 'partier',
       'description' => '',
-      'hierarchy' => '1',
+      'hierarchy' => 1,
       'module' => 'taxonomy',
-      'weight' => '0',
+      'weight' => 0,
     ),
   );
 }

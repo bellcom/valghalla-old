@@ -340,8 +340,8 @@ function valhalla_volunteers_to_polling_station($station_id = NULL) {
   module_load_include('inc', 'valhalla_volunteers', 'valhalla_volunteers');
   $user_party_id = empty($user->field_party[LANGUAGE_NONE][0]['tid']) ? FALSE : $user->field_party[LANGUAGE_NONE][0]['tid'];
   $polling_station = node_load($station_id);
-  //var_dump($polling_station);
-    $field_digital_election_list=field_get_items('node', $polling_station, 'field_digital_election_list');
+  $field_digital_election_list=field_get_items('node', $polling_station, 'field_digital_election_list');
+  
   if (isset($field_digital_election_list)&&(int)$field_digital_election_list[0]['value']==1){
     drupal_set_title($polling_station->title.'<div class="icon-digital-valglist">&nbsp;</div>', PASS_THROUGH);
   }
@@ -350,8 +350,10 @@ function valhalla_volunteers_to_polling_station($station_id = NULL) {
   }
 
   $restrict_polling_stations = FALSE;
+ 
   if (!empty ($user->field_polling_station[LANGUAGE_NONE])) {
     $restrict_polling_stations = array();
+  
     foreach ($user->field_polling_station[LANGUAGE_NONE] as $station) {
       $restrict_polling_stations[] = $station['nid'];
     }
@@ -388,7 +390,6 @@ function valhalla_volunteers_to_polling_station($station_id = NULL) {
 function valhalla_volunteers_to_polling_station_markup($polling_station, $user_party_id){
   // Get values
   $posts_array = valhalla_volunteers_to_polling_station_roles($polling_station, $user_party_id);
-
 
   if(!empty($posts_array['posts_to_fill'])){
     arsort($posts_array['posts_to_fill'], SORT_REGULAR);

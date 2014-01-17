@@ -279,6 +279,10 @@ function liste_valghalla_export_views_default_views() {
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
   $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
+  /* Field: Content: Label */
+  $handler->display->display_options['fields']['field_label_1']['id'] = 'field_label_1';
+  $handler->display->display_options['fields']['field_label_1']['table'] = 'field_data_field_label';
+  $handler->display->display_options['fields']['field_label_1']['field'] = 'field_label';
   $handler->display->display_options['path'] = 'valhalla_lists/valghalla.xls';
 
   /* Display: Data export */
@@ -349,6 +353,11 @@ function liste_valghalla_export_views_default_views() {
   $handler->display->display_options['fields']['entity_id_5']['label'] = 'RSVP';
   $handler->display->display_options['fields']['entity_id_5']['hide_alter_empty'] = FALSE;
   $handler->display->display_options['fields']['entity_id_5']['type'] = 'list_key';
+  /* Field: Content: Label */
+  $handler->display->display_options['fields']['field_label']['id'] = 'field_label';
+  $handler->display->display_options['fields']['field_label']['table'] = 'field_data_field_label';
+  $handler->display->display_options['fields']['field_label']['field'] = 'field_label';
+  $handler->display->display_options['fields']['field_label']['type'] = 'text_plain';
   $handler->display->display_options['path'] = 'valhalla_lists/valghalla-export.csv';
   $translatables['liste_valghalla_export'] = array(
     t('Defaults'),
@@ -381,6 +390,7 @@ function liste_valghalla_export_views_default_views() {
     t('more'),
     t('Data export Excel'),
     t('Rolle'),
+    t('Label'),
     t('partibogstav'),
     t('cprnummer'),
     t('fulde navn'),

@@ -549,19 +549,52 @@ function valhalla_field_bases_field_default_field_bases() {
     'locked' => 0,
     'module' => 'date',
     'settings' => array(
+      'cache_count' => 4,
+      'cache_enabled' => 0,
       'granularity' => array(
         'day' => 'day',
-        'hour' => 'hour',
+        'hour' => 0,
+        'minute' => 0,
         'month' => 'month',
+        'second' => 0,
         'year' => 'year',
       ),
       'repeat' => 0,
-      'timezone_db' => 'UTC',
+      'timezone_db' => '',
       'todate' => '',
-      'tz_handling' => 'site',
+      'tz_handling' => 'none',
     ),
     'translatable' => 1,
     'type' => 'date',
+  );
+
+  // Exported field_base: 'field_description'
+  $field_bases['field_description'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_description',
+    'foreign keys' => array(
+      'format' => array(
+        'columns' => array(
+          'format' => 'format',
+        ),
+        'table' => 'filter_format',
+      ),
+    ),
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'max_length' => 255,
+    ),
+    'translatable' => 0,
+    'type' => 'text',
   );
 
   // Exported field_base: 'field_diaet'
@@ -578,6 +611,32 @@ function valhalla_field_bases_field_default_field_bases() {
     'settings' => array(),
     'translatable' => 1,
     'type' => 'number_integer',
+  );
+
+  // Exported field_base: 'field_digital_election_list'
+  $field_bases['field_digital_election_list'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_digital_election_list',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        0 => 'No',
+        1 => 'Yes',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_boolean',
   );
 
   // Exported field_base: 'field_election_mails_send'
@@ -800,35 +859,6 @@ function valhalla_field_bases_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_partisek'
-  $field_bases['field_partisek'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_partisek',
-    'foreign keys' => array(
-      'format' => array(
-        'columns' => array(
-          'format' => 'format',
-        ),
-        'table' => 'filter_format',
-      ),
-    ),
-    'indexes' => array(
-      'format' => array(
-        0 => 'format',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'text',
-    'settings' => array(
-      'max_length' => 255,
-    ),
-    'translatable' => 1,
-    'type' => 'text',
-  );
-
   // Exported field_base: 'field_party'
   $field_bases['field_party'] = array(
     'active' => 1,
@@ -861,6 +891,22 @@ function valhalla_field_bases_field_default_field_bases() {
     ),
     'translatable' => 1,
     'type' => 'taxonomy_term_reference',
+  );
+
+  // Exported field_base: 'field_party_list'
+  $field_bases['field_party_list'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_party_list',
+    'foreign keys' => array(),
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'valhalla_field_party_volunteers_v3',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'party_volunteers_field_v3',
   );
 
   // Exported field_base: 'field_phone'
@@ -1065,7 +1111,7 @@ function valhalla_field_bases_field_default_field_bases() {
         2 => 0,
         3 => 0,
         4 => 4,
-        8 => 0,
+        5 => 0,
       ),
       'referenceable_status' => array(
         0 => 0,
@@ -1263,188 +1309,24 @@ function valhalla_field_bases_field_default_field_bases() {
     'type' => 'number_integer',
   );
 
-  // Exported field_base: 'field_volunteers_pr_party'
-  $field_bases['field_volunteers_pr_party'] = array(
+  // Exported field_base: 'field_volunteers_pr_party_1'
+  $field_bases['field_volunteers_pr_party_1'] = array(
     'active' => 1,
     'cardinality' => -1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_volunteers_pr_party',
+    'field_name' => 'field_volunteers_pr_party_1',
     'foreign keys' => array(),
     'indexes' => array(),
     'locked' => 0,
-    'module' => 'valhalla_field_party_volunteers_v2',
-    'settings' => array(),
-    'translatable' => 1,
-    'type' => 'party_volunteers_field_v2',
+    'module' => 'field_collection',
+    'settings' => array(
+      'hide_blank_items' => 1,
+      'path' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'field_collection',
   );
-
-  $field_bases['field_description'] = array(
-     'active' => '1',
-      'cardinality' => '1',
-      'deleted' => '0',
-      'entity_types' => array(),
-      'field_name' => 'field_description',
-      'foreign keys' => array(
-        'format' => array(
-          'columns' => array(
-            'format' => 'format',
-          ),
-          'table' => 'filter_format',
-        ),
-      ),
-      'indexes' => array(
-        'format' => array(
-          0 => 'format',
-        ),
-      ),
-      'locked' => '0',
-      'module' => 'text',
-      'settings' => array(
-        'max_length' => '255',
-      ),
-      'translatable' => '0',
-      'type' => 'text',
-  );
-
-  $field_bases['field_party_list'] = array(
-      'active' => '1',
-      'cardinality' => '1',
-      'deleted' => '0',
-      'entity_types' => array(),
-      'field_name' => 'field_party_list',
-      'foreign keys' => array(),
-      'indexes' => array(),
-      'locked' => '0',
-      'module' => 'valhalla_field_party_volunteers_v3',
-      'settings' => array(),
-      'translatable' => '0',
-      'type' => 'party_volunteers_field_v3',
-    );
-
-  // VA
-  $field_bases['field_role_n41'] = array(
-      'active' => '1',
-      'cardinality' => '1',
-      'deleted' => '0',
-      'entity_types' => array(),
-      'field_name' => 'field_role_n41',
-      'foreign keys' => array(),
-      'indexes' => array(),
-      'locked' => '0',
-      'module' => 'valhalla_field_volunteers_roles',
-      'settings' => array(),
-      'translatable' => '0',
-      'type' => 'volunteers_roles_field',
-    );
-
-  // TI
-  $field_bases['field_role_n42'] = array(
-      'active' => '1',
-      'cardinality' => '1',
-      'deleted' => '0',
-      'entity_types' => array(),
-      'field_name' => 'field_role_n42',
-      'foreign keys' => array(),
-      'indexes' => array(),
-      'locked' => '0',
-      'module' => 'valhalla_field_volunteers_roles',
-      'settings' => array(),
-      'translatable' => '0',
-      'type' => 'volunteers_roles_field',
-    );
-      
-
-  // HO
-  $field_bases['field_role_n43'] = array(
-      'active' => '1',
-      'cardinality' => '1',
-      'deleted' => '0',
-      'entity_types' => array(),
-      'field_name' => 'field_role_n43',
-      'foreign keys' => array(),
-      'indexes' => array(),
-      'locked' => '0',
-      'module' => 'valhalla_field_volunteers_roles',
-      'settings' => array(),
-      'translatable' => '0',
-      'type' => 'volunteers_roles_field',
-    );
-  
-  // HU
-  $field_bases['field_role_n44'] = array(
-      'active' => '1',
-      'cardinality' => '1',
-      'deleted' => '0',
-      'entity_types' => array(),
-      'field_name' => 'field_role_n44',
-      'foreign keys' => array(),
-      'indexes' => array(),
-      'locked' => '0',
-      'module' => 'valhalla_field_volunteers_roles',
-      'settings' => array(),
-      'translatable' => '0',
-      'type' => 'volunteers_roles_field',
-    );
-  
-  // TA
-  $field_bases['field_role_n45'] = array(
-      'active' => '1',
-      'cardinality' => '1',
-      'deleted' => '0',
-      'entity_types' => array(),
-      'field_name' => 'field_role_n45',
-      'foreign keys' => array(),
-      'indexes' => array(),
-      'locked' => '0',
-      'module' => 'valhalla_field_volunteers_roles',
-      'settings' => array(),
-      'translatable' => '0',
-      'type' => 'volunteers_roles_field',
-    );
-
-  $field_bases['field_digital_election_list'] = array(
-      'active' => '1',
-      'cardinality' => '1',
-      'deleted' => '0',
-      'entity_types' => array(),
-      'field_name' => 'field_digital_election_list',
-      'foreign keys' => array(),
-      'indexes' => array(
-        'value' => array(
-          0 => 'value',
-        ),
-      ),
-      'locked' => '0',
-      'module' => 'list',
-      'settings' => array(
-        'allowed_values' => array(
-          0 => 'No',
-          1 => 'Yes',
-        ),
-        'allowed_values_function' => '',
-      ),
-      'translatable' => '0',
-      'type' => 'list_boolean',
-    );
-
-  $field_bases['field_volunteers_pr_party_1'] = array(
-      'active' => '1',
-      'cardinality' => '-1',
-      'deleted' => '0',
-      'entity_types' => array(),
-      'field_name' => 'field_volunteers_pr_party_1',
-      'foreign keys' => array(),
-      'indexes' => array(),
-      'locked' => '0',
-      'module' => 'field_collection',
-      'settings' => array(
-        'hide_blank_items' => 1,
-        'path' => '',
-      ),
-      'translatable' => '0',
-      'type' => 'field_collection',
-    );
 
   return $field_bases;
 }
