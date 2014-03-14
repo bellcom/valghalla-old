@@ -1,11 +1,18 @@
 <?php
+/**
+ * @file
+ *  valhalla_volunteers_admin.inc
+ *
+ * @copyright 2014 Syddjurs Kommune. See README.md at
+ * https://github.com/os2web/valghalla
+ */
 
 /**
  * handle import of volunteers - test
  */
 function valhalla_volunteers_admin() {
   global $language;
-  
+
   $args = arg();
   if (isset($args[3]) && preg_match('~^[0-9]+$~', $args[3])) {
     $node = node_load($args[3]);
@@ -34,12 +41,112 @@ function valhalla_volunteers_admin() {
       <li><a href="/node/add/election">'.t('Opret nyt valg').'</a></li>
     </ul>
     <div>' . t('Liste over kommende eller ikke skedulerede valg') . '</div>
+    <div>
+    <h3>'.t('Nulstil tilforordnede').'</h3>
+    <ul>
+    <li><a href="/valghalla/volunteers/action/reset/pos">'.t('Nulstil pladser').'</a></li>
+    <li><a href="/valghalla/volunteers/action/reset/rsvp">'.t('Nulstil svar').'</a></li></ul>
+    </div>
   ';
   return $out . views_embed_view('valg');
 }
 
+/**
+ * Reset volunteers confirmation form
+ *
+ * @author Thomas Thune Hansen <tth@bellcom.dk>
+ */
+function valghalla_volunteers_reset(){
+  $type = arg(4);
+
+  $types = array(
+    'pos' => t('pladser'),
+    'rsvp' => t('svar'),
+  );
+
+  $form['operation'] = array(
+    '#type' => 'hidden',
+    '#value' => $type
+  );
+
+  $form['#submit'][] = 'valghalla_volunteers_reset_submit';
+
+  $message = t('Er du sikker på at du ønsker at slette alle tilforordenes ') . $types[$type] . '?';
+
+  return confirm_form($form, 'Nulstil frivillige', 'admin/valhalla/', $message, t('Ja, fortsæt'), t('Annuller'));
+}
+
+/**
+ *
+ * @author Thomas Thune Hansen <tth@bellcom.dk>
+ */
+function valghalla_volunteers_reset_submit(&$form, &$form_state){
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'volunteers');
+  $nids = array_keys(reset($query->execute()));
+
+  // Build operations array, handle 10 volunteer nodes, at the time
+  $nid_chunks = array_chunk($nids, 10);
+  foreach($nid_chunks as $batch_nids){
+    $operations[] = array(
+      'valghalla_volunteers_reset_batch', array($form_state['values']['operation'], $batch_nids)
+    );
+  }
+
+  // Start batch
+  batch_set(
+    array(
+      'title' => t('Nulstil frivillige'),
+      'operations' => $operations,
+      'finished' => 'valghalla_volunteers_reset_finished_batch',
+      'file' => drupal_get_path('module', 'valhalla_volunteers') .'/valhalla_volunteers_admin.inc',
+    )
+  );
+}
+
+/**
+ * Batch callback
+ *
+ * @author Thomas Thune Hansen <tth@bellcom.dk>
+ */
+function valghalla_volunteers_reset_batch($op, $nids, &$context){
+  // Loop over nids in this batch
+  foreach($nids as $nid){
+    $node = node_load($nid);
+
+    // Reset what the user has chosen $op
+    switch($op){
+      case 'pos':
+          $node->field_polling_station_post = array();
+        break;
+
+      case 'rsvp':
+          $node->field_rsvp = array();
+          $node->field_rsvp_comment = array();
+        break;
+    }
+
+    node_save($node);
+  }
+}
+
+/**
+ * Batch finished callback
+ *
+ * @author Thomas Thune Hansen <tth@bellcom.dk>
+ */
+function valghalla_volunteers_reset_finished_batch($success, $results, $operations){
+  if($success){
+    drupal_set_message(t('De frivillige er nu nulstillet'));
+    drupal_goto('admin/valhalla');
+  }
+}
+
+
+
 function valhalla_volunteers_admin_import_form($form, &$form_state) {
-  
+
   $form['#attributes'] = array('enctype' => "multipart/form-data");
   $form['import'] = array(
     '#type' => 'fieldset',

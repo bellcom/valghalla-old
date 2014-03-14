@@ -1,8 +1,16 @@
 <?php
 /**
+ * Valghalla volunteers module
+ *
+ *
+ *
+ * @file
+ *  valhalla_volunteers.module
  *
  * @comments
  *  tth: Thomas Thune Hansen <tth@bellcom.dk>
+ * @copyright 2014 Syddjurs Kommune. See README.md at
+ * https://github.com/os2web/valghalla
  */
 
 require_once 'valhalla_volunteers.inc';
@@ -96,6 +104,16 @@ function valhalla_volunteers_menu() {
           'page arguments' => array(2),
           'type' => MENU_CALLBACK,
       ),
+      // Reset volunteers
+      'valghalla/volunteers/action/reset' => array(
+        'title' => 'Nulstil frivillige',
+        'access arguments' => array(''),
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('valghalla_volunteers_reset'),
+        'type' => MENU_CALLBACK,
+        'file' => 'valhalla_volunteers_admin.inc',
+      ),
+
       // administration screens
       'admin/valhalla' => array(
           'title' => 'Valhalla',
