@@ -9,6 +9,7 @@
  *
  * @comments
  *  tth: Thomas Thune Hansen <tth@bellcom.dk>
+ *
  * @copyright 2014 Syddjurs Kommune. See README.md at
  * https://github.com/os2web/valghalla
  */
@@ -107,7 +108,7 @@ function valhalla_volunteers_menu() {
       // Reset volunteers
       'valghalla/volunteers/action/reset' => array(
         'title' => 'Nulstil frivillige',
-        'access arguments' => array(''),
+        'access arguments' => array('administer volunteers'),
         'page callback' => 'drupal_get_form',
         'page arguments' => array('valghalla_volunteers_reset'),
         'type' => MENU_CALLBACK,
