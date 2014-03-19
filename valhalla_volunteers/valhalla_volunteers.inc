@@ -478,6 +478,7 @@ EOM;
           '!polling_station' => $polling_station->title,
           '!polling_station_address' => implode("\n", $polling_station_address),
           '!position' => $position_info,
+          '!position_nid' => $position,
           '!time' => $time,
           '!responsible' => $wrapper->field_contact->value(),
           ));

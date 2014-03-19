@@ -30,8 +30,8 @@ function valhalla_cron_rsvp_reminder($last_run_ts) {
   $days_to_election = floor(($election_date1 - $today_date) / 86400);
 
   // check dates
-  $notification_days_arr = variable_get('valhalla_rsvp_reminder_days', '14, 7, 5, 3');
-  $notification_days = explode(',', variable_get('valhalla_rsvp_reminder_days', '14, 7, 5, 3'));
+  $notification_days_arr = variable_get('valghalla_rsvp_reminder_days', '14, 7, 5, 3');
+  $notification_days = explode(',', variable_get('valghalla_rsvp_reminder_days', '14, 7, 5, 3'));
 
   if (!$nid) {
     watchdog('Valghalla', 'Der blev ikke fundet noget aktict valg - aktiver dit valg. ', WATCHDOG_NOTICE);
@@ -89,6 +89,11 @@ function valhalla_cron_rsvp_reminder_send($election, $volunteer) {
 
   $params = _valhalla_helper_get_volunteer_info_params($volunteer);
 
+  // Fetch the mail for the volunteers role
+  if($mail = valghalla_mail_get_mail($params['!position_nid'], 'reminder')){
+    $params = array_merge($params, $mail);
+  }
+
   $send = TRUE;
-  $result = drupal_mail('valhalla_mail', 'rsvp_reminder', $to, $language, $params, $from, $send);
+  $result = drupal_mail('valghalla_mail', 'rsvp_reminder', $to, $language, $params, $from, $send);
 }

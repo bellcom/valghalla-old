@@ -309,7 +309,14 @@ function valhalla_volunteers_rsvp_form_submit($form, &$form_state) {
   $params['rsvp_type'] = $types[$form_state['values']['rsvp']];
   $to = $params['!email'];
   $from = variable_get('site_mail', 'admin@example.com');
-  drupal_mail('valhalla_mail', 'rsvp_confirm',$to,$language,$params,$from,TRUE);
+
+  // Fetch the mail for the volunteers role
+  if($mail = valghalla_mail_get_mail($params['!position_nid'], 'rsvp_'.$params['rsvp_type'])){
+    $params = array_merge($params, $mail);
+  }
+
+  drupal_mail('valghalla_mail', 'rsvp', $to,$language,$params,$from,TRUE);
+
   drupal_set_message(t('Vi har opdateret din status.'));
 
   // allow the "wife" to set her status as well.
@@ -341,7 +348,7 @@ function valhalla_volunteers_to_polling_station($station_id = NULL) {
   $user_party_id = empty($user->field_party[LANGUAGE_NONE][0]['tid']) ? FALSE : $user->field_party[LANGUAGE_NONE][0]['tid'];
   $polling_station = node_load($station_id);
   $field_digital_election_list=field_get_items('node', $polling_station, 'field_digital_election_list');
-  
+
   if (isset($field_digital_election_list)&&(int)$field_digital_election_list[0]['value']==1){
     drupal_set_title($polling_station->title.'<div class="icon-digital-valglist">&nbsp;</div>', PASS_THROUGH);
   }
@@ -350,10 +357,10 @@ function valhalla_volunteers_to_polling_station($station_id = NULL) {
   }
 
   $restrict_polling_stations = FALSE;
- 
+
   if (!empty ($user->field_polling_station[LANGUAGE_NONE])) {
     $restrict_polling_stations = array();
-  
+
     foreach ($user->field_polling_station[LANGUAGE_NONE] as $station) {
       $restrict_polling_stations[] = $station['nid'];
     }
@@ -369,7 +376,7 @@ function valhalla_volunteers_to_polling_station($station_id = NULL) {
         continue;
       }
 
-      $markup_temp .= valhalla_volunteers_to_polling_station_markup($polling_station, $term->tid, TRUE); 
+      $markup_temp .= valhalla_volunteers_to_polling_station_markup($polling_station, $term->tid, TRUE);
       if($markup_temp){
         $markup .= '<h2>'.$term->name.'</h2>';
         $markup .= $markup_temp;
@@ -379,7 +386,7 @@ function valhalla_volunteers_to_polling_station($station_id = NULL) {
     }
   }
   else {
-    $markup .= valhalla_volunteers_to_polling_station_markup($polling_station, $user_party_id); 
+    $markup .= valhalla_volunteers_to_polling_station_markup($polling_station, $user_party_id);
   }
   return $markup;
 }
@@ -434,7 +441,7 @@ function valhalla_volunteers_to_polling_station_roles($polling_station, $user_pa
 
   if ($volunteers_pr_party=field_get_items('node',$polling_station, 'field_volunteers_pr_party_1')) {
     foreach ($volunteers_pr_party as $item) {
-      $field_collection_item=entity_load('field_collection_item', array($item['value']));   
+      $field_collection_item=entity_load('field_collection_item', array($item['value']));
       $party_id=field_get_items('field_collection_item',$field_collection_item[$item['value']],'field_party_list');
 
       if($party_id[0]["party_list"]==$user_party_id) {
@@ -490,7 +497,7 @@ function valhalla_volunteers_to_polling_station_roles($polling_station, $user_pa
       // previously the id was just a running number, which caused the volunteer
       // info to be places in numerous fields on the list, although the volunteer
       // was only added to one post.
-      // The problem only existed when watching multiple parties on the polling 
+      // The problem only existed when watching multiple parties on the polling
       // station. Fix: insert a number that is not repeated.
       $id = rand(1,9) . rand(1,9) . rand(1,9);
       $value = $value;
@@ -522,7 +529,7 @@ function valhalla_volunteers_to_polling_station_ajax($action) {
   module_load_include('inc', 'valhalla_volunteers', 'valhalla_volunteers');
 
   $user = user_load($user->uid);
-  
+
   $user_party_id = empty($user->field_party[LANGUAGE_NONE][0]['tid']) ? FALSE : $user->field_party[LANGUAGE_NONE][0]['tid'];
 
   $output = new stdClass;
@@ -750,10 +757,15 @@ function valhalla_volunteers_send_rsvp($node) {
 
   $params = _valhalla_helper_get_volunteer_info_params($node);
 
+  // Fetch the mail for the volunteers role
+  if($mail = valghalla_mail_get_mail($params['!position_nid'], 'invitation')){
+    $params = array_merge($params, $mail);
+  }
+
   $language = language_default();
   $send = TRUE;
 
-  $result = drupal_mail('valhalla_mail', 'rsvp', $to, $language, $params, $from, $send);
+  $result = drupal_mail('valghalla_mail', 'invitation', $to, $language, $params, $from, $send);
 }
 
 /**
