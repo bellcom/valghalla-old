@@ -5,4 +5,4 @@ package = valhalla
 core = 7.x
 
 dependencies[] = "valhalla_volunteers"
-dependencies[] = "valhalla_mail"
+dependencies[] = "valghalla_mail"
