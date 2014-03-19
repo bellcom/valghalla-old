@@ -11,4 +11,4 @@ files[] = valhalla_volunteers.module
 files[] = valhalla_volunteers.inc
 files[] = valhalla_volunteers_admin.inc
 
-dependencies[] = "valhalla_mail"
+dependencies[] = "valghalla_mail"
