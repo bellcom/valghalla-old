@@ -1731,23 +1731,9 @@ function valhalla_views_views_default_views() {
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
   $handler->display->display_options['fields']['nid']['label'] = '';
-  $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['nid']['element_label_colon'] = FALSE;
-
-  /* Felt: Indhold: Sæt igang */
-  $handler->display->display_options['fields']['field_election_status']['id'] = 'field_election_status';
-  $handler->display->display_options['fields']['field_election_status']['table'] = 'field_data_field_election_status';
-  $handler->display->display_options['fields']['field_election_status']['field'] = 'field_election_status';
-  $handler->display->display_options['fields']['field_election_status']['label'] = '';
-  $handler->display->display_options['fields']['field_election_status']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['field_election_status']['alter']['text'] = '<a href="/node/[nid]/edit">ret</a> | 
-<a href="/admin/valhalla/stop-election/[nid]">stop</a>';
-  $handler->display->display_options['fields']['field_election_status']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_election_status']['empty'] = '<a href="/node/[nid]/edit">ret</a> | 
- <a href="/admin/valhalla/start-election/[nid]">sæt igang</a>';
-  $handler->display->display_options['fields']['field_election_status']['empty_zero'] = TRUE;
-  $handler->display->display_options['fields']['field_election_status']['type'] = 'list_key';
-
+  $handler->display->display_options['fields']['nid']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['nid']['alter']['text'] = '<a href="/node/[nid]/edit">ret</a> | 
+<a href="/admin/valhalla/start-election/[nid]">sæt igang</a>';
   /* Sorteringskriterie: Indhold: Dato (field_date) */
   $handler->display->display_options['sorts']['field_date_value']['id'] = 'field_date_value';
   $handler->display->display_options['sorts']['field_date_value']['table'] = 'field_data_field_date';

@@ -9,39 +9,24 @@ function valhalla_volunteers_admin() {
   $args = arg();
   if (isset($args[3]) && preg_match('~^[0-9]+$~', $args[3])) {
     $node = node_load($args[3]);
-    if ($args[2] == 'start-election') {
-      if (empty($args[4])) {
+    if (empty($args[4])) {
 
-        if (empty($node->field_date[$language->language][0]['value'])) {
-          drupal_set_message(t('Valget <em>@title</em> har ikke nogen tilknyttet dato og kan derfor ikke startes.', array('@title' => $node->title)), 'error');
-          drupal_goto('admin/valhalla');
-        }
-
-        $election_date = date('j/m Y', strtotime($node->field_date[$language->language][0]['value']));
-          return '
-          <p>' . l('Ja!', implode('/', $args) . '/go', array('attributes' => array('style' => 'font-size:20px;text-decoration:underline;'))) . ' ' . t('jeg vil starte <em>@title</em> den <strong>!date</strong>.', array('@title' => $node->title, '!date' => $election_date)) . '</p>
-          <p>Aah, der var vidst lige noget der skulle ' . l('rettes', 'node/' . $args[3] ."/edit", array('attributes' => array('style' => 'text-decoration:underline;'))) . '.</p>
-          ';
+      if (empty($node->field_date[$language->language][0]['value'])) {
+        drupal_set_message(t('Valget <em>@title</em> har ikke nogen tilknyttet dato og kan derfor ikke startes.', array('@title' => $node->title)), 'error');
+        drupal_goto('admin/valhalla');
       }
 
-      $node->field_election_status[$language->language][0]['value'] = 1;
-      node_save($node);
-      drupal_set_message(t('Valget er nu startet !'));
-      drupal_goto('admin/valhalla');
+      $election_date = date('j/m Y', strtotime($node->field_date[$language->language][0]['value']));
+      return '
+        <p>' . l('Ja!', implode('/', $args) . '/go', array('attributes' => array('style' => 'font-size:20px;text-decoration:underline;'))) . ' ' . t('jeg vil starte <em>@title</em> den <strong>!date</strong>.', array('@title' => $node->title, '!date' => $election_date)) . '</p>
+        <p>Aah, der var vidst lige noget der skulle ' . l('rettes', 'node/edit/' . $args[3], array('attributes' => array('style' => 'text-decoration:underline;'))) . '.</p>
+      ';
     }
-    if ($args[2] == 'stop-election') {
-      if (empty($args[4])) {
-          return '
-          <p>' . l('Ja!', implode('/', $args) . '/stop', array('attributes' => array('style' => 'font-size:20px;text-decoration:underline;'))) . ' ' . t('jeg vil stoppe <em>@title</em>.', array('@title' => $node->title)) . '</p>
-          <p>Aah, der var vidst lige noget der skulle ' . l('rettes', 'node/' . $args[3] ."/edit", array('attributes' => array('style' => 'text-decoration:underline;'))) . '.</p>
-          ';
-      }
 
-      $node->field_election_status[$language->language][0]['value'] = 0;
-      node_save($node);
-      drupal_set_message(t('Valget er nu stoppet !'));
-      drupal_goto('admin/valhalla');
-    }
+    $node->field_election_status[$language->language][0]['value'] = 1;
+    node_save($node);
+    drupal_set_message(t('Valget er nu startet !'));
+    drupal_goto('admin/valhalla');
   }
 
   $out = '
