@@ -314,7 +314,7 @@ function _valhalla_helper_get_polling_stations() {
     $data[$item->nid] = $item->title;
   }
 
-  asort($data, SORT_REGULAR); 
+  asort($data, SORT_REGULAR);
   return $data;
 }
 
@@ -369,13 +369,13 @@ function _valhalla_helper_get_volunteer_info_params($node) {
 <li><em>!polling_station</em> will be replaced by the name of the polling station.</li>
 <li><em>!polling_station_address</em> will be replaced by the address of the polling station</li>
 <li><em>!position</em> will be replaced by the VAF/VA/TI label</li>
-<li><em>!time</em> will be replaced by meeting time for position</li>      
+<li><em>!time</em> will be replaced by meeting time for role</li>
 <li><em>!responsible</em> will be replaced by the name of responsible for a given polling station.</li>
 </ul>
 <p>Please note that in some cases the options above is not available.</p>
 EOM;
   }
-  
+
   $params = drupal_static(__FUNCTION__ . $node->nid, FALSE);
 
   if (empty($params)) {
@@ -416,8 +416,7 @@ EOM;
 
     $field_label=field_get_items('node', $node, 'field_label');
     if (FALSE != $polling_station) {
-      // build address "field"
-      $position = db_select('node', 'n')
+      $role_nid = db_select('node', 'n')
                   ->distinct()
                   ->fields('n', array('nid', 'title'))
                   ->condition('n.type', 'roles')
@@ -425,51 +424,28 @@ EOM;
                   ->execute()
                   ->fetchColumn();
 
-      // Get position (role) info
+      // Get role info
       $position_info ='';
 
-      if ($position){
-        $position_node = node_load($position);
+      if ($role_nid){
+        $role_node = node_load($role_nid);
 
-        if (is_object($position_node)) {
-          $position_info = $position_node->title;
-          $description = field_get_items('node', $position_node, 'field_description');
-          if($description) {
-            $position_info = $description[0]['value'];
+        if (is_object($role_node)) {
+          $role_info = $role_node->title;
+          $description_field = field_get_items('node', $role_node, 'field_description');
+          if($description_field) {
+            $role_info = $description_field[0]['value'];
           }
+
+          // tth: Fetch info for token !time.
+          $meetingtime_field = field_get_items('node', $role_node, 'field_meetingtime');
+          $time = $meetingtime_field[0]['value'];
         }
       }
 
-      // tth: Fetch info for token !time.
-      // Since the party set on the volunteer is not nessecarily the same
-      // as the posts party we need to extract it from the polling_station_post
-      // key.
-      // Removing the role id and the pollingstation id from this key,
-      // leaves us the party id.
-      $polling_station_post = field_get_items('node', $node, 'field_polling_station_post');
-      $polling_station_id = field_get_items('node', $node, 'field_polling_station');
-
-      if($polling_station_post && $polling_station_id){
-        $partial_key = $position . $polling_station_id[0]['nid'];
-        $party = str_replace($partial_key, '', $polling_station_post[0]['value']);
-
-        $field_collections = field_get_items('node', $polling_station, 'field_volunteers_pr_party_1');
-
-        // Bug in field_collection / entity
-        // https://drupal.org/node/1164982
-        // quick fix: silence the errors
-        @$fc_entities = entity_load('field_collection_item', $field_collections);
-
-        foreach($fc_entities as $fc_entity){
-          if($fc_entity->field_party_list[LANGUAGE_NONE][0]['party_list'] == $party){
-            $meeting_time_tid = $fc_entity->{'field_role_n'.$position}[LANGUAGE_NONE][0]['meeting_time'];
-            $term = taxonomy_term_load($meeting_time_tid);
-            $time = $term->name;
-          }
-        }
-      }
       $wrapper = entity_metadata_wrapper('node', $polling_station);
 
+      // !address
       $polling_station_address = array();
       $polling_station_address[] = $wrapper->field_address_road->value() . ' ' . $wrapper->field_address_road_no->value();
       $polling_station_address[] = $wrapper->field_address_zipcode->value() . ' ' . $wrapper->field_address_city->value();
