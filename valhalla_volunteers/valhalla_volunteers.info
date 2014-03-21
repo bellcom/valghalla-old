@@ -1,15 +1,26 @@
-; $Id$
 name = valhalla volunteers
 description = holds functionality to add volunteers and for volunteers to give feedback
-package = valhalla
 core = 7.x
-version = "7.x-1.1"
-
+package = valhalla
+version = 7.x-1.2
+project = valhalla_volunteers
+dependencies[] = entityreference
+dependencies[] = features
+dependencies[] = node
+dependencies[] = options
+dependencies[] = valghalla_mail
+dependencies[] = valhalla_field_instances
 configure = admin/config/valhalla/volunteers
-
 features[features_api][] = api:2
+features[field_base][] = field_invitation
+features[field_base][] = field_reminder
+features[field_base][] = field_rsvp_never
+features[field_base][] = field_rsvp_no
+features[field_base][] = field_rsvp_yes
+features[field_instance][] = node-roles-field_invitation
+features[field_instance][] = node-roles-field_rsvp_never
+features[field_instance][] = node-roles-field_rsvp_no
+features[node][] = volunteers
 files[] = valhalla_volunteers.module
 files[] = valhalla_volunteers.inc
 files[] = valhalla_volunteers_admin.inc
-
-dependencies[] = "valghalla_mail"

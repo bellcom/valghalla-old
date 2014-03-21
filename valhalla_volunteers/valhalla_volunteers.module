@@ -1,5 +1,11 @@
 <?php
 /**
+ * @file
+ * Code for the valhalla volunteers feature.
+ */
+
+include_once 'valhalla_volunteers.features.inc';
+/**
  *
  * @comments
  *  tth: Thomas Thune Hansen <tth@bellcom.dk>
