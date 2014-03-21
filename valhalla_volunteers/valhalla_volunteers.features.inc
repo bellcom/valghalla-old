@@ -9,6 +9,14 @@
  */
 function valhalla_volunteers_node_info() {
   $items = array(
+    'roles' => array(
+      'name' => t('Roles of volunteers'),
+      'base' => 'node_content',
+      'description' => '',
+      'has_title' => '1',
+      'title_label' => t('Role'),
+      'help' => '',
+    ),
     'volunteers' => array(
       'name' => t('Frivillige'),
       'base' => 'node_content',
