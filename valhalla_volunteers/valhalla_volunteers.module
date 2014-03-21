@@ -311,17 +311,17 @@ function valhalla_volunteers_rsvp_form_submit($form, &$form_state) {
   $node->field_rsvp[$language->language][0]['value'] = $form_state['values']['rsvp'];
   $node->field_rsvp_comment[$language->language][0]['value'] = $form_state['values']['rsvp_comment'];
   node_save($node);
-  $params  = _valhalla_helper_get_volunteer_info_params($node);
+  $tokens = _valhalla_helper_get_volunteer_info_params($node);
   $params['rsvp_type'] = $types[$form_state['values']['rsvp']];
   $to = $params['!email'];
   $from = variable_get('site_mail', 'admin@example.com');
 
   // Fetch the mail for the volunteers role
-  if($mail = valghalla_mail_get_mail($params['!position_nid'], 'rsvp_'.$params['rsvp_type'])){
-    $params = array_merge($params, $mail);
+  if($mail = valghalla_mail_get_mail($tokens['!position_nid'], 'rsvp_'.$params['rsvp_type'])){
+    $params = array_merge(array('tokens' => $tokens), $mail);
   }
 
-  drupal_mail('valghalla_mail', 'rsvp', $to,$language,$params,$from,TRUE);
+  drupal_mail('valghalla_mail', 'mail', $to,$language,$params,$from,TRUE);
 
   drupal_set_message(t('Vi har opdateret din status.'));
 
@@ -761,17 +761,17 @@ function valhalla_volunteers_send_rsvp($node) {
   $to = $node->field_email[$language->language][0]['email'];
   $from = variable_get('site_mail', 'admin@example.com');
 
-  $params = _valhalla_helper_get_volunteer_info_params($node);
+  $tokens = _valhalla_helper_get_volunteer_info_params($node);
 
   // Fetch the mail for the volunteers role
-  if($mail = valghalla_mail_get_mail($params['!position_nid'], 'invitation')){
-    $params = array_merge($params, $mail);
+  if($mail = valghalla_mail_get_mail($tokens['!position_nid'], 'invitation')){
+    $params = array_merge(array('tokens' => $tokens), $mail);
   }
 
   $language = language_default();
   $send = TRUE;
 
-  $result = drupal_mail('valghalla_mail', 'invitation', $to, $language, $params, $from, $send);
+  $result = drupal_mail('valghalla_mail', 'mail', $to, $language, $params, $from, $send);
 }
 
 /**
