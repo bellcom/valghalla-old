@@ -369,6 +369,7 @@ function _valhalla_helper_get_volunteer_info_params($node) {
 <li><em>!polling_station</em> will be replaced by the name of the polling station.</li>
 <li><em>!polling_station_address</em> will be replaced by the address of the polling station</li>
 <li><em>!position</em> will be replaced by the VAF/VA/TI label</li>
+<li><em>!position_description</em> will be replaced by the description</li>
 <li><em>!time</em> will be replaced by meeting time for role</li>
 <li><em>!responsible</em> will be replaced by the name of responsible for a given polling station.</li>
 </ul>
@@ -425,13 +426,13 @@ EOM;
                   ->fetchColumn();
 
       // Get role info
-      $position_info ='';
+      $role_info ='';
 
       if ($role_nid){
         $role_node = node_load($role_nid);
 
         if (is_object($role_node)) {
-          $role_info = $role_node->title;
+          $role_title = $role_node->title;
           $description_field = field_get_items('node', $role_node, 'field_description');
           if($description_field) {
             $role_info = $description_field[0]['value'];
@@ -453,14 +454,14 @@ EOM;
       $params = array_merge($params, array(
           '!polling_station' => $polling_station->title,
           '!polling_station_address' => implode("\n", $polling_station_address),
-          '!position' => $position_info,
-          '!position_nid' => $position,
+          '!position' => $role_title,
+          '!position_description' => $role_info,
+          '!position_nid' => $role_nid,
           '!time' => $time,
           '!responsible' => $wrapper->field_contact->value(),
           ));
     }
   }
-
   return $params;
 }
 
