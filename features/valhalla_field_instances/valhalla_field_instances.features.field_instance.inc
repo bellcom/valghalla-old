@@ -1111,7 +1111,7 @@ function valhalla_field_instances_field_default_field_instances() {
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => 3,
+      'weight' => 4,
     ),
     'widget_type' => 'text_textarea_with_summary',
   );
@@ -1152,7 +1152,7 @@ function valhalla_field_instances_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 11,
+      'weight' => 18,
     ),
   );
 
@@ -1192,7 +1192,7 @@ function valhalla_field_instances_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 9,
+      'weight' => 15,
     ),
   );
 
@@ -1232,7 +1232,7 @@ function valhalla_field_instances_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 8,
+      'weight' => 14,
     ),
   );
 
@@ -1272,7 +1272,7 @@ function valhalla_field_instances_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 6,
+      'weight' => 12,
     ),
   );
 
@@ -1312,7 +1312,7 @@ function valhalla_field_instances_field_default_field_instances() {
         'size' => 10,
       ),
       'type' => 'text_textfield',
-      'weight' => 7,
+      'weight' => 13,
     ),
   );
 
@@ -1353,44 +1353,7 @@ function valhalla_field_instances_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 10,
-    ),
-  );
-
-  // Exported field_instance: 'node-polling_station-field_chairman'
-  $field_instances['node-polling_station-field_chairman'] = array(
-    'bundle' => 'polling_station',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'inline',
-        'module' => 'node_reference',
-        'settings' => array(),
-        'type' => 'node_reference_default',
-        'weight' => 15,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_chairman',
-    'label' => 'Formand',
-    'required' => 0,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'options',
-      'settings' => array(),
-      'type' => 'options_select',
-      'weight' => 12,
+      'weight' => 17,
     ),
   );
 
@@ -1431,7 +1394,7 @@ function valhalla_field_instances_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 0,
+      'weight' => 2,
     ),
   );
 
@@ -1440,7 +1403,7 @@ function valhalla_field_instances_field_default_field_instances() {
     'bundle' => 'polling_station',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Kontaktperson for valgets afvilking på selve valgdagen(e).',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
@@ -1458,7 +1421,7 @@ function valhalla_field_instances_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'field_contact',
-    'label' => 'Kontakt',
+    'label' => 'Valgkontakt',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -1471,7 +1434,7 @@ function valhalla_field_instances_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 13,
+      'weight' => 4,
     ),
   );
 
@@ -1502,7 +1465,7 @@ function valhalla_field_instances_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'field_digital_election_list',
-    'label' => 'Digital valgiste',
+    'label' => 'Digital valgliste',
     'required' => 0,
     'settings' => array(
       'user_register_form' => FALSE,
@@ -1514,44 +1477,7 @@ function valhalla_field_instances_field_default_field_instances() {
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 19,
-    ),
-  );
-
-  // Exported field_instance: 'node-polling_station-field_party'
-  $field_instances['node-polling_station-field_party'] = array(
-    'bundle' => 'polling_station',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'inline',
-        'module' => 'taxonomy',
-        'settings' => array(),
-        'type' => 'taxonomy_term_reference_link',
-        'weight' => 10,
-      ),
-      'teaser' => array(
-        'label' => 'inline',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_party',
-    'label' => 'Partiformandskab',
-    'required' => 1,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'options',
-      'settings' => array(),
-      'type' => 'options_select',
-      'weight' => 2,
+      'weight' => 8,
     ),
   );
 
@@ -1578,7 +1504,7 @@ function valhalla_field_instances_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'field_venue_contact',
-    'label' => 'Kontakt',
+    'label' => 'Andre kontaktoplysninger',
     'required' => 1,
     'settings' => array(
       'text_processing' => 0,
@@ -1591,7 +1517,7 @@ function valhalla_field_instances_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 16,
+      'weight' => 6,
     ),
   );
 
@@ -1631,7 +1557,7 @@ function valhalla_field_instances_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 15,
+      'weight' => 5,
     ),
   );
 
@@ -1671,7 +1597,7 @@ function valhalla_field_instances_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 17,
+      'weight' => 7,
     ),
   );
 
@@ -1716,7 +1642,7 @@ function valhalla_field_instances_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 5,
+      'weight' => 6,
     ),
   );
 
@@ -1761,7 +1687,7 @@ function valhalla_field_instances_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 4,
+      'weight' => 5,
     ),
   );
 
@@ -1804,7 +1730,7 @@ function valhalla_field_instances_field_default_field_instances() {
       'module' => 'field_collection',
       'settings' => array(),
       'type' => 'field_collection_embed',
-      'weight' => 18,
+      'weight' => 4,
     ),
   );
 
@@ -2856,6 +2782,7 @@ function valhalla_field_instances_field_default_field_instances() {
   // Translatables
   // Included for use with string extractors like potx.
   t('Address');
+  t('Andre kontaktoplysninger');
   t('Ansvarlig');
   t('BNummer');
   t('Begræns adgang til følgende valgsteder');
@@ -2871,7 +2798,7 @@ function valhalla_field_instances_field_default_field_instances() {
   t('City');
   t('Comment');
   t('Dato');
-  t('Digital valgiste');
+  t('Digital valgliste');
   t('Diæt');
   t('Door / Side');
   t('Dør / Side');
@@ -2879,19 +2806,17 @@ function valhalla_field_instances_field_default_field_instances() {
   t('Emails sendt');
   t('Enter a comma-separated list of words to describe your content.');
   t('Floor');
-  t('Formand');
   t('Frivillige pr. parti_v2');
   t('Fuldt partinavn');
   t('House no.');
   t('Image');
-  t('Kontakt');
+  t('Kontaktperson for valgets afvilking på selve valgdagen(e).');
   t('Label');
   t('Logo');
   t('Lokalekontakt');
   t('Noter');
   t('Nummer');
   t('Parti');
-  t('Partiformandskab');
   t('Party');
   t('Pladser per bord');
   t('Polling Station');
@@ -2910,6 +2835,7 @@ function valhalla_field_instances_field_default_field_instances() {
   t('Token');
   t('Type');
   t('Upload an image to go with this article.');
+  t('Valgkontakt');
   t('Valgkreds');
   t('Vej');
   t('Zip code');
