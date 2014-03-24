@@ -41,14 +41,17 @@ function valhalla_volunteers_admin() {
       <li><a href="/node/add/election">'.t('Opret nyt valg').'</a></li>
     </ul>
     <div>' . t('Liste over kommende eller ikke skedulerede valg') . '</div>
+    ';
+  $reset = '
     <div>
     <h3>'.t('Nulstil tilforordnede').'</h3>
     <ul>
     <li><a href="/valghalla/volunteers/action/reset/pos">'.t('Nulstil pladser').'</a></li>
     <li><a href="/valghalla/volunteers/action/reset/rsvp">'.t('Nulstil svar').'</a></li></ul>
     </div>
-  ';
-  return $out . views_embed_view('valg');
+
+    ';
+  return $out . views_embed_view('valg') . $reset;
 }
 
 /**
