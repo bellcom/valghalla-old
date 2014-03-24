@@ -21,6 +21,7 @@ dependencies[] = valhalla_field_absentee_ballot
 dependencies[] = valhalla_field_bases
 dependencies[] = valhalla_field_party_volunteers_v2
 dependencies[] = valhalla_field_party_volunteers_v3
+features[ctools][] = field_group:field_group:1
 features[features_api][] = api:2
 features[field_group][] = group_adresse|node|polling_station|form
 features[field_group][] = group_andet|node|polling_station|form
