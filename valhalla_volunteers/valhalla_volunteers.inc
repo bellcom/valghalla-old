@@ -25,7 +25,7 @@ function _valhalla_helper_wrap_name($node, $container = 'p') {
 
   $party = taxonomy_term_load($node->field_party[$language->language][0]['tid']);
 
-  $rsvp_markup;
+  $rsvp_markup = "";
 
   $rsvp_message = field_get_items('node', $node, 'field_rsvp_comment');
 
