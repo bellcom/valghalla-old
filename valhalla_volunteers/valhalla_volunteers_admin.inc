@@ -229,8 +229,6 @@ function valhalla_volunteers_admin_start_election_form($form, &$form_state, $xtr
     '#title' => t('Så starter vi.'),
   );
 
-  error_log(__FILE__ . ' +' . __LINE__ . ' ' . print_r($xtras, 1));
-
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Importér'),
