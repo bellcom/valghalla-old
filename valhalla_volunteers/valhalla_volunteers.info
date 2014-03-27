@@ -59,3 +59,4 @@ features[node][] = volunteers
 files[] = valhalla_volunteers.module
 files[] = valhalla_volunteers.inc
 files[] = valhalla_volunteers_admin.inc
+stylesheets[all][] = valhalla_volunteers.css
