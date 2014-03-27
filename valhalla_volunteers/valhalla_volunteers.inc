@@ -7,7 +7,7 @@
  * @param stdClass $node
  * @return string
  */
-function _valhalla_helper_wrap_name($node, $container = 'p') {
+function _valhalla_helper_wrap_name($node, $container = 'p',$extra = null) {
   global $language;
 
   $rsvp_map = array(
@@ -44,7 +44,11 @@ function _valhalla_helper_wrap_name($node, $container = 'p') {
     $reply_link = '<a title="Svar for denne tilforordnede" class="edit reply" href="/volunteers/rsvp/' . $field_token[0]['value'] . '">Svar</a>';
   }
 
-  $display = '(' . $party->name. ') ' . $node->title . ' (' . $rsvp_map[$rsvp] . ')' . $rsvp_markup . $reply_link ;
+  $party_name = (isset($party->name)) ? $party->name : "";
+  $display = '(' . $party_name . ') ' . $node->title . ' (' . $rsvp_map[$rsvp] . ')' . $rsvp_markup . $reply_link ;
+  if (isset($extra)) {
+    $display = '(' . $party_name . ') ' . $node->title . ' (' . $rsvp_map[$rsvp] . ')';
+  }
   return '<' . $container . ' class="volunteer ' . $rsvp_class_map[$rsvp] . '">' . $display . '</' . $container . '>';
 }
 

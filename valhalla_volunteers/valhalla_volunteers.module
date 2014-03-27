@@ -314,7 +314,7 @@ function valhalla_volunteers_rsvp_form_submit($form, &$form_state) {
   node_save($node);
   $tokens = _valhalla_helper_get_volunteer_info_params($node);
   $params['rsvp_type'] = $types[$form_state['values']['rsvp']];
-  $to = $params['!email'];
+  $to = $tokens['!email'];
   $from = variable_get('site_mail', 'admin@example.com');
 
   // Fetch the mail for the volunteers role
@@ -337,6 +337,7 @@ function valhalla_volunteers_rsvp_form_submit($form, &$form_state) {
  *@param stdClass $node
  *@global stdClass $language
  *@return void
+ *@author yani
  */
 function valhalla_volunteers_cancellation_mail_to_roles($answer, $node){
   global $language;
@@ -384,6 +385,7 @@ function valhalla_volunteers_cancellation_mail_to_roles($answer, $node){
  *
  *@param none
  *@return string $to (a list of email addresse, seperate by ",")
+ *@author yani
  */
 function valhalla_volunteers_add_email_to_list() {
   module_load_include('inc', 'valghalla_mail', 'valghalla_mail_admin');
@@ -496,21 +498,31 @@ function valhalla_volunteers_to_polling_station($station_id = NULL) {
 
 /**
  * Generate list markup for polling station
+ *
+ * @$params integer $block, used in valhalla_block module for get a array of extra volunteers in the list.
  */
-function valhalla_volunteers_to_polling_station_markup($polling_station, $user_party_id){
+function valhalla_volunteers_to_polling_station_markup($polling_station, $user_party_id, $block = NULL){
   // Get values
   $posts_array = valhalla_volunteers_to_polling_station_roles($polling_station, $user_party_id);
 
   if(!empty($posts_array['posts_to_fill'])){
     arsort($posts_array['posts_to_fill'], SORT_REGULAR);
 
+    // yani: if the function is been called by valhalla_blocks_block_view
+    // return only array.
+    if ($block === 'block3' ){
+      return $posts_array;
+    }
+    else {
     // Return the themed values
-    return theme('station', array(
+      return theme('station', array(
             'posts_to_fill' => $posts_array['posts_to_fill'],
             'party_id' => $posts_array['party_id'],
             'station_id' => $posts_array['station_id'],
             'existing' => $posts_array['existing'],
+            'extra' => $posts_array['extra'],
           ));
+    }
   }
 }
 
@@ -532,6 +544,9 @@ function valhalla_volunteers_to_polling_station_roles($polling_station, $user_pa
   $station_id = $polling_station->nid;
   $field_digital_election_list=field_get_items('node', $polling_station, 'field_digital_election_list');
   $posts_to_fill = array();
+  $existing = array();
+  $volunteers_2 = array();
+  $extra_array = array();
 
   $res = db_select('node', 'n')
     ->fields('n', array('nid', 'title'))
@@ -577,6 +592,9 @@ function valhalla_volunteers_to_polling_station_roles($polling_station, $user_pa
 
     $reset_query = $volunteer_query->execute();
     $volunteers[$value] = reset($reset_query);
+
+    // yani: this array contains all the existed volunteers, used to compare with $existing later.
+    $volunteers_2[$value] = $volunteers[$value];
   }
 
   // tth: Populate "existing"-array with volunteer data
@@ -612,11 +630,33 @@ function valhalla_volunteers_to_polling_station_roles($polling_station, $user_pa
     $id = NULL;
   }
 
+  // yani: make a array of whole volunteers.
+  if (!empty($volunteers_2)) {
+    foreach ($volunteers_2 as $role_name => $people) {
+      if(!empty($people)) {
+        foreach ($people as $key => $object) {
+          $id = $object->nid;
+          $extra_array[$id] = array(
+            'data' => _valhalla_helper_wrap_name(node_load($id), 'p',1),
+            'nid' => $id,
+            'title' => $role_name,
+          );
+        }
+    } }
+  }
+
+  // Yani: compare $volunteers and $existing to find out if the number of the place and the number of existed volunteers are the same.
+  $extra = array();
+  if (count($extra_array) > count($existing)) {
+    $extra= array_diff_assoc($extra_array, $existing);
+  }
+
   return array(
           'posts_to_fill' => $posts_to_fill,
           'party_id' => $user_party_id,
           'station_id' => $station_id,
           'existing' => isset($existing) ? $existing : "",
+          'extra' => isset($extra) ? $extra : "",
        );
 }
 
@@ -882,7 +922,6 @@ function valhalla_volunteers_send_rsvp($node) {
   $from = variable_get('site_mail', 'admin@example.com');
 
   $tokens = _valhalla_helper_get_volunteer_info_params($node);
-
   // Fetch the mail for the volunteers role
   if($mail = valghalla_mail_get_mail($tokens['!position_nid'], 'invitation')){
     $params = array_merge(array('tokens' => $tokens), $mail);
