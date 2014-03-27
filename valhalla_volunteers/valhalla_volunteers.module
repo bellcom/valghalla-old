@@ -575,14 +575,12 @@ function valhalla_volunteers_to_polling_station_roles($polling_station, $user_pa
     }
   }
 
-  //error_log(' posts_to_fill 571 =>'.print_r($posts_to_fill,TRUE), 3, '//Applications/MAMP/htdocs/Valghalla.yani/logs/error_log.log');
   // tth: Get all roles, query all content from bundle 'roles'
   $role_array = _valhalla_helper_get_role_array();
 
   // tth: Loop through the roles used on the pollingstation, and load the volunteers
   // $station_role_id is the "uniqe" id for the current role from the current party on the
   // current station. This is set during the add volunteer to station routine
-
   foreach($posts_to_fill as $key => $value){
     $station_role_id = $user_party_id . $role_array[$value] . $station_id;
 
@@ -598,7 +596,6 @@ function valhalla_volunteers_to_polling_station_roles($polling_station, $user_pa
     // yani: this array contains all the existed volunteers, used to compare with $existing later.
     $volunteers_2[$value] = $volunteers[$value];
   }
-  //error_log(' $volunteers 2 =>'.print_r($volunteers_2,TRUE), 3, '/Applications/MAMP/htdocs/Valghalla.yani/logs/error_log.log');
 
   // tth: Populate "existing"-array with volunteer data
   foreach($posts_to_fill as $key => $value){
