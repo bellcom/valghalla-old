@@ -245,7 +245,7 @@ function _valhalla_helter_parse_csv_import($file_object, $party_forced = FALSE) 
         $party = $party_forced;
       }
       // yani: cpr change to with a dash. and length should be 11. 28/03/2014.
-      if (strlen($cpr) != 11) {
+      if (strlen($cpr) == 10 && !strpos($cpr, '-')) {
         $cpr = substr($cpr,0,6) . "-". substr($cpr,6,4);
       }
       if (FALSE == _valhalla_helper_validate_cpr($cpr)) {
