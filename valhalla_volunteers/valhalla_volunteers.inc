@@ -135,15 +135,15 @@ function _valhalla_helper_get_volunteer_by_cpr($cpr) {
 
 /**
  * Thomas Thune Hansen <tth@bellcom.dk>
- *
- * Length has to be 10 characters, and it cant contain a dash.
+ * Yani Xu <yani@bellcom.dk> Change to with a dash. and length should be 11. 28/03/2014.
+ * Length has to be 11 characters, and it must contain a dash.
  *
  * @param string $cpr
  * @return boolean
  */
 function _valhalla_helper_validate_cpr($cpr) {
-  if(strlen($cpr) === 10 && !strpos($cpr, '-')){
-    return true;
+  if(strlen($cpr) === 11 && strpos($cpr, '-')){
+    return TRUE;
   }
   return false;
 }
@@ -218,23 +218,36 @@ function _valhalla_helter_parse_csv_import($file_object, $party_forced = FALSE) 
   if ($handle = fopen($file_object->uri, 'r')) {
 
     while (($data = fgetcsv($handle, 1024, ";")) !== FALSE) {
+      $number = explode(',',$data[0]);
       if ($counter == 0) {
         // header line..
         $counter++;
         continue;
       }
 
-      if (empty($data[0]) || (count($data) != 5)) {
+      if (empty($data[0]) || count($number) != 5) {
         continue;
       }
 
+      foreach ($number as $key => $value) {
+        $value = explode('"',$value);
+        if (isset($value[1])) {
+          $number[$key] = $value[1];
+        }
+        else {
+          $number[$key] = $value[0];
+        }
+      }
       // extract fields into readable variables
-      list($party, $cpr, $name, $email, $phone) = $data;
+      list($party, $cpr, $name, $email, $phone) = $number;
 
       if ($party_forced) {
         $party = $party_forced;
       }
-
+      // yani: cpr change to with a dash. and length should be 11. 28/03/2014.
+      if (strlen($cpr) != 11) {
+        $cpr = substr($cpr,0,6) . "-". substr($cpr,6,4);
+      }
       if (FALSE == _valhalla_helper_validate_cpr($cpr)) {
         $failed[$cpr] = $name;
         continue;
@@ -273,7 +286,8 @@ function _valhalla_helter_parse_csv_import($file_object, $party_forced = FALSE) 
           $tid = $party;
         } else {
           $term = taxonomy_get_term_by_name($party);
-          $tid = array_shift(array_keys($term));
+          $tmp = array_keys($term);
+          $tid = array_shift($tmp);
         }
         $node->field_party[$language->language][0]['tid'] = $tid;
       }
