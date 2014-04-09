@@ -35,7 +35,6 @@ features[field_base][] = field_address_road_no
 features[field_base][] = field_address_zipcode
 features[field_base][] = field_ansvarlig
 features[field_base][] = field_bogstav
-features[field_base][] = field_chairman
 features[field_base][] = field_constituency
 features[field_base][] = field_contact
 features[field_base][] = field_cpr_number

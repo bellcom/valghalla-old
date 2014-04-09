@@ -1,5 +1,7 @@
 <?php
 /**
  * @file
- * Drupal needs this blank file.
+ * Code for the valhalla_field_instances feature.
  */
+
+include_once 'valhalla_field_instances.features.inc';

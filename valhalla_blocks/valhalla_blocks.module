@@ -15,6 +15,10 @@ function valhalla_blocks_block_info() {
       'info' => t('Valgkredsstatus'),
       'cache' => DRUPAL_NO_CACHE
     ),
+    'party_constituency_error' => array(
+      'info' => t('Valgsted fejl'),
+      'cache' => DRUPAL_NO_CACHE
+    ),
   );
 }
 
@@ -428,6 +432,47 @@ function valhalla_blocks_block_view($delta = '') {
       }
       $block['content'] = $output;
       break;
-    }
+    case 'party_constituency_error':
+
+      $block['content'] = "";
+      foreach (entity_load('node', FALSE, array('type' => 'polling_station')) as $polling_station) {
+        if(in_array('Valgsekretær', $user->roles)){
+          $taxonomy = taxonomy_vocabulary_machine_name_load('partier');
+          foreach (taxonomy_get_tree($taxonomy->vid) as $term) {
+            $posts_array = valhalla_volunteers_to_polling_station_markup($polling_station, $term->tid, 'block3');
+            if(!empty($posts_array['extra'])){
+              $extra_array[] = array(
+                'station_id' => $posts_array['station_id'],
+                'polling_station_name' => $polling_station->title,
+                'party_id' => $posts_array['party_id'],
+              );
+              $block['content'] = theme('station_error', array(
+                'extra' => $extra_array,
+              ));
+            }
+          }
+        }
+      }
+      break;
+  }
   return $block;
+}
+/**
+ * implement hook_theme for valhalla_blocks module
+ *
+ * @param array $existing
+ * @param string $type
+ * @param string $theme
+ * @param string $path
+ * @return array
+ */
+function valhalla_blocks_theme($existing, $type, $theme, $path) {
+  $items = array();
+
+  $items['station_error'] = array(
+      'variables' => array('extra' => NULL),
+      'template' => 'valhalla_blocks_station_error'
+  );
+
+  return $items;
 }

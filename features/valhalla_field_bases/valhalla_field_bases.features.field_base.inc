@@ -366,49 +366,6 @@ function valhalla_field_bases_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_chairman'
-  $field_bases['field_chairman'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_chairman',
-    'foreign keys' => array(
-      'nid' => array(
-        'columns' => array(
-          'nid' => 'nid',
-        ),
-        'table' => 'node',
-      ),
-    ),
-    'indexes' => array(
-      'nid' => array(
-        0 => 'nid',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'node_reference',
-    'settings' => array(
-      'referenceable_types' => array(
-        'article' => 0,
-        'constituency' => 0,
-        'election' => 0,
-        'email' => 0,
-        'page' => 0,
-        'panel' => 0,
-        'polling_station' => 0,
-        'volunteers' => 'volunteers',
-      ),
-      'view' => array(
-        'args' => array(),
-        'display_name' => '',
-        'view_name' => '',
-      ),
-    ),
-    'translatable' => 1,
-    'type' => 'node_reference',
-  );
-
   // Exported field_base: 'field_constituency'
   $field_bases['field_constituency'] = array(
     'active' => 1,
