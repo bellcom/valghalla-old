@@ -92,7 +92,7 @@ function content_type_polling_station_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 19,
+      'weight' => 23,
     ),
   );
 
@@ -132,7 +132,7 @@ function content_type_polling_station_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 15,
+      'weight' => 21,
     ),
   );
 
@@ -172,7 +172,7 @@ function content_type_polling_station_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 14,
+      'weight' => 20,
     ),
   );
 
@@ -212,7 +212,7 @@ function content_type_polling_station_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 12,
+      'weight' => 18,
     ),
   );
 
@@ -292,7 +292,7 @@ function content_type_polling_station_field_default_field_instances() {
         'size' => 10,
       ),
       'type' => 'text_textfield',
-      'weight' => 13,
+      'weight' => 19,
     ),
   );
 
@@ -333,7 +333,7 @@ function content_type_polling_station_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 18,
+      'weight' => 22,
     ),
   );
 
@@ -503,7 +503,7 @@ function content_type_polling_station_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 11,
+      'weight' => 13,
     ),
   );
 
@@ -549,7 +549,7 @@ function content_type_polling_station_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 12,
+      'weight' => 14,
     ),
   );
 
@@ -806,7 +806,7 @@ function content_type_polling_station_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 6,
+      'weight' => 12,
     ),
   );
 
@@ -851,7 +851,7 @@ function content_type_polling_station_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 5,
+      'weight' => 11,
     ),
   );
 
