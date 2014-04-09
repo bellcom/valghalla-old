@@ -49,7 +49,6 @@ function valhalla_volunteers_admin() {
     <li><a href="/valghalla/volunteers/action/reset/pos">'.t('Nulstil pladser').'</a></li>
     <li><a href="/valghalla/volunteers/action/reset/rsvp">'.t('Nulstil svar').'</a></li></ul>
     </div>
-
     ';
   return $out . views_embed_view('valg') . $reset;
 }
