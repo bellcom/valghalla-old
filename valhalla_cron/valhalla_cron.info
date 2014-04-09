@@ -1,8 +1,0 @@
-; $Id$
-name = valhalla cron
-description = holds cron jobs used by the valhalla project
-package = valhalla
-core = 7.x
-
-dependencies[] = "valhalla_volunteers"
-dependencies[] = "valhalla_mail"
