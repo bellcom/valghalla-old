@@ -241,39 +241,6 @@ function valhalla_field_instances_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'comment-comment_node_polling_station-comment_body'
-  $field_instances['comment-comment_node_polling_station-comment_body'] = array(
-    'bundle' => 'comment_node_polling_station',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'hidden',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'comment',
-    'field_name' => 'comment_body',
-    'label' => 'Comment',
-    'required' => TRUE,
-    'settings' => array(
-      'text_processing' => 1,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'module' => 'text',
-      'settings' => array(
-        'rows' => 5,
-      ),
-      'type' => 'text_textarea',
-      'weight' => 0,
-    ),
-  );
-
   // Exported field_instance: 'comment-comment_node_volunteers-comment_body'
   $field_instances['comment-comment_node_volunteers-comment_body'] = array(
     'bundle' => 'comment_node_volunteers',
@@ -303,39 +270,6 @@ function valhalla_field_instances_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 0,
-    ),
-  );
-
-  // Exported field_instance: 'field_collection_item-field_volunteers_pr_party_1-field_party_list'
-  $field_instances['field_collection_item-field_volunteers_pr_party_1-field_party_list'] = array(
-    'bundle' => 'field_volunteers_pr_party_1',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'valhalla_field_party_volunteers_v3',
-        'settings' => array(),
-        'type' => 'party_volunteers_default_v3',
-        'weight' => 4,
-      ),
-    ),
-    'entity_type' => 'field_collection_item',
-    'field_name' => 'field_party_list',
-    'label' => 'Party',
-    'required' => 0,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 0,
-      'module' => 'valhalla_field_party_volunteers_v3',
-      'settings' => array(
-        'available_parties' => array(),
-      ),
-      'type' => 'party_volunteers_standard_v3',
       'weight' => 0,
     ),
   );
@@ -805,7 +739,6 @@ function valhalla_field_instances_field_default_field_instances() {
       'active' => 1,
       'module' => 'date',
       'settings' => array(
-        'display_all_day' => 0,
         'increment' => 1,
         'input_format' => 'm/d/Y - H:i:s',
         'input_format_custom' => '',
@@ -1235,7 +1168,6 @@ function valhalla_field_instances_field_default_field_instances() {
   t('Logo');
   t('Noter');
   t('Parti');
-  t('Party');
   t('Sekretær');
   t('Sæt igang');
   t('Tags');
