@@ -22,14 +22,62 @@ function valhalla_blocks_block_info() {
   );
 }
 
+/**
+ * implements hook_menu()
+ */
+function valhalla_blocks_menu(){
+  $items['valhalla_blocks/ajax/view'] = array(
+    'page callback' => 'valhalla_block_ajax_view',
+    'access callback' => 'user_is_logged_in'
+  );
+
+  return $items;
+}
+
+/**
+ * implements hook_init()
+ */
+function valhalla_blocks_init(){
+  // JS for fetching block contents with AJAX.
+  drupal_add_js(drupal_get_path('module', 'valhalla_blocks') . '/js/valhalla_blocks.js', 'file');
+}
 
 /**
  * hook_block_view implementation
+ */
+function valhalla_blocks_block_view($delta = '') {
+  valhalla_blocks_generate_view($delta);
+  $cache = cache_get('valhalla_blocks_'.$delta);
+
+  $loading = '<div id="valhalla_block-' . $delta . '">
+    <div style="position: absolute;
+        width: 100%;
+        height: 100%;
+        background: rgba(55, 55, 55, 0.4)"
+      class="valhalla-loading-status">
+    <div style="position:absolute;
+        top: 50%;
+        left: 45%;"
+       class="loading-gif"></div></div>';
+  $loading .= $cache->data;
+  $loading .= '</div><script>valhalla_blocks.loadOverview("' . $delta . '");</script>';
+  return array('content' => $loading);
+}
+
+/**
+ * Page callback
+ */
+function valhalla_block_ajax_view($delta){
+  print valhalla_blocks_generate_view($delta);
+}
+
+/**
+ * Generate content for blocks
  *
  * @param string $delta
  * @return array
  */
-function valhalla_blocks_block_view($delta = '') {
+function valhalla_blocks_generate_view($delta = '') {
   global $user, $language;
 
   $user_party_id = &drupal_static(__FUNCTION__);
@@ -54,7 +102,7 @@ function valhalla_blocks_block_view($delta = '') {
   $roles=array();
   $res = db_select('node', 'n')
                     ->distinct()
-                    ->fields('n', array('nid', 'title'))   
+                    ->fields('n', array('nid', 'title'))
                       ->condition('n.type', 'roles')
                     ->execute();
 
@@ -69,7 +117,7 @@ function valhalla_blocks_block_view($delta = '') {
   $block = array();
   switch ($delta) {
     case 'party_status':
-      $block['content'] = '';
+      $view = '';
 
       // let administrators pic a party to see stats for
       if (TRUE === $admin_user) {
@@ -81,7 +129,7 @@ function valhalla_blocks_block_view($delta = '') {
           $parties[] = '<span'.($user_party_id == $item->tid ? ' style="font-weight:bold;"' : '').'>' . l($item->name, 'valhalla/change/party/' . $item->tid) . '</span>';
         }
           $parties[] = '<span>' . l('alle', 'valhalla/change/party/0') . '</span>';
-          $block['content'] .= '<div id="other-parties"><h3>Se status for liste:</h3><p>'.implode(', ', $parties).'</p></div>';
+          $view .= '<div id="other-parties"><h3>Se status for liste:</h3><p>'.implode(', ', $parties).'</p></div>';
       }
 
       $grand_total = 0;
@@ -194,7 +242,7 @@ function valhalla_blocks_block_view($delta = '') {
       $total_missing = $total_volunteers - ($total_yes + $total_no);
 
       // tth: Overall status, generate markup
-      $block['content'] .= '
+      $view .= '
         <table>
           <tr>
             <td></td>
@@ -230,7 +278,7 @@ function valhalla_blocks_block_view($delta = '') {
 
 
         // Role status
-      $block['content'] .= '<table>
+      $view .= '<table>
               <tr>
                 <td></td>
                 <td></td>
@@ -253,7 +301,7 @@ function valhalla_blocks_block_view($delta = '') {
           $total_role[$title] = 0;
         }
 
-        $block['content'] .= '
+        $view .= '
             <tr>
               <td><div class="partistatusenhed">'. $title .'</div></td>
               <td><div class="partistatusenhedvaerdi '. $no .'">'. $total_volunteers_role[$title] . '/' . $total_role[$title] . '</div> </td>
@@ -261,7 +309,7 @@ function valhalla_blocks_block_view($delta = '') {
             </tr>';
       }
 
-      $block['content'] .= '</table>';
+      $view .= '</table>';
       break;
 
     case 'party_constituency_status':
@@ -289,7 +337,7 @@ function valhalla_blocks_block_view($delta = '') {
 
           if ($items=field_get_items('node', $polling_station, 'field_volunteers_pr_party_1')){
             foreach(array_values($items) as $value)
-                $entity_ids[]= $value['value']; 
+                $entity_ids[]= $value['value'];
           }
           foreach($roles as $nid =>$title){
             if(!isset($data[$constituency->title][$polling_station->nid][$nid]['needed'])){
@@ -352,7 +400,7 @@ function valhalla_blocks_block_view($delta = '') {
           foreach($roles as $nid=>$title){
             // tth: Count posts in a new way
             // If the user_party_id is not set, we set it as a wildcard.
-            // this gets ud all posts with the roles for the 
+            // this gets ud all posts with the roles for the
             $party_id = $user_party_id;
 
             if(!$party_id){
@@ -430,11 +478,11 @@ function valhalla_blocks_block_view($delta = '') {
           $output .= theme('table', $table);
         }
       }
-      $block['content'] = $output;
+      $view = $output;
       break;
     case 'party_constituency_error':
 
-      $block['content'] = "";
+      $view = "";
       foreach (entity_load('node', FALSE, array('type' => 'polling_station')) as $polling_station) {
         if(in_array('Valgsekretær', $user->roles)){
           $taxonomy = taxonomy_vocabulary_machine_name_load('partier');
@@ -446,7 +494,7 @@ function valhalla_blocks_block_view($delta = '') {
                 'polling_station_name' => $polling_station->title,
                 'party_id' => $posts_array['party_id'],
               );
-              $block['content'] = theme('station_error', array(
+              $view = theme('station_error', array(
                 'extra' => $extra_array,
               ));
             }
@@ -455,7 +503,9 @@ function valhalla_blocks_block_view($delta = '') {
       }
       break;
   }
-  return $block;
+
+  cache_set('valhalla_blocks_'.$delta, $view);
+  return $view;
 }
 /**
  * implement hook_theme for valhalla_blocks module
