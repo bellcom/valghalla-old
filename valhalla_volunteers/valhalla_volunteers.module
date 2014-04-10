@@ -310,8 +310,6 @@ function valhalla_volunteers_rsvp_form($form, &$form_state) {
 /**
  * handle rsvp form submits
  *
- * @param array $form
- * @param array $form_state
  */
 function valhalla_volunteers_rsvp_form_submit($form, &$form_state) {
   global $language;
@@ -330,6 +328,7 @@ function valhalla_volunteers_rsvp_form_submit($form, &$form_state) {
   if($mail = valghalla_mail_get_mail($tokens['!position_nid'], 'rsvp_'.$params['rsvp_type'])){
     $params = array_merge(array('tokens' => $tokens), $mail);
   }
+
   drupal_mail('valghalla_mail', 'mail', $to,$language,$params,$from,TRUE);
 
   // Send email to roles or other email address, if user cancelled to attend.
@@ -339,14 +338,11 @@ function valhalla_volunteers_rsvp_form_submit($form, &$form_state) {
   // allow the "wife" to set her status as well.
   unset($_SESSION['valhalla_volunteer']);
 }
+
 /**
- *Send an email to roles or/and other email, when a volunteer cancelled to attend election
+ * Send an email to roles or/and other email, when a volunteer cancelled to attend election
  *
- *@param integer $answer
- *@param stdClass $node
- *@global stdClass $language
- *@return void
- *@author yani
+ * @author Yani Xu <yani@bellcom.dk>
  */
 function valhalla_volunteers_cancellation_mail_to_roles($answer, $node){
   global $language;
@@ -364,7 +360,7 @@ function valhalla_volunteers_cancellation_mail_to_roles($answer, $node){
 
         $email_nid = variable_get("valghalla_mail_cancellation_from_participants_mail_rsvp_no");
         $from = variable_get('site_mail', 'admin@example.com');
-        if($params = valghalla_mail_get_mail_byId($email_nid)) {
+        if($params = valghalla_mail_get_mail(FALSE, FALSE, $email_nid)) {
           $tokens = _valhalla_helper_get_volunteer_info_params($node);
           $params = array_merge(array('tokens' => $tokens), $params);
           drupal_mail('valghalla_mail', 'mail', $to, $language, $params, $from, TRUE);
@@ -378,8 +374,7 @@ function valhalla_volunteers_cancellation_mail_to_roles($answer, $node){
       if(!empty($to)) {
         $email_nid = variable_get("valghalla_mail_cancellation_from_participants_mail_rsvp_never");
         $from = variable_get('site_mail', 'admin@example.com');
-
-        if($params = valghalla_mail_get_mail_byId($email_nid)) {
+        if($params = valghalla_mail_get_mail(FALSE, FALSE, $email_nid)) {
           $tokens = _valhalla_helper_get_volunteer_info_params($node);
           $params = array_merge(array('tokens' => $tokens), $params);
           drupal_mail('valghalla_mail', 'mail', $to, $language, $params, $from, TRUE);
@@ -388,13 +383,12 @@ function valhalla_volunteers_cancellation_mail_to_roles($answer, $node){
     break;
   }
 }
+
 /**
- *Get a list of email addresses according to role which are selected in config file
- *see also valghalla_mail_admin
+ * Get a list of email addresses according to role which are selected in config file
+ * see also valghalla_mail_admin
  *
- *@param none
- *@return string $to (a list of email addresse, seperate by ",")
- *@author yani
+ * @author Yani Xu <yani@bellcom.dk>
  */
 function valhalla_volunteers_add_email_to_list() {
   module_load_include('inc', 'valghalla_mail', 'valghalla_mail_admin');
@@ -811,6 +805,7 @@ function valhalla_volunteers_to_polling_station_ajax($action) {
   }
   die(drupal_json_output($output));
 }
+
 /**
  * Send an email when volunteer is been removed from place.
  *
@@ -824,7 +819,7 @@ function valhalla_volunteers_remove_mail($node) {
   if (empty($node->field_rsvp) || (isset($node->field_rsvp[$language->language]) && $node->field_rsvp[$language->language][0]['value'] == 1)) {
     $email_nid = variable_get("valghalla_mail_remove");
     $from = variable_get('site_mail', 'admin@example.com');
-    if($params = valghalla_mail_get_mail_byId($email_nid)) {
+    if($params = valghalla_mail_get_mail(FALSE, FALSE, $email_nid)) {
       $tokens = _valhalla_helper_get_volunteer_info_params($node);
       $params = array_merge(array('tokens' => $tokens), $params);
       drupal_mail('valghalla_mail', 'mail', $user_email, $language, $params, $from, TRUE);
