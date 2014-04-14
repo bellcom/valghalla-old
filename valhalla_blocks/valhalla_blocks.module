@@ -152,6 +152,9 @@ function valhalla_blocks_block_view($delta = '') {
         foreach($volunteers_nids_array as $volunteer_nids){
           $role_title = key($volunteer_nids);
 
+          if(!isset($volunteer_nids[$role_title])){
+            continue;
+          }
           $total_volunteers_role[$role_title] += count($volunteer_nids[$role_title]);
           $total_volunteers += count(reset($volunteer_nids));
           // tth: Get rsvp status for volunteers
