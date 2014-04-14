@@ -153,6 +153,7 @@ function valhalla_blocks_block_view($delta = '') {
           if(!isset($volunteer_nids[$role_title])){
             continue;
           }
+
           $total_volunteers_role[$role_title] += count($volunteer_nids[$role_title]);
           $total_volunteers += count(reset($volunteer_nids));
           // tth: Get rsvp status for volunteers
@@ -477,7 +478,7 @@ function valhalla_blocks_query_volunteers_all_stations($party_id, $role_id, $pol
     }
   }
 
-  return $volunteers;
+  return array_keys($volunteers);
 }
 
 /**
