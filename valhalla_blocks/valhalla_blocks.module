@@ -84,15 +84,13 @@ function valhalla_blocks_block_view($delta = '') {
           $block['content'] .= '<div id="other-parties"><h3>Se status for liste:</h3><p>'.implode(', ', $parties).'</p></div>';
       }
 
-      // Get an array of all polling stations
-      $res = db_select('node', 'n')
-                          ->distinct()
-                          ->fields('n', array('nid', 'title'))
-                          ->condition('n.type', 'polling_station')
-                          ->execute();
-
-      while($rec = $res->fetchAssoc()) {
-        $polling_stations[$rec['nid']] = $rec['nid'];
+      $query = new EntityFieldQuery();
+      $query->entityCondition('bundle', 'polling_station')
+            ->entityCondition('entity_type', 'node')
+            ->propertyCondition('status', 1);
+      $result = $query->execute();
+      if(!empty($result)){
+        $polling_stations = array_keys(array_shift($result));
       }
 
       $grand_total = 0;
