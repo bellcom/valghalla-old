@@ -54,7 +54,7 @@ function valhalla_blocks_block_view($delta = '') {
   $roles=array();
   $res = db_select('node', 'n')
                     ->distinct()
-                    ->fields('n', array('nid', 'title'))   
+                    ->fields('n', array('nid', 'title'))
                       ->condition('n.type', 'roles')
                     ->execute();
 
@@ -82,6 +82,15 @@ function valhalla_blocks_block_view($delta = '') {
         }
           $parties[] = '<span>' . l('alle', 'valhalla/change/party/0') . '</span>';
           $block['content'] .= '<div id="other-parties"><h3>Se status for liste:</h3><p>'.implode(', ', $parties).'</p></div>';
+      }
+
+      $query = new EntityFieldQuery();
+      $query->entityCondition('bundle', 'polling_station')
+            ->entityCondition('entity_type', 'node')
+            ->propertyCondition('status', 1);
+      $result = $query->execute();
+      if(!empty($result)){
+        $polling_stations = array_keys(array_shift($result));
       }
 
       $grand_total = 0;
@@ -120,20 +129,7 @@ function valhalla_blocks_block_view($delta = '') {
 
           $volunteers_result = NULL;
 
-          // tth: Query the volunteers node
-          $volunteer_query = new EntityFieldQuery();
-          $volunteer_query->fieldCondition('field_polling_station_post', 'value', $party_id.$nid.'%', 'like')
-            ->entityCondition('bundle', 'volunteers')
-            ->entityCondition('entity_type', 'node')
-            ->propertyCondition('status', 1);
-          $reset_query = $volunteer_query->execute();
-          $volunteers_array = reset($reset_query);
-
-          if(is_array($volunteers_array)){
-            $volunteers_result = array_keys($volunteers_array);
-          }
-
-          if($volunteers_result){
+          if($volunteers_result = valhalla_blocks_query_volunteers_all_stations($party_id, $nid, $polling_stations)){
             // tth: $volunteers_nids_array will end up containing node ids for all volunteers
             // with polling station posts on all polling stations for the selected party(/ies)
             // We save the title of the role as well, as we use this later for the extra counters
@@ -154,9 +150,12 @@ function valhalla_blocks_block_view($delta = '') {
         foreach($volunteers_nids_array as $volunteer_nids){
           $role_title = key($volunteer_nids);
 
+          if(!isset($volunteer_nids[$role_title])){
+            continue;
+          }
+
           $total_volunteers_role[$role_title] += count($volunteer_nids[$role_title]);
           $total_volunteers += count(reset($volunteer_nids));
-
           // tth: Get rsvp status for volunteers
           // No: rsvp_values(2/3)
           $rsvp_no = db_query('SELECT *
@@ -289,7 +288,7 @@ function valhalla_blocks_block_view($delta = '') {
 
           if ($items=field_get_items('node', $polling_station, 'field_volunteers_pr_party_1')){
             foreach(array_values($items) as $value)
-                $entity_ids[]= $value['value']; 
+                $entity_ids[]= $value['value'];
           }
           foreach($roles as $nid =>$title){
             if(!isset($data[$constituency->title][$polling_station->nid][$nid]['needed'])){
@@ -352,7 +351,7 @@ function valhalla_blocks_block_view($delta = '') {
           foreach($roles as $nid=>$title){
             // tth: Count posts in a new way
             // If the user_party_id is not set, we set it as a wildcard.
-            // this gets ud all posts with the roles for the 
+            // this gets ud all posts with the roles for the
             $party_id = $user_party_id;
 
             if(!$party_id){
@@ -457,6 +456,31 @@ function valhalla_blocks_block_view($delta = '') {
   }
   return $block;
 }
+
+/**
+ * Fetch all volunteer ids on all stations for given
+ * party and role
+ */
+function valhalla_blocks_query_volunteers_all_stations($party_id, $role_id, $polling_stations){
+  $volunteers = array();
+
+  foreach($polling_stations as $station_id){
+    $volunteer_query = new EntityFieldQuery();
+    $volunteer_query->fieldCondition('field_polling_station_post', 'value', $party_id.$role_id.$station_id, 'like')
+      ->entityCondition('bundle', 'volunteers')
+      ->entityCondition('entity_type', 'node')
+      ->propertyCondition('status', 1);
+    $reset_query = $volunteer_query->execute();
+    $volunteers_array = reset($reset_query);
+
+    if($volunteers_array){
+      $volunteers += $volunteers_array;
+    }
+  }
+
+  return array_keys($volunteers);
+}
+
 /**
  * implement hook_theme for valhalla_blocks module
  *
