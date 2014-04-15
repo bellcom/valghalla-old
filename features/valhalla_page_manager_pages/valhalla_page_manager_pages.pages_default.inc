@@ -124,7 +124,7 @@ function valhalla_page_manager_pages_default_page_manager_pages() {
   $pages['alle_partiets_tilforordnede'] = $page;
 
   $page = new stdClass();
-  $page->disabled = TRUE; /* Edit this to true to make a default page disabled initially */
+  $page->disabled = FALSE; /* Edit this to true to make a default page disabled initially */
   $page->api_version = 1;
   $page->name = 'forside';
   $page->task = 'page';
@@ -670,14 +670,14 @@ function valhalla_page_manager_pages_default_page_manager_pages() {
       'center' => array(
         'type' => 'region',
         'title' => 'Center',
-        'width' => 50,
+        'width' => '43.174993174993176',
         'width_type' => '%',
         'parent' => 'main-row',
       ),
       'h__jre_omr__de' => array(
         'type' => 'region',
         'title' => 'Højre område',
-        'width' => 50,
+        'width' => '56.825006825006824',
         'width_type' => '%',
         'parent' => 'main-row',
         'class' => 'hoejre',
@@ -712,19 +712,32 @@ function valhalla_page_manager_pages_default_page_manager_pages() {
     $pane = new stdClass();
     $pane->pid = 'new-1';
     $pane->panel = 'center';
-    $pane->type = 'node';
-    $pane->subtype = 'node';
+    $pane->type = 'custom';
+    $pane->subtype = 'custom';
     $pane->shown = TRUE;
-    $pane->access = array();
+    $pane->access = array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'role',
+          'settings' => array(
+            'rids' => array(
+              0 => 3,
+            ),
+          ),
+          'context' => 'logged-in-user',
+          'not' => FALSE,
+        ),
+      ),
+    );
     $pane->configuration = array(
-      'nid' => 38,
-      'links' => 0,
-      'leave_node_title' => 0,
-      'identifier' => '',
-      'build_mode' => 'full',
-      'link_node_title' => 0,
-      'override_title' => 1,
-      'override_title_text' => 'Status',
+      'admin_title' => '',
+      'title' => 'Status',
+      'body' => '<p><strong>Velkommen til Valghalla – et system til at håndtere tilforordnede til valg.</strong><br />
+I listen til højre kan du se dit partis antal af tilforordnede pr. valgsted. Du kan samtidig se, hvor mange tilforordnede, der er lagt i systemet. 2/6 betyder derfor, at du har fundet 2 ud af 6 personer på det pågældende valgsted.<br />
+Når valget i systemet sættes igang, vil&nbsp;systemet spørge disse personer direkte over e-mail.</p>
+',
+      'format' => 'filtered_html',
+      'substitute' => TRUE,
     );
     $pane->cache = array();
     $pane->style = array(
@@ -737,44 +750,6 @@ function valhalla_page_manager_pages_default_page_manager_pages() {
     $display->panels['center'][0] = 'new-1';
     $pane = new stdClass();
     $pane->pid = 'new-2';
-    $pane->panel = 'center';
-    $pane->type = 'custom';
-    $pane->subtype = 'custom';
-    $pane->shown = FALSE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'admin_title' => 'Parti status',
-      'title' => 'Parti navn',
-      'body' => '<div class="partistatuslinie">
-<div class="partistatusenhed">Status total</div>
-<div class="partistatusenhedvaerdi">20%</div>
-</div>
-<div class="partistatuslinie">
-<div class="partistatusenhed">Accepteredel</div>
-<div class="partistatusenhedvaerdi">20%</div>
-</div>
-<div class="partistatuslinie">
-<div class="partistatusenhed">Afventer</div>
-<div class="partistatusenhedvaerdi">20%</div>
-</div>
-<div class="partistatuslinie">
-<div class="partistatusenhed">Ledige pladser</div>
-<div class="partistatusenhedvaerdi">20%</div>
-</div>',
-      'format' => 'full_html',
-      'substitute' => TRUE,
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 1;
-    $display->content['new-2'] = $pane;
-    $display->panels['center'][1] = 'new-2';
-    $pane = new stdClass();
-    $pane->pid = 'new-3';
     $pane->panel = 'center';
     $pane->type = 'block';
     $pane->subtype = 'valhalla_blocks-party_status';
@@ -790,73 +765,11 @@ function valhalla_page_manager_pages_default_page_manager_pages() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 2;
-    $display->content['new-3'] = $pane;
-    $display->panels['center'][2] = 'new-3';
+    $pane->position = 1;
+    $display->content['new-2'] = $pane;
+    $display->panels['center'][1] = 'new-2';
     $pane = new stdClass();
-    $pane->pid = 'new-4';
-    $pane->panel = 'center';
-    $pane->type = 'custom';
-    $pane->subtype = 'custom';
-    $pane->shown = FALSE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'admin_title' => '',
-      'title' => 'Tilforordnede',
-      'body' => '<a href="/allevores">Alle</a>
-
-<a href="/vil-fjernes">Har sagt DE ALDRIG VIL deltage</a>
-
-<a href="/mangler-svar">Har ikke svaret</a>
-',
-      'format' => 'filtered_html',
-      'substitute' => TRUE,
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 3;
-    $display->content['new-4'] = $pane;
-    $display->panels['center'][3] = 'new-4';
-    $pane = new stdClass();
-    $pane->pid = 'new-5';
-    $pane->panel = 'h__jre_omr__de';
-    $pane->type = 'custom';
-    $pane->subtype = 'custom';
-    $pane->shown = FALSE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'admin_title' => 'Valgkredse',
-      'title' => 'Valgkredse',
-      'body' => '<table>
-<thead><th><a href="#">Valgkreds 1</a></th><th>VAF / VA</th><th>TF</th></thead>
-<tbody>
-
-<tr><td class="valgsted">Valgsted 1</td><td class="vafva">20%</td><td class="friv">20%</td></tr>
-<tr><td class="valgsted">Valgsted 1</td><td class="vafva">20%</td><td class="friv">20%</td></tr>
-<tr><td class="valgsted">Valgsted 1</td><td class="vafva">20%</td><td class="friv">20%</td></tr>
-<tr><td class="valgsted">Valgsted 1</td><td class="vafva">20%</td><td class="friv">20%</td></tr>
-<tr><td class="valgsted">Valgsted 1</td><td class="vafva">20%</td><td class="friv">20%</td></tr>
-</tbody>
-</table>
-</div>',
-      'format' => 'full_html',
-      'substitute' => TRUE,
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 0;
-    $display->content['new-5'] = $pane;
-    $display->panels['h__jre_omr__de'][0] = 'new-5';
-    $pane = new stdClass();
-    $pane->pid = 'new-6';
+    $pane->pid = 'new-3';
     $pane->panel = 'h__jre_omr__de';
     $pane->type = 'block';
     $pane->subtype = 'valhalla_blocks-party_constituency_status';
@@ -872,11 +785,31 @@ function valhalla_page_manager_pages_default_page_manager_pages() {
     );
     $pane->css = array();
     $pane->extras = array();
+    $pane->position = 0;
+    $display->content['new-3'] = $pane;
+    $display->panels['h__jre_omr__de'][0] = 'new-3';
+    $pane = new stdClass();
+    $pane->pid = 'new-4';
+    $pane->panel = 'h__jre_omr__de';
+    $pane->type = 'block';
+    $pane->subtype = 'valhalla_blocks-party_constituency_error';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
     $pane->position = 1;
-    $display->content['new-6'] = $pane;
-    $display->panels['h__jre_omr__de'][1] = 'new-6';
+    $display->content['new-4'] = $pane;
+    $display->panels['h__jre_omr__de'][1] = 'new-4';
   $display->hide_title = PANELS_TITLE_NONE;
-  $display->title_pane = 'new-2';
+  $display->title_pane = '0';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['parti_status'] = $page;
