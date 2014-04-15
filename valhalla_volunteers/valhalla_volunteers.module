@@ -862,43 +862,6 @@ function valhalla_volunteers_node_update($node) {
   ) {
     valhalla_volunteers_send_rsvp($node);
   }
-
-  if ($node->type == 'election') {
-    if (isset($node->field_election_status[$language->language][0]['value']) &&
-        ($node->field_election_status[$language->language][0]['value'] == 1)
-    ) {
-
-      // only allow one open election at a time.
-      foreach (entity_load('node', FALSE, array('type' => 'election')) as $election) {
-        if ($election->nid == $node->nid) {
-          continue;
-        }
-        $election->field_election_status = array();
-        node_save($election);
-      }
-
-      // send mails to volunteers, but only once.
-      if (empty($node->field_election_mails_send[$language->language][0]['value']) ||
-          ($node->field_election_mails_send[$language->language][0]['value'] == 0)
-      ) {
-        $select = db_select('field_data_field_polling_station_post', 'psp')
-            ->fields('psp', array('entity_id'))
-            ->condition('psp.bundle', 'volunteers');
-        $select->addJoin('INNER', 'field_data_field_polling_station', 'ps', 'psp.entity_id = ps.entity_id');
-        $nids = $select->execute()
-            ->fetchAll(PDO::FETCH_COLUMN);
-
-        if (is_array($nids)) {
-          foreach (node_load_multiple($nids) as $volunteer) {
-            valhalla_volunteers_send_rsvp($volunteer);
-          }
-        }
-
-        $node->field_election_mails_send[$language->language][0]['value'] = 1;
-        node_save($node);
-      }
-    }
-  }
 }
 
 /**
