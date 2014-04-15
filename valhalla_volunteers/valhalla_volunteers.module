@@ -1124,54 +1124,56 @@ function valhalla_volunteers_form_volunteers_node_form_alter(&$form, &$form_stat
  * Implements hook_node_validate
  */
 function valhalla_volunteers_node_validate($node, $form, &$form_state){
-  global $user;
+  if($node->type == "volunteers"){
+    global $user;
 
-  // Do some cpr validation
-  $field_language = key($form_state['values']['field_cpr_number']);
-
-  $cpr = $form_state['values']['field_cpr_number'][$field_language][0]['value'];
-  if(_valhalla_helper_get_volunteer_by_cpr($cpr)){
-    form_set_error('field_cpr_number', t('Der er allerede oprettet en frivillig med det CPR-nummer'));
-  }
-
-  if(!_valhalla_helper_validate_cpr($cpr)){
-    form_set_error('field_cpr_number', t('Det indtastede CPR-nummer er ikke korret formateret.'));
-  }
-
-  // Set user party id
-  $account = user_load($user->uid);
-  $user_party_id = empty($account->field_party[LANGUAGE_NONE][0]['tid']) ? FALSE : $account->field_party[LANGUAGE_NONE][0]['tid'];
-  $field_language = key($form_state['values']['field_party']);
-  if($user_party_id){
-    $form_state['values']['field_party'][$field_language][0]['tid'] = $user_party_id;
-  }
-  // Convert the role chosen, to a label on the volunteer
-  $role_id = '';
-  if(isset($form['roles_id'])){
+    // Do some cpr validation
     $field_language = key($form_state['values']['field_cpr_number']);
 
-    $role_id = $form_state['values']['roles_id'];
+    $cpr = $form_state['values']['field_cpr_number'][$field_language][0]['value'];
+    if(_valhalla_helper_get_volunteer_by_cpr($cpr)){
+      form_set_error('field_cpr_number', t('Der er allerede oprettet en frivillig med det CPR-nummer'));
+    }
 
-    $roles_array = _valhalla_helper_get_roles();
-    $form_state['values']['field_label'][$field_language][0]['value'] = strtolower($roles_array[$role_id]);
-  }
+    if(!_valhalla_helper_validate_cpr($cpr)){
+      form_set_error('field_cpr_number', t('Det indtastede CPR-nummer er ikke korret formateret.'));
+    }
 
-  // Set polling station post right away
-  $polling_station = '';
-  $field_language = key($form_state['values']['field_polling_station']);
-  if(!empty($form_state['values']['field_polling_station'][$field_language][0]['nid'])){
-    $polling_station = $form_state['values']['field_polling_station'][$field_language][0]['nid'];
-  }
+    // Set user party id
+    $account = user_load($user->uid);
+    $user_party_id = empty($account->field_party[LANGUAGE_NONE][0]['tid']) ? FALSE : $account->field_party[LANGUAGE_NONE][0]['tid'];
+    $field_language = key($form_state['values']['field_party']);
+    if($user_party_id){
+      $form_state['values']['field_party'][$field_language][0]['tid'] = $user_party_id;
+    }
+    // Convert the role chosen, to a label on the volunteer
+    $role_id = '';
+    if(isset($form['roles_id'])){
+      $field_language = key($form_state['values']['field_cpr_number']);
 
-  if (_valhalla_helper_validate_polling_post($polling_station, $role_id, $user_party_id)){
-    $station_role_id = $user_party_id . $role_id . $polling_station;
+      $role_id = $form_state['values']['roles_id'];
 
-    $field_language = key($form_state['values']['field_polling_station_post']);
-    $form_state['values']['field_polling_station_post'][$field_language][]['value'] = $station_role_id;
-    drupal_set_message(t('Deltageren er blevet tildelt en plads på valgte valgsted/parti/rolle'));
-  }
-  else {
-    drupal_set_message(t('Deltageren er ikke blevet tildelt en plads på et valgsted'), 'warning');
+      $roles_array = _valhalla_helper_get_roles();
+      $form_state['values']['field_label'][$field_language][0]['value'] = strtolower($roles_array[$role_id]);
+    }
+
+    // Set polling station post right away
+    $polling_station = '';
+    $field_language = key($form_state['values']['field_polling_station']);
+    if(!empty($form_state['values']['field_polling_station'][$field_language][0]['nid'])){
+      $polling_station = $form_state['values']['field_polling_station'][$field_language][0]['nid'];
+    }
+
+    if (_valhalla_helper_validate_polling_post($polling_station, $role_id, $user_party_id)){
+      $station_role_id = $user_party_id . $role_id . $polling_station;
+
+      $field_language = key($form_state['values']['field_polling_station_post']);
+      $form_state['values']['field_polling_station_post'][$field_language][]['value'] = $station_role_id;
+      drupal_set_message(t('Deltageren er blevet tildelt en plads på valgte valgsted/parti/rolle'));
+    }
+    else {
+      drupal_set_message(t('Deltageren er ikke blevet tildelt en plads på et valgsted'), 'warning');
+    }
   }
 }
 
