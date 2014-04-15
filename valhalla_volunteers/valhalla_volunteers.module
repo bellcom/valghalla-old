@@ -1114,7 +1114,7 @@ function valhalla_volunteers_form_volunteers_node_form_alter(&$form, &$form_stat
         '#type' => 'select',
         '#title' => t('Rolle'),
         '#options' => _valhalla_helper_get_roles(),
-        '#empty_option' => 'Select',
+        '#empty_option' => t('- None -'),
         '#weight' => 10,
     );
   }
