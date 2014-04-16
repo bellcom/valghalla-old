@@ -634,8 +634,8 @@ function valhalla_volunteers_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'field_cpr_number',
-    'label' => 'CPR Number',
-    'required' => 0,
+    'label' => 'CPR',
+    'required' => 1,
     'settings' => array(
       'text_processing' => 0,
       'user_register_form' => FALSE,
@@ -754,7 +754,7 @@ function valhalla_volunteers_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 20,
+      'weight' => 11,
     ),
   );
 
@@ -782,11 +782,12 @@ function valhalla_volunteers_field_default_field_instances() {
     'entity_type' => 'node',
     'field_name' => 'field_email',
     'label' => 'Email',
-    'required' => FALSE,
+    'required' => 1,
     'settings' => array(
       'user_register_form' => FALSE,
     ),
     'widget' => array(
+      'active' => 1,
       'module' => 'email',
       'settings' => array(
         'size' => 60,
@@ -976,7 +977,7 @@ function valhalla_volunteers_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'field_polling_station',
-    'label' => 'Polling Station',
+    'label' => 'Ønsket valgsted',
     'required' => 0,
     'settings' => array(
       'user_register_form' => FALSE,
@@ -986,7 +987,7 @@ function valhalla_volunteers_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 10,
+      'weight' => 7,
     ),
   );
 
@@ -1150,7 +1151,7 @@ function valhalla_volunteers_field_default_field_instances() {
   t('Address');
   t('BNummer');
   t('CO Navn');
-  t('CPR Number');
+  t('CPR');
   t('CPR Valideret');
   t('City');
   t('Description');
@@ -1163,7 +1164,6 @@ function valhalla_volunteers_field_default_field_instances() {
   t('Label');
   t('Mødetidspunkt');
   t('Parti');
-  t('Polling Station');
   t('Polling Station post');
   t('Påmindelse');
   t('RSVP - Aldrig');
@@ -1177,6 +1177,7 @@ function valhalla_volunteers_field_default_field_instances() {
   t('Token');
   t('Zip code');
   t('only for internal use');
+  t('Ønsket valgsted');
 
   return $field_instances;
 }

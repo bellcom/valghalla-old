@@ -9,9 +9,36 @@ function valhalla_volunteers_admin() {
   $args = arg();
   if (isset($args[3]) && preg_match('~^[0-9]+$~', $args[3])) {
     $node = node_load($args[3]);
+
+    // Start election
+    if(arg(2) == 'start-election' && arg(4) == 'go'){
+      // Stop all other elections
+      foreach (entity_load('node', FALSE, array('type' => 'election')) as $election) {
+        if ($election->nid == $node->nid) {
+          continue;
+        }
+        $election->field_election_status = array();
+        node_save($election);
+      }
+
+      $node->field_election_status[$language->language][0]['value'] = 1;
+      node_save($node);
+      drupal_set_message(t('Valget er nu aktiveret!'));
+      drupal_goto('admin/valhalla');
+      return;
+    }
+
+    // Stop election
+    if(arg(2) == 'start-election' && arg(4) == 'stop'){
+      $node->field_election_status[$language->language][0]['value'] = 0;
+      node_save($node);
+      drupal_set_message(t('Valget er nu stoppet!'));
+      drupal_goto('admin/valhalla');
+      return;
+    }
+
     if ($args[2] == 'start-election') {
       if (empty($args[4])) {
-
         if (empty($node->field_date[$language->language][0]['value'])) {
           drupal_set_message(t('Valget <em>@title</em> har ikke nogen tilknyttet dato og kan derfor ikke startes.', array('@title' => $node->title)), 'error');
           drupal_goto('admin/valhalla');
@@ -19,28 +46,16 @@ function valhalla_volunteers_admin() {
 
         $election_date = date('j/m Y', strtotime($node->field_date[$language->language][0]['value']));
         return '
-          <p>' . l('Ja!', implode('/', $args) . '/go', array('attributes' => array('style' => 'font-size:20px;text-decoration:underline;'))) . ' ' . t('jeg vil starte <em>@title</em> den <strong>!date</strong>.', array('@title' => $node->title, '!date' => $election_date)) . '</p>
-          <p>Aah, der var vidst lige noget der skulle ' . l('rettes', 'node/edit/' . $args[3], array('attributes' => array('style' => 'text-decoration:underline;'))) . '.</p>
-        ';
+          <p>' . l('Ja!', implode('/', $args) . '/go', array('attributes' => array('style' => 'font-size:20px;text-decoration:underline;'))) . ' ' . t('jeg vil aktivere <em>@title</em> den <strong>!date</strong>.</p><p><b>Bemærk!:</b> Der bliver ikke sendt invitationsmails, når du aktiverer valget. Dette gøres fra overblikssiden.</p>', array('@title' => $node->title, '!date' => $election_date));
       }
 
-      $node->field_election_status[$language->language][0]['value'] = 1;
-      node_save($node);
-      drupal_set_message(t('Valget er nu startet !'));
-      drupal_goto('admin/valhalla');
     }
     if ($args[2] == 'stop-election') {
       if (empty($args[4])) {
           return '
           <p>' . l('Ja!', implode('/', $args) . '/stop', array('attributes' => array('style' => 'font-size:20px;text-decoration:underline;'))) . ' ' . t('jeg vil stoppe <em>@title</em>.', array('@title' => $node->title)) . '</p>
-          <p>Aah, der var vidst lige noget der skulle ' . l('rettes', 'node/' . $args[3] ."/edit", array('attributes' => array('style' => 'text-decoration:underline;'))) . '.</p>
           ';
       }
-
-      $node->field_election_status[$language->language][0]['value'] = 0;
-      node_save($node);
-      drupal_set_message(t('Valget er nu stoppet !'));
-      drupal_goto('admin/valhalla');
     }
   }
 
@@ -51,15 +66,20 @@ function valhalla_volunteers_admin() {
     <div>' . t('Liste over kommende eller ikke skedulerede valg') . '</div>
     ';
 
-  $reset = '
+  $extra = '
     <div>
+    <h3>'.t('Send invitationer').'</h3>
+    <ul>
+    <li><a href="valhalla/sendinvitation">Send invitationer</a>
+    </li>
+    </ul>
     <h3>'.t('Nulstil tilforordnede').'</h3>
     <ul>
     <li><a href="/valghalla/volunteers/action/reset/pos">'.t('Nulstil pladser').'</a></li>
     <li><a href="/valghalla/volunteers/action/reset/rsvp">'.t('Nulstil svar').'</a></li></ul>
     </div>
     ';
-  return $out . views_embed_view('valg') . $reset;
+  return $out . views_embed_view('valg') . $extra;
 }
 
 /**
