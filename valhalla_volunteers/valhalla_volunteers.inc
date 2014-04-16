@@ -395,6 +395,7 @@ function _valhalla_helper_get_volunteer_info_params($node) {
 EOM;
   }
 
+  if(is_object($node)){
   $params = drupal_static(__FUNCTION__ . $node->nid, FALSE);
 
   if (empty($params)) {
@@ -481,5 +482,6 @@ EOM;
     }
   }
   return $params;
+}
 }
 

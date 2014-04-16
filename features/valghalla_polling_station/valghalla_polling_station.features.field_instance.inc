@@ -884,7 +884,7 @@ function valghalla_polling_station_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'field_volunteers_pr_party_1',
-    'label' => 'Frivillige pr. parti_v2',
+    'label' => 'Frivillige pr. parti',
     'required' => 0,
     'settings' => array(
       'user_register_form' => FALSE,
@@ -908,7 +908,7 @@ function valghalla_polling_station_field_default_field_instances() {
   t('By');
   t('Digital valgliste');
   t('Dør / Side');
-  t('Frivillige pr. parti_v2');
+  t('Frivillige pr. parti');
   t('Kontaktperson for valgets afvilking på selve valgdagen(e).');
   t('Lokalekontakt');
   t('Nummer');
