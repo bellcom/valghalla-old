@@ -1094,7 +1094,7 @@ function valhalla_volunteers_node_validate($node, $form, &$form_state){
     $field_language = key($form_state['values']['field_cpr_number']);
 
     $cpr = $form_state['values']['field_cpr_number'][$field_language][0]['value'];
-    $tmp =_valhalla_helper_get_volunteer_by_cpr($cpr);
+    $tmp = _valhalla_helper_get_volunteer_by_cpr($cpr);
     if($tmp && $tmp->nid !== $node->nid){
       form_set_error('field_cpr_number', t('Der er allerede oprettet en frivillig med det CPR-nummer'));
     }
@@ -1127,7 +1127,9 @@ function valhalla_volunteers_node_validate($node, $form, &$form_state){
     if(!empty($form_state['values']['field_polling_station'][$field_language][0]['nid'])){
       $polling_station = $form_state['values']['field_polling_station'][$field_language][0]['nid'];
     }
-    if(!$node->nid){
+    // If it is a new node, and all the relevant data for a polling station post is set.
+    // check if seat is empty, and if it is, add the volunteer to it
+    if(!$node->nid && $polling_station && $role_id && $user_party_id){
       if(_valhalla_helper_validate_polling_post($polling_station, $role_id, $user_party_id)){
         $station_role_id = $user_party_id . $role_id . $polling_station;
 
@@ -1139,13 +1141,11 @@ function valhalla_volunteers_node_validate($node, $form, &$form_state){
         drupal_set_message(t('Deltageren er ikke blevet tildelt en plads på et valgsted'), 'warning');
       }
     }
-    
+
     $field_language = key($form_state['values']['field_token']);
     if(empty($form_state['values']['field_token'][$field_language][0]['value'])){
       $form_state['values']['field_token'][$field_language][]['value'] = user_password(10);
     }
-
-    //error_log(__FILE__.':'.__LINE__. print_r($form_state['values'], 1)); // tth@bellcom.dk debugging
   }
 }
 
