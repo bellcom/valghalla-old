@@ -23,7 +23,7 @@ function valhalla_volunteers_node_info() {
       'base' => 'node_content',
       'description' => '',
       'has_title' => '1',
-      'title_label' => t('Rolle'),
+      'title_label' => t('Role'),
       'help' => '',
     ),
     'volunteers' => array(

@@ -46,7 +46,6 @@ features[field_base][] = field_party
 features[field_base][] = field_party_list
 features[field_base][] = field_phone
 features[field_base][] = field_phone2
-features[field_base][] = field_polling_station
 features[field_base][] = field_polling_station_post
 features[field_base][] = field_rsvp
 features[field_base][] = field_rsvp_comment
