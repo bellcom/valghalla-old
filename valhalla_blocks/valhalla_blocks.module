@@ -284,6 +284,30 @@ function valhalla_blocks_generate_view($delta = '') {
               </tr>
         ';
 
+
+      $data = array();
+      if(!$user_party_id){
+        $vid = db_query("SELECT vid FROM taxonomy_vocabulary WHERE machine_name = 'partier'")->fetchField();
+
+        foreach (taxonomy_get_tree($vid) as $item) {
+          $data = valhalla_blocks_get_polling_station_data($item->tid, $data);
+        }
+      }
+      else {
+        $data = valhalla_blocks_get_polling_station_data($user_party_id);
+      }
+
+      foreach($data as $constituency){
+        foreach($constituency as $polling_station){
+          foreach ($polling_station as $key => $count){
+            if(is_numeric($key)){
+              $total_count_role[$key]['needed'] += $count['needed'];
+              $total_count_role[$key]['count'] += $count['count'];
+            }
+          }
+        }
+      }
+
       foreach($roles as $nid =>$title){
 
         $no = '';
@@ -299,11 +323,18 @@ function valhalla_blocks_generate_view($delta = '') {
           $total_role[$title] = 0;
         }
 
+        if(!$total_count_role[$nid]['count']){
+          $total_count_role[$nid]['count'] = 0;
+        }
+        if(!$total_count_role[$nid]['needed']){
+          $total_count_role[$nid]['needed'] = 0;
+        }
+
         $view .= '
             <tr>
               <td><div class="partistatusenhed">'. $title .'</div></td>
-              <td><div class="partistatusenhedvaerdi '. $no .'">'. $total_volunteers_role[$title] . '/' . $total_role[$title] . '</div> </td>
-              <td><div class="partistatusenhedvaerdi">' . ($total_role[$title] - ($total_volunteers_role[$title])) . '</div> </td>
+              <td><div class="partistatusenhedvaerdi '. $no .'">'. $total_count_role[$nid]['count'] . '/' . $total_count_role[$nid]['needed'] . '</div> </td>
+              <td><div class="partistatusenhedvaerdi">' . ($total_count_role[$nid]['needed'] - $total_count_role[$nid]['count']) . '</div> </td>
             </tr>';
       }
 
