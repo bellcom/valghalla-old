@@ -323,6 +323,13 @@ function valhalla_blocks_generate_view($delta = '') {
           $total_role[$title] = 0;
         }
 
+        if(!$total_count_role[$nid]['count']){
+          $total_count_role[$nid]['count'] = 0;
+        }
+        if(!$total_count_role[$nid]['needed']){
+          $total_count_role[$nid]['needed'] = 0;
+        }
+
         $view .= '
             <tr>
               <td><div class="partistatusenhed">'. $title .'</div></td>
