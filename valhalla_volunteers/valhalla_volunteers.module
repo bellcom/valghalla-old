@@ -815,6 +815,12 @@ function valhalla_volunteers_to_polling_station_ajax($action) {
 function valhalla_volunteers_remove_mail($node) {
   global $language;
   $user_email = $node->field_email[$language->language][0]['email'];
+
+  $election = _valhalla_helper_get_active_election();
+  // do not send mails if the election is not open.
+  if (FALSE == $election) {
+    return;
+  }
   // send email when user's status is unknown or true.
   if (empty($node->field_rsvp) || (isset($node->field_rsvp[$language->language]) && $node->field_rsvp[$language->language][0]['value'] == 1)) {
     $email_nid = variable_get("valghalla_mail_remove");
