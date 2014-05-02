@@ -584,6 +584,7 @@ function valhalla_volunteers_to_polling_station_roles($polling_station, $user_pa
   // tth: Loop through the roles used on the pollingstation, and load the volunteers
   // $station_role_id is the "uniqe" id for the current role from the current party on the
   // current station. This is set during the add volunteer to station routine
+  $post_id = 1;
   foreach($posts_to_fill as $key => $value){
     $station_role_id = $user_party_id . $role_array[$value] . $station_id;
 
@@ -624,7 +625,8 @@ function valhalla_volunteers_to_polling_station_roles($polling_station, $user_pa
       // was only added to one post.
       // The problem only existed when watching multiple parties on the polling
       // station. Fix: insert a number that is not repeated.
-      $id = rand(1,9) . rand(1,9) . rand(1,9);
+      $id = "p" . $post_id; 
+      $post_id++;
       $value = $value;
     }
 
