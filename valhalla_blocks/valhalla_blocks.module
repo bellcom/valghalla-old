@@ -46,7 +46,6 @@ function valhalla_blocks_init(){
  * hook_block_view implementation
  */
 function valhalla_blocks_block_view($delta = '') {
-  valhalla_blocks_generate_view($delta);
   $cache = cache_get('valhalla_blocks_'.$delta);
 
   $loading = '<div id="valhalla_block-' . $delta . '">
@@ -318,7 +317,6 @@ function valhalla_blocks_generate_view($delta = '') {
         $vid = db_query("SELECT vid FROM taxonomy_vocabulary WHERE machine_name = 'partier'")->fetchField();
 
         foreach (taxonomy_get_tree($vid) as $item) {
-          error_log(__FILE__.':'.__LINE__. print_r($data, 1)); // tth@bellcom.dk debugging
           $data = valhalla_blocks_get_polling_station_data($item->tid, $data);
         }
       }
@@ -477,7 +475,12 @@ function valhalla_blocks_generate_view($delta = '') {
   return $view;
 }
 
-function valhalla_blocks_get_polling_station_data($user_party_id, $data){
+/**
+ * Fetch info for polling station
+ *
+ * Uses same function as the add to polling station view.
+ */
+function valhalla_blocks_get_polling_station_data($user_party_id, $data = array()){
   $role_array = _valhalla_helper_get_role_array();
   foreach (entity_load('node', FALSE, array('type' => 'constituency')) as $constituency) {
     $data[$constituency->title];
@@ -495,6 +498,9 @@ function valhalla_blocks_get_polling_station_data($user_party_id, $data){
   return $data;
 }
 
+/**
+ * Map the data from the polling station for use in the blocks
+ */
 function valhalla_blocks_map_polling_station_data($data, $constituency, $polling_station, $polling_station_posts){
   $role_array = _valhalla_helper_get_role_array();
   $data[$constituency->title][$polling_station->nid]['title'] = $polling_station->title;
