@@ -1,7 +1,0 @@
-<?php
-/**
- * @file
- * Code for the valhalla_page_manager_handlers feature.
- */
-
-include_once 'valhalla_page_manager_handlers.features.inc';
