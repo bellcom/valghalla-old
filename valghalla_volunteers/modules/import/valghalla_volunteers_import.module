@@ -1,0 +1,221 @@
+<?php
+/**
+ * @file
+ * Import volunteers from CSV file.
+ */
+
+/**
+ * Implements hook_permission().
+ */
+function valghalla_volunteers_import_permission() {
+  return array(
+    'import volunteers' => array(
+      'title' => t('Importer deltagere'),
+      'description' => 'Giv brugeren lov til at importere deltagere fra CSV.',
+    ),
+  );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function valghalla_volunteers_import_menu() {
+  $items['valghalla/deltagere/importer'] = array(
+    'title' => 'Importér deltagere',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('valghalla_volunteers_import_form'),
+    'access arguments' => array('import volunteers'),
+    'type' => MENU_NORMAL_ITEM,
+    'weight' => 10,
+  );
+
+  return $items;
+}
+
+/**
+ * Form callback for volunteer import.
+ */
+function valghalla_volunteers_import_form($form, &$form_state) {
+  $form['#attributes'] = array('enctype' => "multipart/form-data");
+
+  $description = <<<EOL
+<p>Her kan du importere en liste af deltagere fra en CSV (comma-seperated values) fil.</p>
+
+<ul>
+  <li>Filens første linje, bliver ikke importeret, da denne bruges som beskrivelse.</li>
+  <li>Værdierne skal være adskildt af et komma (,).</li>
+  <li>Hvis en deltager allerede findes (findes på CPR), bliver denne opdateret med data fra filen.</li>
+</ul>
+
+<p>Du kan se et eksempel på hvordan sådan en fil kan se ud her:</p>
+<pre>
+Parti,CPR,Navn,Email,Telefon
+A,123456-2342,Fornavn Efternavn,email@adresse.dk,12314141
+A,123223-2242,Fornavn Mellemnavn Efternavn,andenemail@adresse.dk,12314141
+</pre>
+EOL;
+
+  $form['pre'] = array(
+    '#markup' => $description,
+  );
+
+  $form['import'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Importér nye deltagere'),
+  );
+
+  $form['import']['upload'] = array(
+    '#type' => 'file',
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Importér'),
+  );
+
+  return $form;
+}
+
+/**
+ * Validation handler for import.
+ */
+function valghalla_volunteers_import_form_validate($form, &$form_state) {
+  $validators = array('file_validate_extensions' => array('csv'));
+  $file = file_save_upload('upload', $validators);
+
+  if (FALSE == $file) {
+    form_set_error('import][upload', t('Mangler en gyldig csv fil.'));
+  }
+  else {
+    $form_state['file object'] = $file;
+  }
+}
+
+/**
+ * Submit handler for importing volunteers.
+ */
+function valghalla_volunteers_import_form_submit($form, &$form_state) {
+  global $language;
+  global $user;
+
+  module_load_include('inc', 'valghalla_volunteers', 'valghalla_volunteers');
+
+  $force_party = FALSE;
+  $user_entity = user_load($user->uid);
+  $user_party_id = empty($user_entity->field_party[LANGUAGE_NONE][0]['tid']) ? FALSE : $user_entity->field_party[LANGUAGE_NONE][0]['tid'];
+
+  if ($user_party_id) {
+    $force_party = $user_party_id;
+  }
+  $import = _valghalla_volunteers_parse_csv_import($form_state['file object'], $force_party);
+
+  if ($import) {
+    drupal_set_message(t('Importen oprettede @added og opdaterede @updated deltagere.', array('@added' => $import['added'], '@updated' => $import['updated'])));
+
+    if ($import['failed']) {
+      $msg = '<p>' . t('Følgende blev ikke importeret.') . '</p><ul>';
+      foreach ($import['failed'] as $cpr => $name) {
+        $msg .= '<li>' .  $name . ' ' . $cpr . '</li>';
+      }
+      $msg .= '</ul>';
+      drupal_set_message($msg, 'error');
+    }
+  }
+}
+
+/**
+ * Handle csv imports of volunteers.
+ */
+function _valghalla_volunteers_parse_csv_import($file_object, $party_forced = FALSE) {
+  global $user, $language;
+
+  $failed = array();
+  $counter = $added = $updated = 0;
+  if ($handle = fopen($file_object->uri, 'r')) {
+
+    while (($data = fgetcsv($handle, 1024, ",")) !== FALSE) {
+      if ($counter == 0) {
+        // Header line.
+        $counter++;
+        continue;
+      }
+
+      // If users party id is set, file doesn't include party, skip line.
+      if (empty($data[0]) && $party_forced) {
+        continue;
+      }
+
+      // Normal import files
+      if ((count($data) == 5)) {
+        // Extract fields into readable variables.
+        list($party, $cpr, $name, $email, $phone) = $data;
+      }
+      // Exported files included valgsted, status and rolle.
+      else {
+        $party = $data[0];
+        $cpr = $data[1];
+        $name = $data[2];
+        $email = $data[3];
+        $phone = $data[4];
+      }
+
+      if ($party_forced) {
+        $party = $party_forced;
+      }
+
+      if (FALSE == valghalla_volunteer_validator_validate_format($cpr)) {
+        $failed[$cpr] = $name;
+        continue;
+      }
+
+      $node = _valghalla_helper_get_volunteer_by_cpr($cpr);
+
+      if (!$node instanceof stdClass) {
+        $node = new stdClass();
+        $node->type = 'volunteers';
+        node_object_prepare($node);
+        $node->comment = 0;
+        $node->title = $name;
+        $node->language = $language->language;
+        $node->field_cpr_number[$language->language][0]['value'] = $cpr;
+
+        $added++;
+      }
+      else {
+        if (($party_forced && !empty($node->field_party[$language->language][0]['tid'])) &&
+            ($node->field_party[$language->language][0]['tid'] != $party_forced)
+        ) {
+          $failed[$cpr] = $name . ' - tilhører et andet parti';
+          continue;
+        }
+
+        $updated++;
+      }
+
+      $node->field_email[$language->language][0]['email'] = $email;
+      $node->field_phone[$language->language][0]['value'] = $phone;
+      $node->field_token[$language->language][0]['value'] = user_password(8);
+
+      if ($party) {
+        if (preg_match('~^[0-9]+$~', $party)) {
+          $tid = $party;
+        }
+        else {
+          $term = taxonomy_get_term_by_name($party);
+          $tid = array_shift(array_keys($term));
+        }
+        $node->field_party[$language->language][0]['tid'] = $tid;
+      }
+
+      node_save($node);
+      $counter++;
+    }
+    fclose($handle);
+  }
+
+  return array(
+    'added' => $added,
+    'updated' => $updated,
+    'failed' => $failed,
+  );
+}

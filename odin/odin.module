@@ -1,0 +1,379 @@
+<?php
+/**
+ * Helper module
+ *
+ * Named after the god Odin from the norse mythology, who drank from
+ * the well of wisdom.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function odin_menu() {
+  $items['reset-alphabetical/%'] = array(
+    'title' => 'Nulstil til alfabetisk rækkefølge',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('odin_reset_alphabetical_form', 1),
+    'access arguments' => array('administer valghalla'),
+  );
+  return $items;
+}
+
+/**
+ * Reset node type content to alphabetical order.
+ */
+function odin_reset_alphabetical_form($form, &$form_state, $node_type) {
+  $form['node_type'] = array(
+    '#type' => 'hidden',
+    '#value' => $node_type,
+  );
+
+  $type = node_type_get_name($node_type);
+
+  $form['message'] = array(
+    '#type' => 'item',
+    '#markup' => t('Er du sikker på at du vil nulstille rækkefølgen for "%type"?', array('%type' => $type)),
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Fortsæt'),
+    '#suffix' => l(t('Annuller'), $_SERVER['HTTP_REFERER']),
+  );
+
+  return $form;
+}
+
+/**
+ * Submit handler for reset node order form.
+ */
+function odin_reset_alphabetical_form_submit(&$form, &$form_state) {
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', $form_state['values']['node_type'])
+    ->propertyOrderBy('title', 'ASC');
+
+  $result = $query->execute();
+
+  if (isset($result['node'])) {
+    $weight = 0;
+
+    foreach ($result['node'] as $nid => $info) {
+      $node = node_load($nid);
+
+      // For now this field is used on both role and polling station node.
+      $language = field_language('node', $node, 'field_role_weight');
+      $node->field_role_weight[$language][0]['value'] = $weight;
+      node_save($node);
+
+      $weight++;
+    }
+  }
+
+  drupal_set_message(t('Rækkefølgen er blevet nulstillet'));
+}
+
+/**
+ * Retrieve party tid for next free seat on specified parameters
+ */
+function odin_party_tid_for_next_free_seat($election_nid, $polling_station_nid, $role_nid) {
+  $parties = odin_get_parties();
+  $polling_station = node_load($polling_station_nid);
+
+  foreach ($parties as $party_tid => $party) {
+    $posts_array = valghalla_volunteers_to_polling_station_roles($polling_station, $party_tid, $election_nid);
+
+    foreach ($posts_array['existing'] as $key => $existing) {
+      unset($posts_array['posts_to_fill'][$key]);
+    }
+    foreach ($posts_array['posts_to_fill'] as $post_to_fill) {
+      if ($post_to_fill['role_nid'] == $role_nid) {
+        return $party_tid;
+      }
+    }
+  }
+}
+
+/**
+ * Get count for roles and total
+ * @params
+ *  $eleciton_nid
+ *  $polling_station_nids
+ *  $roles
+ *  $user_party_id
+ */
+function odin_get_volunteers_count($election_nid, $polling_station_nids, $roles, $user_party_id = NULL) {
+  $total_count = array(
+      'assigned' => 0,
+      'total' => 0,
+      'rsvp_ok' => 0,
+      'rsvp_no' => 0,
+    );
+
+  foreach ($roles as $role_nid => $role_title) {
+    //
+    // Total assinged roles
+    //
+    $assigned_count = _valghalla_helper_get_roles_count($polling_station_nids, $role_nid, $user_party_id);
+    $role_count[$role_nid]['assigned'] = is_numeric($assigned_count) ? $assigned_count: 0;
+    $total_count['assigned'] += $role_count[$role_nid]['assigned'];
+
+    //
+    // Total assigned for role
+    //
+    $volunteer_query = new EntityFieldQuery();
+
+    $volunteer_query->entityCondition('entity_type', 'field_collection_item')
+      ->entityCondition('bundle', 'field_electioninfo')
+      ->fieldCondition('field_election', 'target_id', $election_nid)
+      ->fieldCondition('field_vlnt_station', 'target_id', $polling_station_nids)
+      ->fieldCondition('field_post_role', 'target_id', $role_nid);
+
+    if ($user_party_id) {
+      $volunteer_query->fieldCondition('field_post_party', 'target_id', $user_party_id);
+    }
+
+    $query_result = $volunteer_query->execute();
+    $result       = array_shift($query_result);
+
+    $role_count[$role_nid]['total'] = count($result);
+    $total_count['total'] += $role_count[$role_nid]['total'];
+
+    //
+    // Total replied ok for role
+    //
+    $volunteer_query = new EntityFieldQuery();
+
+    $volunteer_query->entityCondition('entity_type', 'field_collection_item')
+      ->entityCondition('bundle', 'field_electioninfo')
+      ->fieldCondition('field_election', 'target_id', $election_nid)
+      ->fieldCondition('field_vlnt_station', 'target_id', $polling_station_nids)
+      ->fieldCondition('field_post_role', 'target_id', $role_nid)
+      // RVSP 1 corresponds to ok
+      ->fieldCondition('field_rsvp', 'value', 1);
+
+    if ($user_party_id) {
+      $volunteer_query->fieldCondition('field_post_party', 'target_id', $user_party_id);
+    }
+
+    $query_result = $volunteer_query->execute();
+    $result       = array_shift($query_result);
+
+    $role_count[$role_nid]['rsvp_ok'] = count($result);
+    $total_count['rsvp_ok'] += $role_count[$role_nid]['rsvp_ok'];
+
+    //
+    // Total replied no for role
+    //
+    $volunteer_query = new EntityFieldQuery();
+
+    $volunteer_query->entityCondition('entity_type', 'field_collection_item')
+      ->entityCondition('bundle', 'field_electioninfo')
+      ->fieldCondition('field_election', 'target_id', $election_nid)
+      ->fieldCondition('field_vlnt_station', 'target_id', $polling_station_nids)
+      ->fieldCondition('field_post_role', 'target_id', $role_nid)
+      // RVSP 2,3 is no
+      ->fieldCondition('field_rsvp', 'value', array(2, 3));
+
+    if ($user_party_id) {
+      $volunteer_query->fieldCondition('field_post_party', 'target_id', $user_party_id);
+    }
+
+    $query_result = $volunteer_query->execute();
+    $result       = array_shift($query_result);
+
+    $role_count[$role_nid]['rsvp_no'] = count($result);
+    $total_count['rsvp_no'] += $role_count[$role_nid]['rsvp_no'];
+  }
+
+  return $count = array('total_count' => $total_count, 'role_count' => $role_count);
+}
+
+/**
+ * Retrive keyed list of parties
+ */
+function odin_get_parties() {
+  $parties = array();
+
+  $taxonomy = taxonomy_vocabulary_machine_name_load('partier');
+  foreach (taxonomy_get_tree($taxonomy->vid) as $term) {
+    $parties[$term->tid] = $term->name;
+  }
+
+  return $parties;
+}
+
+/**
+ * Retrive keyed list of roles.
+ */
+function odin_get_roles() {
+  $data = &drupal_static(__FUNCTION__);
+
+  if (!isset($data)) {
+    // This SQL is generated by views.
+    $sql = <<<EOL
+      SELECT
+        node.title AS node_title,
+        node.nid AS nid,
+        field_data_field_role_weight.field_role_weight_value AS field_data_field_role_weight_field_role_weight_value
+      FROM
+        {node} node
+      LEFT JOIN
+        {field_data_field_role_weight} field_data_field_role_weight
+        ON
+          node.nid = field_data_field_role_weight.entity_id AND
+          (field_data_field_role_weight.entity_type = 'node' AND field_data_field_role_weight.deleted = '0')
+      WHERE
+        (( (node.type IN  ('roles')) ))
+      ORDER BY
+        field_data_field_role_weight_field_role_weight_value ASC,
+        node_title ASC
+EOL;
+
+    $result = db_query($sql)->fetchAllKeyed(1, 0);
+    $data = $result ? $result : array();
+  }
+
+  return $data;
+}
+
+function odin_get_elections() {
+  $data = array();
+
+  foreach (entity_load('node', FALSE, array('type' => 'election')) as $item) {
+    $data[$item->nid] = $item->title;
+  }
+
+  return $data;
+}
+
+/**
+ * Retrieve constituencies for the election.
+ */
+function odin_get_constituencies($election_nid) {
+  $polling_stations = odin_get_polling_stations($election_nid);
+
+  $sql = <<<EOL
+    SELECT
+      node.nid AS nid,
+      node_field_data_field_constituency.nid AS node_field_data_field_constituency_nid
+    FROM
+      {node} node
+    LEFT JOIN
+      {field_data_field_constituency} field_data_field_constituency
+        ON node.nid = field_data_field_constituency.entity_id AND
+          (field_data_field_constituency.entity_type = 'node' AND field_data_field_constituency.deleted = '0')
+    LEFT JOIN
+      {node} node_field_data_field_constituency
+        ON field_data_field_constituency.field_constituency_nid = node_field_data_field_constituency.nid
+    WHERE (( (node.type IN  ('polling_station')) AND (node.nid IN (:nids)) ))
+EOL;
+
+  $result = db_query($sql, array(':nids' => array_keys($polling_stations)))->fetchAllKeyed(0, 1);
+  $constituencies = array();
+
+  if ($result) {
+    foreach ($polling_stations as $polling_station_nid => $polling_station_title) {
+      $constituency_nid = $result[$polling_station_nid];
+      $constituencies[$constituency_nid][$polling_station_nid] = $polling_station_title;
+    }
+  }
+
+  return $constituencies;
+}
+
+/**
+ * Retrieve a list of polling stations, sorted by weight.
+ */
+function odin_get_polling_stations($election_nid) {
+  $election_node = node_load($election_nid);
+
+  $polling_stations_field = field_get_items('node', $election_node, 'field_polling_stations');
+
+  foreach ($polling_stations_field as $data) {
+    $nids[$data['target_id']] = $data['target_id'];
+  }
+
+  $sql = <<<EOL
+    SELECT
+      node.nid AS nid,
+      node.title AS node_title,
+      field_data_field_role_weight.field_role_weight_value AS field_data_field_role_weight_field_role_weight_value
+    FROM
+      {node} node
+      LEFT JOIN
+        {field_data_field_role_weight} field_data_field_role_weight
+        ON node.nid = field_data_field_role_weight.entity_id AND
+          (field_data_field_role_weight.entity_type = 'node' AND field_data_field_role_weight.deleted = '0')
+    WHERE
+      (( (node.type IN  ('polling_station')) AND (node.nid IN (:nids)) ))
+    ORDER BY
+      field_data_field_role_weight_field_role_weight_value ASC,
+      node_title ASC
+EOL;
+
+  $result = db_query($sql, array(':nids' => $nids))->fetchAllKeyed(0, 1);
+
+  return $result ? $result : array();
+}
+
+function odin_volunteer_has_post_on_election($volunteer_nid, $election_nid) {
+  $fc_query = new EntityFieldQuery();
+
+  $fc_query->entityCondition('entity_type', 'field_collection_item')
+    ->entityCondition('bundle', 'field_electioninfo')
+    ->fieldCondition('field_election', 'target_id', $election_nid);
+
+  $result = $fc_query->execute();
+
+  if (isset($result['field_collection_item'])) {
+    $fc_ids = array_keys($result['field_collection_item']);
+
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node')
+          ->entityCondition('bundle', 'volunteers')
+          ->entityCondition('entity_id', $volunteer_nid)
+          ->fieldCondition('field_electioninfo', 'value', $fc_ids, 'IN')
+          ->count();
+
+
+    return $query->execute() > 0 ? TRUE : FALSE;
+  }
+  return FALSE;
+}
+
+/**
+ * Retrive volunteer node by cpr number
+ *
+ * @param string $cpr
+ * @return mixed stdClass on success otherwise false
+ */
+function odin_load_volunteer_by_cpr($cpr) {
+  $entity_id = db_select('field_data_field_cpr_number', 't')
+      ->fields('t', array('entity_id'))
+      ->condition('entity_type', 'node', '=')
+      ->condition('bundle', 'volunteers', '=')
+      ->condition('field_cpr_number_value', $cpr, '=')
+      ->execute()
+      ->fetchField();
+
+  if ($entity_id) {
+    return node_load($entity_id);
+  }
+
+  return FALSE;
+}
+
+
+function odin_get_future_elections() {
+  $election_query = new EntityFieldQuery();
+  $election_query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'election')
+    ->fieldCondition('field_date', 'value', date('Y-m-d'), '>');
+  $result = $election_query->execute();
+
+  if (isset($result['node'])) {
+    return array_keys(array_shift($result));
+  }
+  return FALSE;
+}

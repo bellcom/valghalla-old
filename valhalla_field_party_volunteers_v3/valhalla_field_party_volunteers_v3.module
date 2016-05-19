@@ -2,6 +2,16 @@
 // valhalla_field_party_volunteers
 module_load_all();
 
+/**
+ * Implements hook_form_alter().
+ */
+function valhalla_field_party_volunteers_v3_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'polling_station_node_form') {
+    $lang = $form['field_volunteers_pr_party_1']['#language'];
+    $form['field_volunteers_pr_party_1'][$lang]['add_more']['#value'] = t('Tilføj endnu et parti');
+  }
+}
+
 function valhalla_field_party_volunteers_v3_field_info() {
   return array(
     'party_volunteers_field_v3' => array(
@@ -22,8 +32,6 @@ function valhalla_field_party_volunteers_v3_field_schema() {
       'not null' => TRUE,
       'default' => 0,
     ),
-
-
   );
 
   return array(
@@ -36,8 +44,8 @@ function valhalla_field_party_volunteers_v3_field_widget_info() {
   $widgets = array();
 
   $widgets['party_volunteers_standard_v3'] = array(
-    'label' => t('Volunteers to Party v3'),
-    'field types' => array('party_volunteers_field_v3',
+    'label' => t('Party selection'),
+    'field types' => array('party_volunteers_field_v3',    
       '#type' => 'custom_field_type',
       '#title' => t('Party'),
       ),
@@ -45,14 +53,14 @@ function valhalla_field_party_volunteers_v3_field_widget_info() {
       'available_parties' => array(),
     )
   );
-
+ 
   return $widgets;
 }
 
 function valhalla_field_party_volunteers_v3_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
-
+   
   $settings = $instance['widget']['settings'];
-  $party_value = isset($items[$delta]['party_list']) ? $items[$delta]['party_list'] : '';
+  $party_value = isset($items[$delta]['party_list']) ? $items[$delta]['party_list'] : '';  
   //$number_ti_value = isset($items[$delta]['number_ti']) ? $items[$delta]['number_ti'] : '0';
 
   if ($instance['widget']['type'] == 'party_volunteers_standard_v3') {
@@ -64,8 +72,9 @@ function valhalla_field_party_volunteers_v3_field_widget_form(&$form, &$form_sta
     foreach (taxonomy_get_tree($taxonomy->vid) as $item) {
       $options[$item->tid] = $item->name;
     }
-    $element = array(
-        '#suffix' => '<a href="/node/add/roles?destination='.$_SERVER['REQUEST_URI'].'">Tilføj en rolle mere</a>');
+$element=array( 
+        '#suffix' => '<a href="/node/add/roles?destination='.$_SERVER['REQUEST_URI'].'">' . t('Tilføj endnu en rolle') . '
+</a>');
     $element['party_list'] = array(
       '#type' => 'select',
       '#title' => t('Party'),

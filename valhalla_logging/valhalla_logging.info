@@ -8,5 +8,5 @@ name = Logging
 ; Module description
 description = Handles logging of sensitive information
 
-package = valhalla
+package = Valghalla
 core = 7.x

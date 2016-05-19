@@ -1,0 +1,116 @@
+<?php
+/**
+ * @file
+ * Valghalla volunteers validate, validate age module.
+ *
+ * @author Thomas Thune Hansen <tth@bellcom.dk>
+ * @copyright 2012 OS2 - Offentligt Digitaliseringsfællesskab.
+ * See README.md at https://github.com/os2web/valghalla_mail
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function vvv_validate_age_menu() {
+  $items['admin/valghalla/validator/validate_age'] = array(
+    'title' => 'Indstillinger for "Valider Alder"',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('vvv_validate_age_settings'),
+    'access arguments' => array('administer valghalla'),
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_valghalla_vol_validator_validate().
+ */
+function vvv_validate_age_valghalla_volunteer_validator_validate() {
+  return array(
+    'age' => array(
+      'label' => 'Valider alder',
+      'description' => t('Valider deltagerens alder'),
+      'validate' => 'vvv_validate_age_validate',
+      'config' => 'admin/valghalla/validator/validate_age',
+    ),
+  );
+}
+
+/**
+ * Page callback for settings.
+ */
+function vvv_validate_age_settings() {
+  $form['vvv_validate_age_on_election'] = array(
+    '#type' => 'checkbox',
+    '#title' => 'Brug valgdato, for validering',
+    '#description' => 'Valider alderen mod valgets dato. Hvis dette ikke vælges, bruges dags dato.',
+    '#default_value' => variable_get('vvv_validate_age_on_election', TRUE),
+  );
+
+  $form['vvv_validate_age_age'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Alder',
+    '#default_value' => variable_get('vvv_validate_age_age', 18),
+    '#description' => 'Hvilken alder skal deltageren min. have',
+  );
+
+  return system_settings_form($form);
+}
+
+/**
+ * Validation on age.
+ */
+function vvv_validate_age_validate($volunteer, $message) {
+  $date = &drupal_static(__FUNCTION__);
+  if (!isset($date)) {
+    // Get date to validate volunteer against.
+    if (variable_get('vvv_validate_age_on_election', TRUE)) {
+      $election_nids = odin_get_future_elections();
+
+      foreach (node_load_multiple($election_nids) as $election_node) {
+        $date_field = field_get_items('node', $election_node, 'field_date');
+        $tmp_date = $date_field ? new DateTime($date_field[0]['value']) : '';
+
+        // Use the date.
+        if (!isset($date)) {
+          $date = $tmp_date;
+        }
+
+        // If there are more than one date, use the "lowest".
+        if ($tmp_date && ($tmp_date < $date)) {
+          $date = $tmp_date;
+        }
+      }
+    }
+  }
+  if (!$date) {
+    $date = new DateTime('now');
+  }
+
+  // Birthdate.
+  $cpr_field = field_get_items('node', $volunteer, 'field_cpr_number');
+  $cpr = $cpr_field ? $cpr_field[0]['value'] : '';
+
+  try {
+    $years = _valghalla_helper_get_age_from_cpr($cpr);
+  }
+  catch (Exception $e) {
+    return array(
+      'valid' => FALSE,
+      'text' => 'Deltageren har ikke en gyldig fødselsdato',
+    );
+  }
+
+  $min_age = variable_get('vvv_validate_age_age', 18);
+
+  if ($years < $min_age) {
+    return array(
+      'valid' => FALSE,
+      'text' => 'Deltagerens alder er under: ' . $min_age,
+    );
+  }
+  return array(
+    'valid' => TRUE,
+  );
+}

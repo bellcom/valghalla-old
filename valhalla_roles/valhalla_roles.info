@@ -1,7 +1,7 @@
 ; $Id$
 name = valhalla volunteers roles
 description = holds functionality to add and delete roles for volunteers
-package = valhalla
+package = Valghalla
 core = 7.x
 version = "7.x-1.1"
 
